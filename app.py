@@ -99,10 +99,8 @@ uploaded_file = st.sidebar.file_uploader(
     help="Supporte CSV ou Excel avec n'importe quelles colonnes"
 )
 
-# Téléchargement + installation du fichier exemple
+# Téléchargement du fichier exemple (téléchargeable uniquement)
 historical_data_file = 'ventes_historique.csv'
-if "use_sample_data" not in st.session_state:
-    st.session_state.use_sample_data = False
 
 if os.path.exists(historical_data_file):
     with open(historical_data_file, "rb") as f:
@@ -114,24 +112,14 @@ if os.path.exists(historical_data_file):
             use_container_width=True
         )
 
-    if st.sidebar.button(
-        "🧪 Installer les données exemple",
-        help="Charge automatiquement un jeu de données exemple pour tester l'application.",
-        use_container_width=True
-    ):
-        st.session_state.use_sample_data = True
-
-if uploaded_file or st.session_state.use_sample_data:
+if uploaded_file:
     try:
-        data_source = uploaded_file if uploaded_file else historical_data_file
-        df = load_data(data_source)
+        df = load_data(uploaded_file)
         
         if df is not None:
             # 🆕 AFFICHER INFO SUR LE FICHIER CHARGÉ
-            source_name = uploaded_file.name if uploaded_file else "ventes_historique.csv"
+            source_name = uploaded_file.name
             st.sidebar.success(f"✅ Fichier chargé: {source_name}")
-            if not uploaded_file:
-                st.sidebar.info("🧪 Données exemple installées. Vous pouvez maintenant tester l'application.")
             st.sidebar.info(f"""
             **Détails du fichier:**
             - Lignes: {len(df)}
@@ -2465,7 +2453,7 @@ L'équipe VentesPRO
                 worst_product = "N/A"
 
             rapport_complet = f"""
-╔══════════════════════════════════════════════════════════╗
+╔════════════════════════════��═════════════════════════════╗
 ║     RAPPORT GÉNÉRAL - VentesPRO               ║
 ╚══════════════════════════════════════════════════════════╝
 
@@ -2538,7 +2526,7 @@ Fin du Rapport
             
             # Générer insights
             if st.button("🚀 Générer les Insights", type="primary", use_container_width=True):
-                with st.spinner("🧠 Analyse en cours..."):
+                with st.spinner("�� Analyse en cours..."):
                     # Simuler l'analyse
                     import time
                     progress = st.progress(0)
@@ -2825,7 +2813,7 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
             faqs = [
                 {
                     'question': 'Comment charger mes données?',
-                    'reponse': "Utilisez le bouton '📥 Chargez votre fichier CSV' dans la sidebar. Le fichier doit être au format CSV avec séparateur point-virgule (;) et contenir au minimum les colonnes: Date, Produit, Ventes."
+                    'reponse': "Utilisez le bouton '📥 Chargez votre fichier CSV' dans la sidebar. Le fichier doit être au format CSV avec séparateur point-virgule (;) et contenir au minimum les c[...]
                 },
                 {
                     'question': 'Quel est le format de date accepté?',
@@ -2833,11 +2821,11 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
                 },
                 {
                     'question': 'Comment fonctionnent les prévisions?',
-                    'reponse': "VentesPro utilise plusieurs algorithmes de Machine Learning (Random Forest, XGBoost, ARIMA, etc.) pour générer des prévisions. Le mode 'Auto' compare tous les modèles et sélectionne automatiquement le plus performant."
+                    'reponse': "VentesPro utilise plusieurs algorithmes de Machine Learning (Random Forest, XGBoost, ARIMA, etc.) pour générer des prévisions. Le mode 'Auto' compare tous les modèl[...]
                 },
                 {
                     'question': 'Comment configurer les alertes?',
-                    'reponse': "Allez dans la section '⚠️ Alertes', renseignez vos informations (nom, email, téléphone), choisissez le produit à surveiller et définissez vos seuils de variation. Vous recevrez un email dès qu'une alerte est déclenchée."
+                    'reponse': "Allez dans la section '⚠️ Alertes', renseignez vos informations (nom, email, téléphone), choisissez le produit à surveiller et définissez vos seuils de variatio[...]
                 },
                 {
                     'question': 'Puis-je exporter mes analyses?',
