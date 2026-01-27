@@ -162,12 +162,12 @@ if uploaded_file or st.session_state.use_sample_data:
                     index=0 if len(numeric_cols) > 0 else None,
                     help="Sélectionnez la colonne numérique à analyser et prévoir"
                 )
-             with col3:
+            with col3:
                 cat_options = ["Aucune"] + list(df.columns)
                 default_cat_index = 0
                 if "Produit" in df.columns:
                     default_cat_index = cat_options.index("Produit")
-                    cat_col = st.selectbox(
+                cat_col = st.selectbox(
                     "📦 Colonne catégorique (optionnelle)",
                     options=cat_options,
                     index=default_cat_index,
@@ -2896,6 +2896,4 @@ st.markdown("""
         Version 2.0 | Propulsé par Streamlit & IA
     </p>
 </div>
-
 """, unsafe_allow_html=True)
-
