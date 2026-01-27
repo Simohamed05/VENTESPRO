@@ -167,7 +167,7 @@ if uploaded_file or st.session_state.use_sample_data:
                 default_cat_index = 0
                 if "Produit" in df.columns:
                     default_cat_index = cat_options.index("Produit")
-                cat_col = st.selectbox(
+                    cat_col = st.selectbox(
                     "📦 Colonne catégorique (optionnelle)",
                     options=cat_options,
                     index=default_cat_index,
@@ -2898,3 +2898,4 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
