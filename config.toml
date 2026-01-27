@@ -1,6 +1,0 @@
-[theme]
-primaryColor = "#FF5733"  # Couleur principale (boutons, sliders)
-backgroundColor = "#1E1E1E"  # Couleur du fond
-secondaryBackgroundColor = "#2A2A2A"  # Fond des sections secondaires
-textColor = "#FFFFFF"  # Couleur du texte
-font = "sans serif"  # Police (options : "sans serif", "serif", "monospace")
