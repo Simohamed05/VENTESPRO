@@ -99,8 +99,11 @@ uploaded_file = st.sidebar.file_uploader(
     help="Supporte CSV ou Excel avec n'importe quelles colonnes"
 )
 
-# Téléchargement du fichier exemple
+# Téléchargement + installation du fichier exemple
 historical_data_file = 'ventes_historique.csv'
+if "use_sample_data" not in st.session_state:
+    st.session_state.use_sample_data = False
+
 if os.path.exists(historical_data_file):
     with open(historical_data_file, "rb") as f:
         st.sidebar.download_button(
@@ -111,13 +114,24 @@ if os.path.exists(historical_data_file):
             use_container_width=True
         )
 
-if uploaded_file:
+    if st.sidebar.button(
+        "🧪 Installer les données exemple",
+        help="Charge automatiquement un jeu de données exemple pour tester l'application.",
+        use_container_width=True
+    ):
+        st.session_state.use_sample_data = True
+
+if uploaded_file or st.session_state.use_sample_data:
     try:
-        df = load_data(uploaded_file)
+        data_source = uploaded_file if uploaded_file else historical_data_file
+        df = load_data(data_source)
         
         if df is not None:
             # 🆕 AFFICHER INFO SUR LE FICHIER CHARGÉ
-            st.sidebar.success(f"✅ Fichier chargé: {uploaded_file.name}")
+            source_name = uploaded_file.name if uploaded_file else "ventes_historique.csv"
+            st.sidebar.success(f"✅ Fichier chargé: {source_name}")
+            if not uploaded_file:
+                st.sidebar.info("🧪 Données exemple installées. Vous pouvez maintenant tester l'application.")
             st.sidebar.info(f"""
             **Détails du fichier:**
             - Lignes: {len(df)}
@@ -148,11 +162,15 @@ if uploaded_file:
                     index=0 if len(numeric_cols) > 0 else None,
                     help="Sélectionnez la colonne numérique à analyser et prévoir"
                 )
-            with col3:
+             with col3:
+                cat_options = ["Aucune"] + list(df.columns)
+                default_cat_index = 0
+                if "Produit" in df.columns:
+                    default_cat_index = cat_options.index("Produit")
                 cat_col = st.selectbox(
                     "📦 Colonne catégorique (optionnelle)",
-                    options=["Aucune"] + list(df.columns),
-                    index=0,
+                    options=cat_options,
+                    index=default_cat_index,
                     help="Sélectionnez une colonne catégorique pour le grouping (ex: Produit, Région)"
                 )
 
@@ -2878,4 +2896,5 @@ st.markdown("""
         Version 2.0 | Propulsé par Streamlit & IA
     </p>
 </div>
+
 """, unsafe_allow_html=True)
