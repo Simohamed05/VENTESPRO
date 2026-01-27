@@ -2811,31 +2811,31 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
             st.markdown("### ❓ Questions Fréquentes")
             
             faqs = [
-                {
-                    'question': 'Comment charger mes données?',
-                    'reponse': "Utilisez le bouton '📥 Chargez votre fichier CSV' dans la sidebar. Le fichier doit être au format CSV avec séparateur point-virgule (;) et contenir au minimum les c[...]
-                },
-                {
-                    'question': 'Quel est le format de date accepté?',
-                    'reponse': "Le format de date accepté est JJ/MM/AAAA (ex: 15/03/2024). Assurez-vous que toutes vos dates suivent ce format."
-                },
-                {
-                    'question': 'Comment fonctionnent les prévisions?',
-                    'reponse': "VentesPro utilise plusieurs algorithmes de Machine Learning (Random Forest, XGBoost, ARIMA, etc.) pour générer des prévisions. Le mode 'Auto' compare tous les modèl[...]
-                },
-                {
-                    'question': 'Comment configurer les alertes?',
-                    'reponse': "Allez dans la section '⚠️ Alertes', renseignez vos informations (nom, email, téléphone), choisissez le produit à surveiller et définissez vos seuils de variatio[...]
-                },
-                {
-                    'question': 'Puis-je exporter mes analyses?',
-                    'reponse': "Oui! Toutes les sections proposent des exports en CSV, Excel ou PDF. Vous pouvez également télécharger des rapports complets depuis la section '📑 Rapports'."
-                },
-                {
-                    'question': 'Les données sont-elles sécurisées?',
-                    'reponse': "Vos données restent locales et ne sont pas stockées sur nos serveurs. Elles sont traitées uniquement pendant votre session."
-                }
-            ]
+    {
+        'question': 'Comment charger mes données?',
+        'reponse': "Utilisez le bouton '📥 Chargez votre fichier' dans la sidebar. Le fichier peut être au format CSV ou Excel. Assurez-vous qu'il contient au minimum une colonne de dates et une colonne numérique (ex: Ventes). Les séparateurs courants sont ',' ou ';'."
+    },
+    {
+        'question': 'Quel est le format de date accepté?',
+        'reponse': "Les formats usuels sont JJ/MM/AAAA ou AAAA-MM-JJ. L'application essaie une conversion robuste (y compris les dates Excel sérialisées). Si certaines dates ne sont pas converties, vérifiez le format de la colonne date dans votre fichier."
+    },
+    {
+        'question': 'Comment fonctionnent les prévisions?',
+        'reponse': "VentesPRO propose plusieurs algorithmes (Naïf, Tendance linéaire, Holt-Winters, ARIMA/SARIMA, Random Forest, XGBoost, Prophet). Le mode 'Auto' backteste plusieurs modèles et sélectionne le meilleur selon un critère (MAE)."
+    },
+    {
+        'question': 'Comment configurer les alertes?',
+        'reponse': "Allez dans la section '⚠️ Alertes', renseignez votre nom et email, choisissez la catégorie à surveiller (optionnel) et définissez les seuils de variation. Un email de confirmation est envoyé après enregistrement."
+    },
+    {
+        'question': 'Puis-je exporter mes analyses?',
+        'reponse': "Oui. Les sections proposent des exports en CSV, Excel ou JSON. Vous pouvez aussi télécharger des rapports détaillés depuis la page 'Rapports'."
+    },
+    {
+        'question': 'Les données sont-elles sécurisées?',
+        'reponse': "Les données sont traitées localement dans la session Streamlit. Elles ne sont pas transmises à des serveurs externes par défaut. Les exports et envois d'email dépendent de votre configuration."
+    }
+]
             
             for i, faq in enumerate(faqs):
                 with st.expander(f"❓ {faq['question']}", expanded=(i==0)):
@@ -2885,3 +2885,4 @@ st.markdown("""
     </p>
 </div>
 """, unsafe_allow_html=True)
+
