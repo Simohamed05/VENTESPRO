@@ -1,3 +1,4 @@
+prophet
 streamlit>=1.32.0
 plotly
 
@@ -22,3 +23,4 @@ xgboost>=2.0.0
 XlsxWriter>=3.1.2
 
 openpyxl>=3.1.2
+
