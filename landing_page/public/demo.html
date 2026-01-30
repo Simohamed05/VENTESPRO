@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VentesPro — Demander une démo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <div class="live-strip">
+    <div class="live-left">
+      <span class="ping"></span>
+      <span class="live">LIVE</span>
+      <span class="time" id="liveTime">—</span>
+    </div>
+    <div class="marquee-wrap">
+      <div class="marquee">
+        <div class="marquee-item ok"><strong>analyst@biz.com</strong><span data-i18n="live.demo">Démo demandée</span><b>NEW</b></div>
+        <div class="marquee-item ok"><strong>client@shop.ma</strong><span data-i18n="live.report">Rapport exporté</span><b>PDF</b></div>
+        <div class="marquee-item warn"><strong>team@retail.fr</strong><span data-i18n="live.alert">Alerte</span><b>-8%</b></div>
+
+        <div class="marquee-item ok"><strong>analyst@biz.com</strong><span data-i18n="live.demo">Démo demandée</span><b>NEW</b></div>
+        <div class="marquee-item ok"><strong>client@shop.ma</strong><span data-i18n="live.report">Rapport exporté</span><b>PDF</b></div>
+        <div class="marquee-item warn"><strong>team@retail.fr</strong><span data-i18n="live.alert">Alerte</span><b>-8%</b></div>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="VentesPro">
+        <span class="logo" aria-hidden="true">
+          <span class="logo">
+          <img src="VentesPRO.png" alt="VentesPro logo" class="logo-img" loading="lazy" />
+        </span>
+      </a>
+
+      <nav class="menu" aria-label="Navigation">
+        <a href="index.html#features" data-i18n="nav.features">Fonctionnalités</a>
+        <a href="index.html#how" data-i18n="nav.how">Fonctionnement</a>
+        <a href="index.html#models" data-i18n="nav.models">Modèles IA</a>
+        <a href="login.html" data-i18n="nav.login">Connexion</a>
+      </nav>
+
+      <div class="nav-cta">
+        <button class="btn ghost" id="langBtn" type="button">FR</button>
+        <a class="btn ghost" href="login.html" data-i18n="nav.login">Connexion</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <section class="container hero-grid">
+      <div class="reveal">
+        <span class="pill">
+          <span class="spark">🎯</span>
+          <span data-i18n="demo.pill">Démo gratuite — configuration rapide</span>
+        </span>
+
+        <h1 data-i18n="demo.title">Demander une démo</h1>
+        <p class="lead" data-i18n="demo.desc">
+          Décris ton activité et tes données : on te montre comment VentesPro peut prévoir, alerter et générer des rapports.
+        </p>
+
+        <form class="form card-tilt reveal" id="demoForm" autocomplete="on">
+          <div class="row">
+            <label data-i18n="demo.nameLabel">Nom</label>
+            <input name="name" required data-i18n-placeholder="demo.namePH" placeholder="Votre nom" />
+          </div>
+
+          <div class="row">
+            <label data-i18n="demo.emailLabel">Email</label>
+            <input name="email" type="email" required data-i18n-placeholder="demo.emailPH" placeholder="vous@exemple.com" />
+          </div>
+
+          <div class="row">
+            <label data-i18n="demo.businessLabel">Type de business</label>
+            <select name="business" required>
+              <option value="" data-i18n="demo.businessOpt0">Choisir…</option>
+              <option data-i18n="demo.businessOpt1">Commerce / Retail</option>
+              <option data-i18n="demo.businessOpt2">E-commerce</option>
+              <option data-i18n="demo.businessOpt3">Distribution</option>
+              <option data-i18n="demo.businessOpt4">Services</option>
+              <option data-i18n="demo.businessOpt5">Autre</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label data-i18n="demo.msgLabel">Message</label>
+            <textarea name="message" rows="4" data-i18n-placeholder="demo.msgPH" placeholder="Ex: prévoir les ventes par catégorie sur 3 mois…"></textarea>
+          </div>
+
+          <button class="btn primary big" type="submit" data-i18n="demo.submit">Envoyer</button>
+          <p class="fine" id="demoMsg" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="reveal">
+        <div class="mock card-tilt">
+          <div class="mock-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="mock-title" data-i18n="demo.sideTitle">Ce que tu obtiens</div>
+          </div>
+          <div class="mock-body">
+            <div class="mini-card"><div class="ic">📥</div><div><b data-i18n="demo.side1t">Import</b><small data-i18n="demo.side1d">CSV/Excel + mapping</small></div></div>
+            <div class="mini-card"><div class="ic">📈</div><div><b data-i18n="demo.side2t">Analyse</b><small data-i18n="demo.side2d">KPIs + saisonnalité</small></div></div>
+            <div class="mini-card"><div class="ic">🤖</div><div><b data-i18n="demo.side3t">Prévision IA</b><small data-i18n="demo.side3d">Auto best model</small></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container foot">
+      <div>
+        <b>VentesPro</b>
+        <small data-i18n="footer.tagline">Prévisions • Analyse • Alertes</small>
+      </div>
+      <div class="foot-links">
+        <a href="index.html" data-i18n="nav.home">Accueil</a>
+        <a href="login.html" data-i18n="nav.login">Connexion</a>
+      </div>
+      <div class="copy">© <span id="year"></span> VentesPro.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

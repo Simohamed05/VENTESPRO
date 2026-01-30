@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VentesPro — Connexion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <div class="live-strip">
+    <div class="live-left">
+      <span class="ping"></span>
+      <span class="live">LIVE</span>
+      <span class="time" id="liveTime">—</span>
+    </div>
+    <div class="marquee-wrap">
+      <div class="marquee">
+        <div class="marquee-item ok"><strong>user@biz.com</strong><span data-i18n="live.login">Connexion</span><b>OK</b></div>
+        <div class="marquee-item ok"><strong>owner@store.ma</strong><span data-i18n="live.secure">Sécurisé</span><b>SSL</b></div>
+        <div class="marquee-item ok"><strong>team@retail.fr</strong><span data-i18n="live.analytics">Analytics</span><b>ON</b></div>
+
+        <div class="marquee-item ok"><strong>user@biz.com</strong><span data-i18n="live.login">Connexion</span><b>OK</b></div>
+        <div class="marquee-item ok"><strong>owner@store.ma</strong><span data-i18n="live.secure">Sécurisé</span><b>SSL</b></div>
+        <div class="marquee-item ok"><strong>team@retail.fr</strong><span data-i18n="live.analytics">Analytics</span><b>ON</b></div>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="VentesPro">
+        <span class="logo" aria-hidden="true">
+          <!-- mini logo -->
+          <span class="logo">
+          <img src="VentesPRO.png" alt="VentesPro logo" class="logo-img" loading="lazy" />
+        </span>
+      </a>
+
+      <nav class="menu" aria-label="Navigation">
+        <a href="index.html#features" data-i18n="nav.features">Fonctionnalités</a>
+        <a href="index.html#how" data-i18n="nav.how">Fonctionnement</a>
+        <a href="index.html#models" data-i18n="nav.models">Modèles IA</a>
+        <a href="demo.html" data-i18n="nav.demo">Démo</a>
+      </nav>
+
+      <div class="nav-cta">
+        <button class="btn ghost" id="langBtn" type="button">FR</button>
+        <a class="btn primary" href="demo.html" data-i18n="nav.ctaDemo">Demander une démo</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <section class="container hero-grid">
+      <div class="reveal">
+        <span class="pill">
+          <span class="spark">🔐</span>
+          <span data-i18n="login.pill">Accès sécurisé à VentesPro</span>
+        </span>
+
+        <h1 data-i18n="login.title">Connexion</h1>
+        <p class="lead" data-i18n="login.desc">
+          Connectez-vous pour accéder à votre tableau de bord, vos prévisions et vos rapports.
+        </p>
+
+        <form class="form card-tilt reveal" id="loginForm" autocomplete="on">
+          <div class="row">
+            <label data-i18n="login.emailLabel">Email</label>
+            <input name="email" type="email" required data-i18n-placeholder="login.emailPH" placeholder="vous@exemple.com" />
+          </div>
+
+          <div class="row">
+            <label data-i18n="login.passLabel">Mot de passe</label>
+            <input name="password" type="password" required data-i18n-placeholder="login.passPH" placeholder="••••••••" />
+          </div>
+
+          <button class="btn primary big" type="submit" data-i18n="login.submit">Se connecter</button>
+          <p class="fine" id="loginMsg" aria-live="polite"></p>
+
+          <p class="fine">
+            <a class="link" href="demo.html" data-i18n="login.noAccount">Pas de compte ? Demander une démo</a>
+          </p>
+        </form>
+      </div>
+
+      <div class="reveal">
+        <div class="mock card-tilt">
+          <div class="mock-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="mock-title" data-i18n="login.sideTitle">Accès rapide</div>
+          </div>
+          <div class="mock-body">
+            <div class="mini-card">
+              <div class="ic">🔮</div>
+              <div>
+                <b data-i18n="login.side1t">Prévisions</b>
+                <small data-i18n="login.side1d">Auto-Model + intervalles</small>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="ic">🚨</div>
+              <div>
+                <b data-i18n="login.side2t">Alertes</b>
+                <small data-i18n="login.side2d">Seuils & anomalies</small>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="ic">📑</div>
+              <div>
+                <b data-i18n="login.side3t">Rapports</b>
+                <small data-i18n="login.side3d">Export & partage</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container foot">
+      <div>
+        <b>VentesPro</b>
+        <small data-i18n="footer.tagline">Prévisions • Analyse • Alertes</small>
+      </div>
+      <div class="foot-links">
+        <a href="index.html#features" data-i18n="nav.features">Fonctionnalités</a>
+        <a href="demo.html" data-i18n="nav.demo">Démo</a>
+      </div>
+      <div class="copy">© <span id="year"></span> VentesPro.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
