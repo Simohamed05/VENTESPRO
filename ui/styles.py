@@ -310,6 +310,75 @@ CSS_STYLES = """
       background: var(--vp-surface) !important;
       backdrop-filter: blur(12px);
     }
+    /* ===================== TABS (st.tabs) - BIG + CENTER + ATTRACTIVE ===================== */
+    div[data-testid="stTabs"]{
+      position: sticky;
+      top: 74px;              /* si tu as topbar sticky */
+      z-index: 998;
+      background: transparent;
+      padding-top: 6px;
+    }
+    
+    /* Conteneur des tabs */
+    div[data-testid="stTabs"] [role="tablist"]{
+      display: flex !important;
+      justify-content: center !important;  /* CENTRÉ */
+      gap: 10px !important;
+      flex-wrap: wrap !important;
+      padding: 10px 10px !important;
+      margin: 10px auto 18px auto !important;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--vp-border);
+      box-shadow: var(--vp-shadow-soft);
+      max-width: 1100px;
+    }
+    
+    @media (prefers-color-scheme: dark){
+      div[data-testid="stTabs"] [role="tablist"]{
+        background: rgba(17,24,39,0.55);
+        border: 1px solid rgba(148,163,184,0.22);
+      }
+    }
+    
+    /* Boutons tabs */
+    div[data-testid="stTabs"] button[role="tab"]{
+      padding: 10px 16px !important;
+      border-radius: 999px !important;
+      font-weight: 700 !important;
+      font-size: 15px !important;
+      border: 1px solid var(--vp-border) !important;
+      background: var(--vp-surface) !important;
+      color: var(--vp-text) !important;
+      transition: all .2s ease-in-out;
+      box-shadow: 0 10px 18px rgba(15,23,42,0.06);
+    }
+    
+    div[data-testid="stTabs"] button[role="tab"]:hover{
+      transform: translateY(-2px);
+      border-color: var(--vp-border-strong) !important;
+      box-shadow: var(--vp-shadow-soft);
+    }
+    
+    /* Tab active */
+    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"]{
+      background: linear-gradient(135deg, var(--vp-primary) 0%, var(--vp-accent) 100%) !important;
+      color: white !important;
+      border: none !important;
+      box-shadow: 0 14px 26px rgba(37, 99, 235, 0.22);
+    }
+    
+    /* Cache la barre rouge/bleue fine par défaut */
+    div[data-testid="stTabs"] [data-baseweb="tab-highlight"]{
+      display:none !important;
+    }
+    
+    /* Réduit l’espace inutile au-dessus du contenu */
+    div[data-testid="stTabs"] [data-testid="stVerticalBlock"]{
+      gap: 0.3rem;
+    }
+
 
 </style>
 """
