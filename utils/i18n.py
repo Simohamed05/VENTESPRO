@@ -1,42 +1,55 @@
+# utils/i18n.py — VentesPRO (aligné 100% avec ton app.py)
+
 import streamlit as st
+
+TRANANG = ("fr", "en")
 
 TRANSLATIONS = {
     "fr": {
-        # --- Language
-        "lang_label": "🌐 Language",
-        "lang_fr": "fr",
-        "lang_en": "en",
+        # =========================
+        # Language selector
+        # =========================
+        "lang_label": "🌐 Langue",
+        "lang_fr": "FR",
+        "lang_en": "EN",
 
-        # --- Sidebar / Upload
+        # =========================
+        # Sidebar / Upload
+        # =========================
         "config_title": "⚙️ Configuration",
         "upload_label": "📥 Chargez votre fichier (CSV/Excel)",
-        "upload_help": "Supporte CSV ou Excel avec n'importe quelles colonnes",
+        "upload_help": "Supporte CSV/Excel/TSV/TXT/Parquet (colonnes libres)",
         "download_example": "📄 Télécharger fichier exemple",
-        "file_loaded": "✅ Fichier chargé: {name}",
-        "file_details_title": "**Détails du fichier:**",
-        "file_details_rows": "- Lignes: {n}",
-        "file_details_cols": "- Colonnes: {n}",
-        "file_details_detected": "- Colonnes détectées: {cols}",
+        "file_loaded": "✅ Fichier chargé : {name}",
+        "file_details_title": "**Détails du fichier :**",
+        "file_details_rows": "- Lignes : {n}",
+        "file_details_cols": "- Colonnes : {n}",
+        "file_details_detected": "- Colonnes détectées : {cols}",
         "file_empty": "❌ Le fichier est vide",
+        "err_load_file": "❌ Impossible de charger le fichier.",
         "config_columns": "🔧 Configurer les colonnes",
         "date_col": "📅 Colonne de date",
         "date_col_help": "Sélectionnez la colonne contenant les dates",
         "target_col": "🎯 Colonne cible (à prévoir)",
         "target_col_help": "Sélectionnez la colonne numérique à analyser et prévoir",
         "cat_col": "📦 Colonne catégorique (optionnelle)",
-        "cat_col_help": "Sélectionnez une colonne catégorique pour le grouping (ex: Produit, Région)",
+        "cat_col_help": "Sélectionnez une colonne catégorique (ex : Produit, Région)",
         "none": "Aucune",
         "need_cols": "⚠️ Sélectionnez au moins la colonne date et la colonne cible pour continuer.",
-        "date_convert_error": "❌ Erreur lors de la conversion de la colonne date: {err}",
+        "date_convert_error": "❌ Erreur lors de la conversion de la colonne date : {err}",
 
-        # --- Quick stats
+        # =========================
+        # Quick stats (sidebar)
+        # =========================
         "quick_stats": "### 📊 Statistiques Rapides",
         "total_target": "💰 Total Cible",
         "unique_cats": "📦 Catégories Uniques",
         "period_entries": "📅 Période",
         "entries": "{n} entrées",
 
-        # --- Main tabs (déjà présents chez toi)
+        # =========================
+        # Tabs
+        # =========================
         "tab_home": "🏠 Accueil",
         "tab_dashboard": "📊 Tableau de Bord",
         "tab_analysis": "📈 Analyse Avancée",
@@ -47,224 +60,195 @@ TRANSLATIONS = {
         "tab_insights": "💡 Insights",
         "tab_support": "📞 Support",
 
-        # --- Home
+        # =========================
+        # HOME
+        # =========================
         "home_welcome_title": "### 🎯 Bienvenue sur VentesPRO",
         "home_welcome_text": "Transformez vos données temporelles en insights actionnables avec notre plateforme d'analyse avancée et de prévision par IA.",
         "overview": "### 📊 Vue d'ensemble",
-        "avg_target": "Moyenne Cible",
-        "growth_avg": "Croissance Moy.",
-        "features_title": "### ✨ Fonctionnalités Principales",
-        "global_trend": "### 📈 Tendance Globale",
-        "trend_chart_title": "Évolution des valeurs avec moyennes mobiles",
-        "date": "Date",
-        "values": "Valeurs",
-        "quick_start": "### 🚀 Guide de Démarrage Rapide",
-        "how_to_use": "📖 Comment utiliser VentesPRO",
 
-        # --- Dashboard
-        "dash_title": "## 📊 Tableau de Bord Interactif",
-        "filters": "🔍 Filtres",
+        "kpi_total_target": "Total des valeurs",
+        "kpi_unique_categories": "Catégories uniques",
+        "kpi_avg_growth": "Croissance moyenne",
+        "kpi_avg_target": "Valeur moyenne",
+        "kpi_categories": "Catégories",
+
+        "home_features_title": "Fonctionnalités Principales",
+        "home_feat_realtime_title": "Analyse en Temps Réel",
+        "home_feat_realtime_1": "Dashboard interactif",
+        "home_feat_realtime_2": "Visualisations dynamiques",
+        "home_feat_realtime_3": "KPIs automatisés",
+        "home_feat_realtime_4": "Comparaisons multi-catégories",
+        "home_feat_realtime_5": "Analyse saisonnière",
+
+        "home_feat_ai_title": "Prévisions IA",
+        "home_feat_ai_1": "5+ modèles de ML",
+        "home_feat_ai_2": "Mode Auto-Select",
+        "home_feat_ai_3": "Intervalles de confiance",
+        "home_feat_ai_4": "Prévisions jusqu'à 1 an",
+        "home_feat_ai_5": "Comparaison de modèles",
+
+        "home_feat_alerts_title": "Alertes Intelligentes",
+        "home_feat_alerts_1": "Notifications Email/SMS",
+        "home_feat_alerts_2": "Seuils personnalisables",
+        "home_feat_alerts_3": "Détection d'anomalies",
+        "home_feat_alerts_4": "Alertes en temps réel",
+        "home_feat_alerts_5": "Historique des alertes",
+
+        "home_global_trend_title": "Tendance Globale",
+        "home_trend_chart_title": "Évolution des valeurs avec moyennes mobiles",
+        "legend_daily": "Valeurs Quotidiennes",
+        "legend_ma7": "Moyenne Mobile 7j",
+        "legend_ma30": "Moyenne Mobile 30j",
+
+        "axis_date": "Date",
+        "axis_values": "Valeurs",
+
+        "home_quickstart_title": "Guide de Démarrage Rapide",
+        "home_howto_title": "📖 Comment utiliser VentesPRO",
+        "home_howto_md": """
+#### 1️⃣ Préparer vos données
+- Format: CSV ou Excel
+- Au moins 1 colonne date + 1 colonne numérique cible
+- Dates lisibles (JJ/MM/AAAA, AAAA-MM-JJ, ou Excel serial)
+
+#### 2️⃣ Charger le fichier
+- Via la sidebar
+- Téléchargez le fichier exemple si besoin
+
+#### 3️⃣ Configurer les colonnes
+- Date
+- Colonne numérique cible
+- Colonne catégorique (optionnelle)
+
+#### 4️⃣ Explorer
+- Dashboard
+- Analyse
+- Alertes
+- Prévisions
+- Rapports / Exports
+""",
+
+        # =========================
+        # DASHBOARD
+        # =========================
+        "dash_title": "Tableau de Bord Interactif",
+        "filters_title": "🔍 Filtres",
         "categories": "Catégories",
-        "date_start": "Date de début",
-        "date_end": "Date de fin",
-        "no_data_filters": "⚠️ Aucune donnée ne correspond aux filtres sélectionnés",
+        "start_date": "Date de début",
+        "end_date": "Date de fin",
+        "warn_no_data_filters": "⚠️ Aucune donnée ne correspond aux filtres sélectionnés",
 
-        "dash_tab_evo": "📈 Évolution",
+        "dash_tab_trend": "📈 Évolution",
         "dash_tab_geo": "🌍 Géographie",
         "dash_tab_promo": "🏷️ Promotions",
         "dash_tab_stock": "📦 Stocks",
         "dash_tab_season": "📅 Saisonnalité",
 
-        "evo_title": "### 📈 Évolution des Valeurs",
-        "perf_by_cat": "### 🏆 Performance par Catégorie",
+        "no_region_col": "📌 Pas de colonne 'Region' dans les données",
+        "no_promo_col": "📌 Pas de colonne 'Promo' dans les données",
+        "no_stock_col": "📌 Pas de colonne 'Stock' dans les données",
 
-        "geo_no_region": "📌 Pas de colonne 'Region' dans les données",
-        "geo_title": "### 🌍 Analyse par Région",
-        "choose_region": "Choisissez une région",
-        "total_share": "📈 Part du Total",
-        "compare_regions": "### 🗺️ Comparaison entre Régions",
+        # Weekdays (utilisés dans Seasonality)
+        "day_mon": "Lun",
+        "day_tue": "Mar",
+        "day_wed": "Mer",
+        "day_thu": "Jeu",
+        "day_fri": "Ven",
+        "day_sat": "Sam",
+        "day_sun": "Dim",
 
-        "promo_no_col": "📌 Pas de colonne 'Promo' dans les données",
-        "promo_title": "### 🏷️ Impact des Promotions",
-        "promo_reco": "### 💡 Recommandations",
-        "promo_lift": "📊 Lift Promotionnel",
-        "promo_lift_desc": "Différence moyenne avec/sans promotion",
-        "promo_lift_na": "⚠️ Lift non calculable (pas assez de données 'Oui/Non' ou moyenne sans promo = 0).",
-        "promo_need_data": "📌 Ajoute des données 'Oui' et 'Non' dans la colonne Promo pour mesurer l’impact.",
-        "promo_good": "✅ Promotions très efficaces : continue et optimise le ciblage.",
-        "promo_mid": "📊 Impact positif modéré : teste d’autres mécaniques promo.",
-        "promo_bad": "⚠️ Impact faible ou négatif : revois la stratégie promo.",
-        "promo_time": "### 📈 Évolution Temporelle",
-
-        "stock_no_col": "📌 Pas de colonne 'Stock' dans les données",
-        "stock_title": "### 📦 Gestion des Stocks",
-        "select_cat": "Sélectionnez une catégorie",
-        "stock_alerts": "### ⚠️ Alertes de Stock",
-        "stock_current": "📦 Stock Actuel",
-        "stock_avg": "📊 Stock Moyen",
-        "variation": "📈 Variation",
-        "stock_critical": "🚨 **Alerte Stock Critique!** Le stock est inférieur à 30% de la moyenne",
-        "stock_low": "⚠️ **Stock Bas** - Envisagez un réapprovisionnement",
-        "stock_ok": "✅ Niveau de stock satisfaisant",
-        "stock_corr": "### 📊 Corrélation Stock-Valeurs",
-        "corr_coef": "🔗 Coefficient de Corrélation",
-        "corr_strong": "Fort lien entre stock et valeurs",
-        "corr_mid": "Lien modéré entre stock et valeurs",
-        "corr_weak": "Faible lien entre stock et valeurs",
-
-        "season_title": "### 📅 Analyse Saisonnière",
-        "day_week": "### 📆 Valeurs par Jour de la Semaine",
-        "heatmap": "### 🔥 Carte de Chaleur Saisonnière",
-        "season_insights": "### 💡 Insights Saisonniers",
-        "best_month": "🏆 **Meilleur Mois**: {m} ({v:,.0f})",
-        "best_day": "🏆 **Meilleur Jour**: {d} ({v:,.0f})",
-        "worst_month": "📉 **Mois le Plus Faible**: {m} ({v:,.0f})",
-        "worst_day": "📉 **Jour le Plus Faible**: {d} ({v:,.0f})",
-
-        # --- Analysis
-        "analysis_title": "## 📈 Analyse Avancée et Statistiques",
+        # =========================
+        # ANALYSIS
+        # =========================
+        "analysis_title": "Analyse Avancée et Statistiques",
         "analysis_tab_vars": "📊 Variables",
         "analysis_tab_corr": "🔗 Corrélations",
         "analysis_tab_trends": "📉 Tendances",
         "analysis_tab_pred": "🎯 Analyse Prédictive",
-        "no_numeric": "Aucune variable numérique disponible pour l'analyse",
-        "choose_var": "Choisissez une variable à analyser",
-        "desc_stats": "#### 📈 Statistiques Descriptives",
-        "corr_title": "### 🔗 Analyse des Corrélations",
-        "not_enough_corr": "Pas assez de variables numériques pour l'analyse de corrélation",
-        "corr_top": "#### 🔝 Top Corrélations",
-        "corr_pos": "**🔝 Corrélations Positives**",
-        "corr_neg": "**🔻 Corrélations Négatives**",
-        "corr_viz": "#### 🎯 Visualisation des Corrélations",
+        "use_forecast_section": "Utilisez la section Prévisions pour des modèles avancés",
+        "no_numeric_vars": "Aucune variable numérique disponible pour l'analyse",
+        "corr_matrix": "Matrice de Corrélation",
         "var_x": "Variable X",
         "var_y": "Variable Y",
-        "corr_value": "**Coefficient de corrélation**: {v:.3f}",
-        "trends_title": "### 📉 Analyse des Tendances",
-        "pred_title": "### 🎯 Analyse Prédictive",
-        "pred_hint": "Utilisez la section Prévisions pour des modèles avancés",
+        "corr_coef": "Coefficient de corrélation",
 
-        # --- Alerts
-        "alerts_title": "## ⚠️ Système d'Alertes Intelligentes",
-        "alerts_info": "Configurez des alertes pour surveiller les variations importantes de vos valeurs.\nVous recevrez un email lorsque les seuils sont dépassés.",
+        # =========================
+        # ALERTS
+        # =========================
+        "alerts_title": "Système d'Alertes Intelligentes",
+        "alerts_intro": "Configurez des alertes pour surveiller les variations importantes de vos valeurs.\nVous recevrez un email lorsque les seuils sont dépassés.",
         "your_name": "👤 Votre nom*",
         "your_email": "📧 Votre email*",
-        "your_phone": "📱 Votre téléphone (optionnel)",
-        "alert_params": "### 📊 Paramètres d'Alerte",
-        "cat_watch": "Catégorie à surveiller",
-        "th_up": "📈 Seuil de hausse (%)",
-        "th_down": "📉 Seuil de baisse (%)",
-        "enable_alerts": "✅ Activer les Alertes",
+        "your_phone_optional": "📱 Votre téléphone (optionnel)",
+        "alert_settings": "### 📊 Paramètres d'Alerte",
+        "category_to_watch": "Catégorie à surveiller",
+        "rise_threshold": "📈 Seuil de hausse (%)",
+        "drop_threshold": "📉 Seuil de baisse (%)",
+        "activate_alerts": "✅ Activer les Alertes",
         "invalid_phone": "❌ Format de téléphone invalide (ex: +212766052983 ou 0766052983)",
         "alerts_enabled": "✅ Alertes activées! Vous recevrez un email de confirmation.",
         "save_error": "❌ Erreur lors de l'enregistrement. Essayez à nouveau.",
         "invalid_email": "❌ Format d'email invalide",
-        "required_fields": "❌ Veuillez remplir les champs obligatoires",
-        "detect_rt": "### 🚨 Détection en Temps Réel",
-        "check_now": "🔍 Vérifier les Alertes Maintenant",
-        "analysing": "Analyse en cours...",
-        "variation_detected": "⚠️ Variation détectée: {v:+.2f}%",
-        "no_variation": "✅ Aucune variation significative",
-        "not_enough_data": "Pas assez de données pour détecter des variations",
-        "history": "### 📜 Historique des Alertes",
+        "fill_required": "❌ Veuillez remplir les champs obligatoires",
+        "email_alert_confirm_subject": "Confirmation d'Activation des Alertes - VentesPRO",
 
-        # --- Forecast
+        # =========================
+        # FORECAST
+        # =========================
         "forecast_title": "## 🔮 Prévisions par Intelligence Artificielle",
-        "forecast_info": "Générez des prévisions pour votre colonne cible en utilisant des modèles de prévision.\n✅ Compatible avec n’importe quelle colonne numérique\n✅ Date optionnelle (si pas de date, une timeline est générée automatiquement)",
-        "recommended_models": "**Modèles conseillés (robustes)** : Auto (comparaison), Random Forest, XGBoost, SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business.",
-        "cat_to_forecast": "Catégorie à prévoir",
-        "model_choice": "Modèle de prévision",
-        "horizon": "Horizon de prévision (nombre de points)",
-        "show_ci": "Afficher intervalles de confiance (95%)",
+        "forecast_intro": "Générez des prévisions pour votre colonne cible.\n✅ Compatible avec n’importe quelle colonne numérique\n✅ Date optionnelle (si pas de date, une timeline est générée automatiquement)",
+        "forecast_tips": "**Modèles conseillés** : Auto (comparaison), Random Forest, XGBoost, SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business.",
+        "category_to_forecast": "Catégorie à prévoir",
+        "forecast_model": "Modèle de prévision",
+        "forecast_horizon": "Horizon de prévision (nombre de points)",
+        "show_confidence": "Afficher intervalles de confiance (95%)",
         "generate_forecast": "🔮 Générer les Prévisions",
-        "prep_data": "📦 Préparation des données...",
-        "cannot_generate": "❌ Impossible de générer les prévisions.",
+        "status_prepare": "📦 Préparation des données...",
+        "forecast_failed": "❌ Impossible de générer les prévisions.",
         "forecast_success": "✅ Prévisions générées avec succès!",
-        "forecast_stats": "### 📊 Statistiques des Prévisions",
-        "reliability_score": "### 🧭 Score de fiabilité",
-        "reliability": "Fiabilité estimée",
-        "reliability_note": "Estimation basée sur un backtest rapide (si disponible), la stabilité récente des données et la longueur de l'historique. Ce score n'est pas une garantie.",
-        "insights": "### 💡 Insights",
-        "detail_table": "📋 Tableau détaillé des prévisions",
         "downloads": "### 💾 Téléchargements",
         "download_csv": "📥 Télécharger CSV",
         "download_report": "📄 Télécharger Rapport",
-        "error_forecast": "❌ Erreur lors de la génération des prévisions",
 
-        # --- Data
-        "data_title": "## 📂 Exploration des Données Brutes",
-        "advanced_filters": "🔍 Filtres Avancés",
-        "regions": "🌍 Régions",
-        "period": "📅 Période",
-        "filtered_stats": "### 📊 Statistiques des Données Filtrées",
-        "rows": "📦 Lignes",
-        "mean_target": "📊 Moyenne Cible",
-        "data_table": "### 📋 Tableau de Données",
-        "show_index": "Afficher l'index",
-        "rows_to_show": "Lignes à afficher",
-        "sort_by": "Trier par",
-        "export_data": "### 💾 Exporter les Données",
-        "download_excel": "📊 Télécharger Excel",
-        "download_json": "📄 Télécharger JSON",
-        "quick_analysis": "### 🔍 Analyse Rapide",
-        "desc_stats_tab": "📊 Statistiques Descriptives",
-        "dist_tab": "📈 Distribution",
-        "variable": "Variable",
-        "excel_unavailable": "Export Excel non disponible",
+        # =========================
+        # EMPTY STATE (no file)
+        # =========================
+        "welcome_title": "Bienvenue sur VentesPro Analytics",
+        "welcome_subtitle": "Votre plateforme d'analyse et de prévision des ventes par IA",
+        "welcome_steps_md": """
+### 📋 Pour Commencer
+**1️⃣ Préparez votre fichier**
+- Colonnes: une date + une colonne numérique
+- Format date: JJ/MM/AAAA ou AAAA-MM-JJ
+- CSV/Excel supportés
 
-        # --- Reports
-        "reports_title": "## 📑 Rapports Automatisés",
-        "general_report": "### 📊 Rapport Général",
-        "detailed_analysis": "### 📊 Analyse Détaillée",
-        "top5": "#### 🏆 Top 5 Catégories",
-        "bottom5": "#### 📉 5 Catégories les Moins Performantes",
-        "insights_reco": "### 💡 Insights et Recommandations",
-        "download_full_report": "### 💾 Télécharger le Rapport",
-        "download_full_btn": "📄 Télécharger le Rapport Complet",
+**2️⃣ Chargez votre fichier** via la sidebar ⬅️  
+**3️⃣ Explorez** les fonctionnalités!
+""",
+        "tip_example_file": "💡 Astuce: téléchargez le fichier exemple dans la sidebar",
 
-        # --- Insights IA
-        "ai_insights_title": "## 💡 Insights Générés par Intelligence Artificielle",
-        "ai_info": "🤖 Cette section utilise des algorithmes d'IA pour générer des insights automatiques",
-        "generate_insights": "🚀 Générer les Insights",
-        "analysis_running": "🔎 Analyse en cours...",
-        "analysis_done": "✅ Analyse terminée!",
-        "main_insights": "### 🎯 Insights Principaux",
-        "seasonality": "### 📅 Analyse de Saisonnalité",
-        "cat_analysis": "### 📦 Analyse des Catégories",
-        "express_pred": "### 🔮 Prédictions Express",
-        "action_plan": "### ✅ Plan d'Action Recommandé",
-
-        # --- Support
-        "support_title": "## 🛠️ Support Technique",
-        "email": "📧 Email",
-        "phone": "📱 Téléphone",
-        "reply_24h": "Réponse sous 24h ouvrées",
-        "hours": "Lun-Ven: 9h-18h (GMT+1)",
-        "send_msg": "### ✉️ Envoyez-nous un Message",
-        "subject": "📋 Sujet",
-        "message": "💬 Votre message*",
-        "send": "📤 Envoyer le Message",
-        "sent_ok": "✅ Votre message a été envoyé avec succès! Nous vous répondrons sous 24h.",
-        "faq": "### ❓ Questions Fréquentes",
-
-        # --- Empty state
-        "welcome_empty_title": "## 🚀 Bienvenue sur VentesPro Analytics",
-        "welcome_empty_sub": "### Votre plateforme d'analyse et de prévision des ventes par IA",
-        "start_title": "### 📋 Pour Commencer",
-        "tip_example": "💡 **Astuce**: Téléchargez notre fichier exemple dans la sidebar",
-
-        # --- Footer
-        "footer_copy": "© 2025 VentesPro Analytics | Développé avec ❤️ par Mohamed HADI",
-        "footer_ver": "Version 2.0 | Propulsé par Streamlit & IA",
+        # =========================
+        # FOOTER
+        # =========================
+        "footer_built_by": "© 2025 VentesPro Analytics | Développé avec ❤️ par {name}",
+        "footer_version_powered": "Version 2.0 | Propulsé par Streamlit & IA",
     },
 
     "en": {
+        # =========================
+        # Language selector
+        # =========================
         "lang_label": "🌐 Language",
-        "lang_fr": "fr",
-        "lang_en": "en",
+        "lang_fr": "FR",
+        "lang_en": "EN",
 
+        # =========================
+        # Sidebar / Upload
+        # =========================
         "config_title": "⚙️ Settings",
         "upload_label": "📥 Upload your file (CSV/Excel)",
-        "upload_help": "Supports CSV or Excel with any columns",
+        "upload_help": "Supports CSV/Excel/TSV/TXT/Parquet (any columns)",
         "download_example": "📄 Download sample file",
         "file_loaded": "✅ File loaded: {name}",
         "file_details_title": "**File details:**",
@@ -272,23 +256,30 @@ TRANSLATIONS = {
         "file_details_cols": "- Columns: {n}",
         "file_details_detected": "- Detected columns: {cols}",
         "file_empty": "❌ The file is empty",
+        "err_load_file": "❌ Unable to load the file.",
         "config_columns": "🔧 Configure columns",
         "date_col": "📅 Date column",
         "date_col_help": "Select the column containing dates",
         "target_col": "🎯 Target column (to forecast)",
         "target_col_help": "Select the numeric column to analyze and forecast",
         "cat_col": "📦 Category column (optional)",
-        "cat_col_help": "Select a categorical column for grouping (e.g., Product, Region)",
+        "cat_col_help": "Select a categorical column (e.g., Product, Region)",
         "none": "None",
-        "need_cols": "⚠️ Please select at least the date column and the target column to continue.",
+        "need_cols": "⚠️ Please select at least the date column and target column to continue.",
         "date_convert_error": "❌ Error converting date column: {err}",
 
+        # =========================
+        # Quick stats (sidebar)
+        # =========================
         "quick_stats": "### 📊 Quick Stats",
         "total_target": "💰 Total Target",
         "unique_cats": "📦 Unique Categories",
         "period_entries": "📅 Period",
         "entries": "{n} entries",
 
+        # =========================
+        # Tabs
+        # =========================
         "tab_home": "🏠 Home",
         "tab_dashboard": "📊 Dashboard",
         "tab_analysis": "📈 Advanced Analysis",
@@ -299,215 +290,199 @@ TRANSLATIONS = {
         "tab_insights": "💡 Insights",
         "tab_support": "📞 Support",
 
+        # =========================
+        # HOME
+        # =========================
         "home_welcome_title": "### 🎯 Welcome to VentesPRO",
         "home_welcome_text": "Turn your time-series data into actionable insights with our advanced analytics and AI forecasting platform.",
         "overview": "### 📊 Overview",
-        "avg_target": "Average Target",
-        "growth_avg": "Avg. Growth",
-        "features_title": "### ✨ Key Features",
-        "global_trend": "### 📈 Overall Trend",
-        "trend_chart_title": "Values evolution with moving averages",
-        "date": "Date",
-        "values": "Values",
-        "quick_start": "### 🚀 Quick Start Guide",
-        "how_to_use": "📖 How to use VentesPRO",
 
-        "dash_title": "## 📊 Interactive Dashboard",
-        "filters": "🔍 Filters",
+        "kpi_total_target": "Total values",
+        "kpi_unique_categories": "Unique categories",
+        "kpi_avg_growth": "Average growth",
+        "kpi_avg_target": "Average value",
+        "kpi_categories": "Categories",
+
+        "home_features_title": "Key Features",
+        "home_feat_realtime_title": "Real-time Analytics",
+        "home_feat_realtime_1": "Interactive dashboard",
+        "home_feat_realtime_2": "Dynamic visualizations",
+        "home_feat_realtime_3": "Automated KPIs",
+        "home_feat_realtime_4": "Multi-category comparisons",
+        "home_feat_realtime_5": "Seasonality analysis",
+
+        "home_feat_ai_title": "AI Forecasting",
+        "home_feat_ai_1": "5+ ML models",
+        "home_feat_ai_2": "Auto-select mode",
+        "home_feat_ai_3": "Confidence intervals",
+        "home_feat_ai_4": "Forecast up to 1 year",
+        "home_feat_ai_5": "Model comparison",
+
+        "home_feat_alerts_title": "Smart Alerts",
+        "home_feat_alerts_1": "Email/SMS notifications",
+        "home_feat_alerts_2": "Custom thresholds",
+        "home_feat_alerts_3": "Anomaly detection",
+        "home_feat_alerts_4": "Real-time alerts",
+        "home_feat_alerts_5": "Alerts history",
+
+        "home_global_trend_title": "Overall Trend",
+        "home_trend_chart_title": "Values evolution with moving averages",
+        "legend_daily": "Daily Values",
+        "legend_ma7": "7-day Moving Avg",
+        "legend_ma30": "30-day Moving Avg",
+
+        "axis_date": "Date",
+        "axis_values": "Values",
+
+        "home_quickstart_title": "Quick Start Guide",
+        "home_howto_title": "📖 How to use VentesPRO",
+        "home_howto_md": """
+#### 1️⃣ Prepare your data
+- Format: CSV or Excel
+- At least 1 date column + 1 numeric target column
+- Readable dates (DD/MM/YYYY, YYYY-MM-DD, or Excel serial)
+
+#### 2️⃣ Upload the file
+- From the sidebar
+- Download the sample file if needed
+
+#### 3️⃣ Configure columns
+- Date
+- Numeric target column
+- Category column (optional)
+
+#### 4️⃣ Explore
+- Dashboard
+- Analysis
+- Alerts
+- Forecasting
+- Reports / Exports
+""",
+
+        # =========================
+        # DASHBOARD
+        # =========================
+        "dash_title": "Interactive Dashboard",
+        "filters_title": "🔍 Filters",
         "categories": "Categories",
-        "date_start": "Start date",
-        "date_end": "End date",
-        "no_data_filters": "⚠️ No data matches the selected filters",
+        "start_date": "Start date",
+        "end_date": "End date",
+        "warn_no_data_filters": "⚠️ No data matches the selected filters",
 
-        "dash_tab_evo": "📈 Trend",
+        "dash_tab_trend": "📈 Trend",
         "dash_tab_geo": "🌍 Geography",
         "dash_tab_promo": "🏷️ Promotions",
         "dash_tab_stock": "📦 Stock",
         "dash_tab_season": "📅 Seasonality",
 
-        "evo_title": "### 📈 Values Trend",
-        "perf_by_cat": "### 🏆 Performance by Category",
+        "no_region_col": "📌 No 'Region' column found in the data",
+        "no_promo_col": "📌 No 'Promo' column found in the data",
+        "no_stock_col": "📌 No 'Stock' column found in the data",
 
-        "geo_no_region": "📌 No 'Region' column found in the data",
-        "geo_title": "### 🌍 Region analysis",
-        "choose_region": "Choose a region",
-        "total_share": "📈 Share of total",
-        "compare_regions": "### 🗺️ Region comparison",
+        # Weekdays
+        "day_mon": "Mon",
+        "day_tue": "Tue",
+        "day_wed": "Wed",
+        "day_thu": "Thu",
+        "day_fri": "Fri",
+        "day_sat": "Sat",
+        "day_sun": "Sun",
 
-        "promo_no_col": "📌 No 'Promo' column found in the data",
-        "promo_title": "### 🏷️ Promotion impact",
-        "promo_reco": "### 💡 Recommendations",
-        "promo_lift": "📊 Promotion Lift",
-        "promo_lift_desc": "Average difference with/without promotion",
-        "promo_lift_na": "⚠️ Lift cannot be computed (missing 'Yes/No' or baseline is 0).",
-        "promo_need_data": "📌 Add 'Yes' and 'No' values in Promo to measure impact.",
-        "promo_good": "✅ Promotions are highly effective: keep and optimize targeting.",
-        "promo_mid": "📊 Moderate positive impact: test other promo mechanics.",
-        "promo_bad": "⚠️ Low or negative impact: review the promo strategy.",
-        "promo_time": "### 📈 Time evolution",
-
-        "stock_no_col": "📌 No 'Stock' column found in the data",
-        "stock_title": "### 📦 Stock management",
-        "select_cat": "Select a category",
-        "stock_alerts": "### ⚠️ Stock alerts",
-        "stock_current": "📦 Current stock",
-        "stock_avg": "📊 Average stock",
-        "variation": "📈 Variation",
-        "stock_critical": "🚨 **Critical stock alert!** Stock is below 30% of average",
-        "stock_low": "⚠️ **Low stock** - Consider restocking",
-        "stock_ok": "✅ Stock level is healthy",
-        "stock_corr": "### 📊 Stock–Values correlation",
-        "corr_coef": "🔗 Correlation coefficient",
-        "corr_strong": "Strong relationship between stock and values",
-        "corr_mid": "Moderate relationship between stock and values",
-        "corr_weak": "Weak relationship between stock and values",
-
-        "season_title": "### 📅 Seasonality analysis",
-        "day_week": "### 📆 Values by weekday",
-        "heatmap": "### 🔥 Seasonal heatmap",
-        "season_insights": "### 💡 Seasonal insights",
-        "best_month": "🏆 **Best month**: {m} ({v:,.0f})",
-        "best_day": "🏆 **Best day**: {d} ({v:,.0f})",
-        "worst_month": "📉 **Worst month**: {m} ({v:,.0f})",
-        "worst_day": "📉 **Worst day**: {d} ({v:,.0f})",
-
-        "analysis_title": "## 📈 Advanced analysis & statistics",
+        # =========================
+        # ANALYSIS
+        # =========================
+        "analysis_title": "Advanced Analysis & Statistics",
         "analysis_tab_vars": "📊 Variables",
         "analysis_tab_corr": "🔗 Correlations",
         "analysis_tab_trends": "📉 Trends",
-        "analysis_tab_pred": "🎯 Predictive analysis",
-        "no_numeric": "No numeric variables available for analysis",
-        "choose_var": "Choose a variable to analyze",
-        "desc_stats": "#### 📈 Descriptive statistics",
-        "corr_title": "### 🔗 Correlation analysis",
-        "not_enough_corr": "Not enough numeric variables for correlation analysis",
-        "corr_top": "#### 🔝 Top correlations",
-        "corr_pos": "**🔝 Positive correlations**",
-        "corr_neg": "**🔻 Negative correlations**",
-        "corr_viz": "#### 🎯 Correlation visualization",
+        "analysis_tab_pred": "🎯 Predictive Analysis",
+        "use_forecast_section": "Use the Forecasting section for advanced models",
+        "no_numeric_vars": "No numeric variables available for analysis",
+        "corr_matrix": "Correlation Matrix",
         "var_x": "X variable",
         "var_y": "Y variable",
-        "corr_value": "**Correlation coefficient**: {v:.3f}",
-        "trends_title": "### 📉 Trend analysis",
-        "pred_title": "### 🎯 Predictive analysis",
-        "pred_hint": "Use the Forecasting section for advanced models",
+        "corr_coef": "Correlation coefficient",
 
-        "alerts_title": "## ⚠️ Smart alerts system",
-        "alerts_info": "Configure alerts to monitor significant variations.\nYou will receive an email when thresholds are exceeded.",
+        # =========================
+        # ALERTS
+        # =========================
+        "alerts_title": "Smart Alerts System",
+        "alerts_intro": "Configure alerts to monitor significant changes.\nYou will receive an email when thresholds are exceeded.",
         "your_name": "👤 Your name*",
         "your_email": "📧 Your email*",
-        "your_phone": "📱 Your phone (optional)",
-        "alert_params": "### 📊 Alert settings",
-        "cat_watch": "Category to monitor",
-        "th_up": "📈 Increase threshold (%)",
-        "th_down": "📉 Decrease threshold (%)",
-        "enable_alerts": "✅ Enable alerts",
-        "invalid_phone": "❌ Invalid phone format (e.g., +212766052983 or 0766052983)",
+        "your_phone_optional": "📱 Your phone (optional)",
+        "alert_settings": "### 📊 Alert settings",
+        "category_to_watch": "Category to monitor",
+        "rise_threshold": "📈 Increase threshold (%)",
+        "drop_threshold": "📉 Decrease threshold (%)",
+        "activate_alerts": "✅ Enable alerts",
+        "invalid_phone": "❌ Invalid phone format (e.g. +212766052983 or 0766052983)",
         "alerts_enabled": "✅ Alerts enabled! You will receive a confirmation email.",
         "save_error": "❌ Error while saving. Please try again.",
         "invalid_email": "❌ Invalid email format",
-        "required_fields": "❌ Please fill in required fields",
-        "detect_rt": "### 🚨 Real-time detection",
-        "check_now": "🔍 Check alerts now",
-        "analysing": "Analyzing...",
-        "variation_detected": "⚠️ Variation detected: {v:+.2f}%",
-        "no_variation": "✅ No significant variation",
-        "not_enough_data": "Not enough data to detect variations",
-        "history": "### 📜 Alerts history",
+        "fill_required": "❌ Please fill in required fields",
+        "email_alert_confirm_subject": "Alerts enabled confirmation - VentesPRO",
 
-        "forecast_title": "## 🔮 AI forecasting",
-        "forecast_info": "Generate forecasts for your target column using forecasting models.\n✅ Works with any numeric column\n✅ Optional date (if missing, a timeline is generated automatically)",
-        "recommended_models": "**Recommended (robust)**: Auto (compare), Random Forest, XGBoost, SARIMA / Holt-Winters (seasonality) and Prophet for business series.",
-        "cat_to_forecast": "Category to forecast",
-        "model_choice": "Forecast model",
-        "horizon": "Forecast horizon (number of points)",
-        "show_ci": "Show confidence interval (95%)",
-        "generate_forecast": "🔮 Generate forecast",
-        "prep_data": "📦 Preparing data...",
-        "cannot_generate": "❌ Unable to generate forecasts.",
+        # =========================
+        # FORECAST
+        # =========================
+        "forecast_title": "## 🔮 AI Forecasting",
+        "forecast_intro": "Generate forecasts for your target column.\n✅ Works with any numeric column\n✅ Optional date (if missing, a timeline is generated automatically)",
+        "forecast_tips": "**Recommended models**: Auto (compare), Random Forest, XGBoost, SARIMA / Holt-Winters (seasonality) and Prophet for business series.",
+        "category_to_forecast": "Category to forecast",
+        "forecast_model": "Forecast model",
+        "forecast_horizon": "Forecast horizon (number of points)",
+        "show_confidence": "Show confidence interval (95%)",
+        "generate_forecast": "🔮 Generate Forecast",
+        "status_prepare": "📦 Preparing data...",
+        "forecast_failed": "❌ Unable to generate forecasts.",
         "forecast_success": "✅ Forecast generated successfully!",
-        "forecast_stats": "### 📊 Forecast statistics",
-        "reliability_score": "### 🧭 Reliability score",
-        "reliability": "Estimated reliability",
-        "reliability_note": "Based on a quick backtest (if available), recent stability, and history length. Not a guarantee.",
-        "insights": "### 💡 Insights",
-        "detail_table": "📋 Detailed forecast table",
         "downloads": "### 💾 Downloads",
         "download_csv": "📥 Download CSV",
-        "download_report": "📄 Download report",
-        "error_forecast": "❌ Error while generating forecast",
+        "download_report": "📄 Download Report",
 
-        "data_title": "## 📂 Raw data exploration",
-        "advanced_filters": "🔍 Advanced filters",
-        "regions": "🌍 Regions",
-        "period": "📅 Period",
-        "filtered_stats": "### 📊 Filtered data statistics",
-        "rows": "📦 Rows",
-        "mean_target": "📊 Average target",
-        "data_table": "### 📋 Data table",
-        "show_index": "Show index",
-        "rows_to_show": "Rows to show",
-        "sort_by": "Sort by",
-        "export_data": "### 💾 Export data",
-        "download_excel": "📊 Download Excel",
-        "download_json": "📄 Download JSON",
-        "quick_analysis": "### 🔍 Quick analysis",
-        "desc_stats_tab": "📊 Descriptive stats",
-        "dist_tab": "📈 Distribution",
-        "variable": "Variable",
-        "excel_unavailable": "Excel export unavailable",
+        # =========================
+        # EMPTY STATE (no file)
+        # =========================
+        "welcome_title": "Welcome to VentesPro Analytics",
+        "welcome_subtitle": "Your AI sales analytics & forecasting platform",
+        "welcome_steps_md": """
+### 📋 Getting started
+**1️⃣ Prepare your file**
+- Columns: one date + one numeric column
+- Date formats: DD/MM/YYYY or YYYY-MM-DD
+- CSV/Excel supported
 
-        "reports_title": "## 📑 Automated reports",
-        "general_report": "### 📊 General report",
-        "detailed_analysis": "### 📊 Detailed analysis",
-        "top5": "#### 🏆 Top 5 categories",
-        "bottom5": "#### 📉 5 weakest categories",
-        "insights_reco": "### 💡 Insights & recommendations",
-        "download_full_report": "### 💾 Download report",
-        "download_full_btn": "📄 Download full report",
+**2️⃣ Upload your file** from the sidebar ⬅️  
+**3️⃣ Explore** the features!
+""",
+        "tip_example_file": "💡 Tip: download the sample file from the sidebar",
 
-        "ai_insights_title": "## 💡 AI-generated insights",
-        "ai_info": "🤖 This section uses AI algorithms to generate automatic insights",
-        "generate_insights": "🚀 Generate insights",
-        "analysis_running": "🔎 Analysis in progress...",
-        "analysis_done": "✅ Analysis complete!",
-        "main_insights": "### 🎯 Key insights",
-        "seasonality": "### 📅 Seasonality analysis",
-        "cat_analysis": "### 📦 Category analysis",
-        "express_pred": "### 🔮 Express predictions",
-        "action_plan": "### ✅ Recommended action plan",
-
-        "support_title": "## 🛠️ Technical support",
-        "email": "📧 Email",
-        "phone": "📱 Phone",
-        "reply_24h": "Reply within 24 business hours",
-        "hours": "Mon–Fri: 9am–6pm (GMT+1)",
-        "send_msg": "### ✉️ Send us a message",
-        "subject": "📋 Subject",
-        "message": "💬 Your message*",
-        "send": "📤 Send message",
-        "sent_ok": "✅ Your message was sent successfully! We’ll reply within 24h.",
-        "faq": "### ❓ Frequently asked questions",
-
-        "welcome_empty_title": "## 🚀 Welcome to VentesPro Analytics",
-        "welcome_empty_sub": "### Your AI sales analytics & forecasting platform",
-        "start_title": "### 📋 Getting started",
-        "tip_example": "💡 **Tip**: Download our sample file from the sidebar",
-
-        "footer_copy": "© 2025 VentesPro Analytics | Built with ❤️ by Mohamed HADI",
-        "footer_ver": "Version 2.0 | Powered by Streamlit & AI",
-    }
+        # =========================
+        # FOOTER
+        # =========================
+        "footer_built_by": "© 2025 VentesPro Analytics | Built with ❤️ by {name}",
+        "footer_version_powered": "Version 2.0 | Powered by Streamlit & AI",
+    },
 }
 
+
 def set_lang(lang: str):
+    """Store 'fr' or 'en' in session_state."""
     if lang not in ("fr", "en"):
         lang = "fr"
     st.session_state["lang"] = lang
 
+
 def get_lang() -> str:
     return st.session_state.get("lang", "fr")
 
+
 def t(key: str, **kwargs) -> str:
+    """
+    Translate a key based on current language.
+    Supports .format(**kwargs).
+    """
     lang = get_lang()
     text = TRANSLATIONS.get(lang, {}).get(key, TRANSLATIONS["fr"].get(key, key))
     try:
