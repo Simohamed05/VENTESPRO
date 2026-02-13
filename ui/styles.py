@@ -321,22 +321,19 @@ CSS_STYLES = """
     
     /* Conteneur des tabs */
     div[data-testid="stTabs"] [role="tablist"]{
-      display: flex !important;
-      justify-content: center !important;
-      gap: 10px !important;
-      flex-wrap: nowrap !important;        /* ❌ plus de retour à la ligne */
-      overflow-x: auto !important;         /* scroll si trop long */
-      white-space: nowrap !important;
-      padding: 10px 16px !important;
-      margin: 10px auto 18px auto !important;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--vp-border);
-      box-shadow: var(--vp-shadow-soft);
-      max-width: 1200px;
-    }
-    
+  display: flex !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+
+  background: transparent !important;  /* ❌ pas de rectangle */
+  border: none !important;
+  box-shadow: none !important;
+  padding: 12px 0 !important;
+  margin: 10px auto 20px auto !important;
+}
     @media (prefers-color-scheme: dark){
       div[data-testid="stTabs"] [role="tablist"]{
         background: rgba(17,24,39,0.55);
