@@ -195,7 +195,7 @@ if uploaded_file:
         df = load_data(uploaded_file)
 
         if df is None:
-            st.error("❌ Impossible de charger le fichier.")
+            st.error(t("err_load_file"))
             st.stop()
 
         if len(df) == 0:
@@ -315,7 +315,7 @@ if uploaded_file:
 <div class='stCard' style='text-align: center;'>
     <h3 style='color: #f59e0b; margin-bottom: 0.5rem;'>💰</h3>
     <h2 style='color: #1e293b; margin: 0;'>{total_target:,.0f}</h2>
-    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>Total Cible</p>
+    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>{t("kpi_total_target")}</p>
 </div>
 """,
                     unsafe_allow_html=True,
@@ -329,22 +329,22 @@ if uploaded_file:
 <div class='stCard' style='text-align: center;'>
     <h3 style='color: #8b5cf6; margin-bottom: 0.5rem;'>📦</h3>
     <h2 style='color: #1e293b; margin: 0;'>{nb_cats}</h2>
-    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>Catégories Uniques</p>
+    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>{t("kpi_unique_categories")}</p>
 </div>
 """,
                         unsafe_allow_html=True,
                     )
                 else:
                     st.markdown(
-                        """
-<div class='stCard' style='text-align: center;'>
-    <h3 style='color: #8b5cf6; margin-bottom: 0.5rem;'>📦</h3>
-    <h2 style='color: #1e293b; margin: 0;'>—</h2>
-    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>Catégories</p>
-</div>
-""",
-                        unsafe_allow_html=True,
-                    )
+            f"""
+        <div class='stCard' style='text-align: center;'>
+            <h3 style='color: #8b5cf6; margin-bottom: 0.5rem;'>📦</h3>
+            <h2 style='color: #1e293b; margin: 0;'>—</h2>
+            <p style='color: #64748b; margin: 0.5rem 0 0 0;'>{t("kpi_categories")}</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
 
             with c3:
                 croissance = float(df[target_col].pct_change().mean() * 100) if len(df) > 1 else 0.0
@@ -353,7 +353,7 @@ if uploaded_file:
 <div class='stCard' style='text-align: center;'>
     <h3 style='color: #10b981; margin-bottom: 0.5rem;'>📈</h3>
     <h2 style='color: #1e293b; margin: 0;'>{croissance:+.2f}%</h2>
-    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>Croissance Moy.</p>
+    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>{t("kpi_avg_growth")}</p>
 </div>
 """,
                     unsafe_allow_html=True,
@@ -366,7 +366,7 @@ if uploaded_file:
 <div class='stCard' style='text-align: center;'>
     <h3 style='color: #f59e0b; margin-bottom: 0.5rem;'>💵</h3>
     <h2 style='color: #1e293b; margin: 0;'>{avg_target:,.0f}</h2>
-    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>Moyenne Cible</p>
+    <p style='color: #64748b; margin: 0.5rem 0 0 0;'>{t("kpi_avg_target")}</p>
 </div>
 """,
                     unsafe_allow_html=True,
@@ -374,62 +374,63 @@ if uploaded_file:
 
             st.markdown("---")
 
-            st.markdown("### ✨ Fonctionnalités Principales")
+            st.markdown(f"### ✨ {t('home_features_title')}")
             colA, colB, colC = st.columns(3)
 
             with colA:
                 st.markdown(
-                    """
-<div class='stCard'>
-    <h3 style='color: #6366f1;'>📊 Analyse en Temps Réel</h3>
-    <ul style='color: #64748b; line-height: 2;'>
-        <li>Dashboard interactif</li>
-        <li>Visualisations dynamiques</li>
-        <li>KPIs automatisés</li>
-        <li>Comparaisons multi-catégories</li>
-        <li>Analyse saisonnière</li>
-    </ul>
-</div>
-""",
+                    f"""
+            <div class='stCard'>
+                <h3 style='color: #6366f1;'>📊 {t("home_feat_realtime_title")}</h3>
+                <ul style='color: #64748b; line-height: 2;'>
+                    <li>{t("home_feat_realtime_1")}</li>
+                    <li>{t("home_feat_realtime_2")}</li>
+                    <li>{t("home_feat_realtime_3")}</li>
+                    <li>{t("home_feat_realtime_4")}</li>
+                    <li>{t("home_feat_realtime_5")}</li>
+                </ul>
+            </div>
+            """,
                     unsafe_allow_html=True,
                 )
 
             with colB:
                 st.markdown(
-                    """
-<div class='stCard'>
-    <h3 style='color: #8b5cf6;'>🔮 Prévisions IA</h3>
-    <ul style='color: #64748b; line-height: 2;'>
-        <li>5+ modèles de ML</li>
-        <li>Mode Auto-Select</li>
-        <li>Intervalles de confiance</li>
-        <li>Prévisions jusqu'à 1 an</li>
-        <li>Comparaison de modèles</li>
-    </ul>
-</div>
-""",
+                    f"""
+            <div class='stCard'>
+                <h3 style='color: #8b5cf6;'>🔮 {t("home_feat_ai_title")}</h3>
+                <ul style='color: #64748b; line-height: 2;'>
+                    <li>{t("home_feat_ai_1")}</li>
+                    <li>{t("home_feat_ai_2")}</li>
+                    <li>{t("home_feat_ai_3")}</li>
+                    <li>{t("home_feat_ai_4")}</li>
+                    <li>{t("home_feat_ai_5")}</li>
+                </ul>
+            </div>
+            """,
                     unsafe_allow_html=True,
                 )
 
             with colC:
                 st.markdown(
-                    """
-<div class='stCard'>
-    <h3 style='color: #10b981;'>🚨 Alertes Intelligentes</h3>
-    <ul style='color: #64748b; line-height: 2;'>
-        <li>Notifications Email/SMS</li>
-        <li>Seuils personnalisables</li>
-        <li>Détection d'anomalies</li>
-        <li>Alertes en temps réel</li>
-        <li>Historique des alertes</li>
-    </ul>
-</div>
-""",
+                    f"""
+            <div class='stCard'>
+                <h3 style='color: #10b981;'>🚨 {t("home_feat_alerts_title")}</h3>
+                <ul style='color: #64748b; line-height: 2;'>
+                    <li>{t("home_feat_alerts_1")}</li>
+                    <li>{t("home_feat_alerts_2")}</li>
+                    <li>{t("home_feat_alerts_3")}</li>
+                    <li>{t("home_feat_alerts_4")}</li>
+                    <li>{t("home_feat_alerts_5")}</li>
+                </ul>
+            </div>
+            """,
                     unsafe_allow_html=True,
                 )
 
+
             st.markdown("---")
-            st.markdown("### 📈 Tendance Globale")
+            st.markdown(f"### 📈 {t('home_global_trend_title')}")
 
             fig = go.Figure()
             daily_values = df.groupby(df.index)[target_col].sum()
@@ -440,7 +441,7 @@ if uploaded_file:
                 go.Scatter(
                     x=daily_values.index,
                     y=daily_values.values,
-                    name="Valeurs Quotidiennes",
+                    name=t("legend_daily"),
                     mode="lines",
                     line=dict(color="rgba(99, 102, 241, 0.3)", width=1),
                     fill="tozeroy",
@@ -449,21 +450,21 @@ if uploaded_file:
             )
             fig.add_trace(
                 go.Scatter(
-                    x=ma_7.index, y=ma_7.values, name="Moyenne Mobile 7j", line=dict(color="#6366f1", width=3)
+                    x=ma_7.index, y=ma_7.values, name=t("legend_ma7"), line=dict(color="#6366f1", width=3)
                 )
             )
             fig.add_trace(
                 go.Scatter(
                     x=ma_30.index,
                     y=ma_30.values,
-                    name="Moyenne Mobile 30j",
+                    name=t("legend_ma30"),
                     line=dict(color="#8b5cf6", width=3, dash="dash"),
                 )
             )
             fig.update_layout(
-                title="Évolution des valeurs avec moyennes mobiles",
-                xaxis_title="Date",
-                yaxis_title="Valeurs",
+                title=t("home_trend_chart_title"),
+                xaxis_title=t("axis_date"),
+                yaxis_title=t("axis_values"),
                 hovermode="x unified",
                 height=500,
                 template="plotly_white",
@@ -472,9 +473,10 @@ if uploaded_file:
             st.plotly_chart(fig, use_container_width=True)
 
             st.markdown("---")
-            st.markdown("### 🚀 Guide de Démarrage Rapide")
-            with st.expander("📖 Comment utiliser VentesPRO", expanded=False):
-                st.markdown(
+            st.markdown(f"### 🚀 {t('home_quickstart_title')}")
+            with st.expander(t("home_howto_title"), expanded=False):
+                st.markdown(t("home_howto_md"),
+
                     """
 #### 1️⃣ Préparer vos données
 - Format: CSV ou Excel
@@ -503,15 +505,17 @@ if uploaded_file:
         # DASHBOARD
         # ============================================================
         with tab_dashboard:
-            st.markdown("## 📊 Tableau de Bord Interactif")
+            st.markdown(f"## 📊 {t('dash_title')}")
 
-            with st.expander("🔍 Filtres", expanded=True):
+
+            with st.expander(t("filters_title"), expanded=True):
+
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
                     if not _is_none_choice(cat_col):
                         cats_selected = st.multiselect(
-                            "Catégories",
+                            t("categories"),
                             df[cat_col].dropna().unique(),
                             default=list(df[cat_col].dropna().unique()[:3]),
                         )
@@ -520,14 +524,14 @@ if uploaded_file:
 
                 with col2:
                     date_debut = st.date_input(
-                        "Date de début",
+                        t("start_date"),
                         value=df.index.min().date(),
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
                     )
                 with col3:
                     date_fin = st.date_input(
-                        "Date de fin",
+                        t("end_date"),
                         value=df.index.max().date(),
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
@@ -538,10 +542,10 @@ if uploaded_file:
                 df_filtered = df_filtered[df_filtered[cat_col].isin(cats_selected)]
 
             if len(df_filtered) == 0:
-                st.warning("⚠️ Aucune donnée ne correspond aux filtres sélectionnés")
+                st.warning(t("warn_no_data_filters"))
                 st.stop()
 
-            tab1, tab2, tab3, tab4, tab5 = st.tabs(["📈 Évolution", "🌍 Géographie", "🏷️ Promotions", "📦 Stocks", "📅 Saisonnalité"])
+            tab1, tab2, tab3, tab4, tab5 = st.tabs([t("dash_tab_trend"), t("dash_tab_geo"), t("dash_tab_promo"), t("dash_tab_stock"), t("dash_tab_season")])
 
             with tab1:
                 st.markdown("### 📈 Évolution des Valeurs")
@@ -639,7 +643,7 @@ if uploaded_file:
                         use_container_width=True,
                     )
                 else:
-                    st.info("📌 Pas de colonne 'Region' dans les données")
+                    st.info(t("no_region_col"))
 
             with tab3:
                 if promo_col:
@@ -707,7 +711,7 @@ if uploaded_file:
                     fig.update_layout(title="Comparaison hebdomadaire des valeurs", xaxis_title="Semaine", yaxis_title="Valeurs Moyennes", height=400, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info("📌 Pas de colonne 'Promo' dans les données")
+                    st.info(t("no_promo_col"))
 
             with tab4:
                 if stock_col:
@@ -763,7 +767,7 @@ if uploaded_file:
                         fig.update_layout(height=300, template="plotly_white")
                         st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info("📌 Pas de colonne 'Stock' dans les données")
+                    st.info(t("no_stock_col"))
 
             with tab5:
                 st.markdown("### 📅 Analyse Saisonnière")
@@ -788,7 +792,7 @@ if uploaded_file:
                 st.markdown("### 📆 Valeurs par Jour de la Semaine")
                 df_season["JourNum"] = df_season.index.dayofweek  # 0=Lundi
                 daily_values = df_season.groupby("JourNum")[target_col].mean().sort_index()
-                day_labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                day_labels = [t("day_mon"), t("day_tue"), t("day_wed"), t("day_thu"), t("day_fri"), t("day_sat"), t("day_sun")]
 
                 fig = go.Figure(
                     go.Bar(
@@ -830,8 +834,8 @@ if uploaded_file:
         # ANALYSIS
         # ============================================================
         with tab_analysis:
-            st.markdown("## 📈 Analyse Avancée et Statistiques")
-            t1, t2, t3, t4 = st.tabs(["📊 Variables", "🔗 Corrélations", "📉 Tendances", "🎯 Analyse Prédictive"])
+            st.markdown(f"## 📈 {t('analysis_title')}")
+            t1, t2, t3, t4 = st.tabs([t("analysis_tab_vars"), t("analysis_tab_corr"), t("analysis_tab_trends"), t("analysis_tab_pred")])
 
             with t1:
                 st.markdown("### 📊 Analyse par Variable")
@@ -870,7 +874,7 @@ if uploaded_file:
                         fig.update_layout(title=f"Comparaison de {variable} entre Catégories", yaxis_title=variable, height=400, template="plotly_white")
                         st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.warning("Aucune variable numérique disponible pour l'analyse")
+                    st.warning(t("no_numeric_vars"))
 
             with t2:
                 st.markdown("### 🔗 Analyse des Corrélations")
@@ -889,22 +893,22 @@ if uploaded_file:
                             colorbar=dict(title="Corrélation"),
                         )
                     )
-                    fig.update_layout(title="Matrice de Corrélation", height=600, template="plotly_white")
+                    fig.update_layout(title=t("corr_matrix"), height=600, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
 
                     st.markdown("#### 🎯 Visualisation des Corrélations")
                     c1, c2 = st.columns(2)
                     with c1:
-                        var1 = st.selectbox("Variable X", numeric_df.columns, key="corr_x")
+                        var1 = st.selectbox(t("var_x"), numeric_df.columns, key="corr_x")
                     with c2:
-                        var2 = st.selectbox("Variable Y", [c for c in numeric_df.columns if c != var1], key="corr_y")
+                        var2 = st.selectbox(t("var_y"), [c for c in numeric_df.columns if c != var1], key="corr_y")
 
                     fig = px.scatter(df, x=var1, y=var2, trendline="ols", title=f"Relation entre {var1} et {var2}", color=cat_col if not _is_none_choice(cat_col) else None)
                     fig.update_layout(height=500, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
 
                     corr_value = float(df[var1].corr(df[var2])) if len(df) > 1 else 0.0
-                    st.info(f"**Coefficient de corrélation**: {corr_value:.3f}")
+                    st.info(t("corr_coef"))
                 else:
                     st.warning("Pas assez de variables numériques pour l'analyse de corrélation")
 
@@ -921,7 +925,7 @@ if uploaded_file:
 
             with t4:
                 st.markdown("### 🎯 Analyse Prédictive")
-                st.info("Utilisez la section Prévisions pour des modèles avancés")
+                st.info(t("use_forecast_section"))
 
                 # FIX: ne pas modifier df global
                 y_series = df[target_col].values.astype(float)
@@ -942,41 +946,39 @@ if uploaded_file:
         # ALERTS
         # ============================================================
         with tab_alerts:
-            st.markdown("## ⚠️ Système d'Alertes Intelligentes")
-            st.info(
-                "Configurez des alertes pour surveiller les variations importantes de vos valeurs.\n"
-                "Vous recevrez un email lorsque les seuils sont dépassés."
-            )
+            st.markdown(f"## ⚠️ {t('alerts_title')}")
+
+            st.info(t("alerts_intro"))
 
             with st.form("alert_form"):
                 col1, col2 = st.columns(2)
                 with col1:
-                    nom = st.text_input("👤 Votre nom*", placeholder="Ex: Mohamed HADI")
-                    email = st.text_input("📧 Votre email*", placeholder="Ex: mohamed@exemple.com")
+                    nom = st.text_input(t("your_name"), placeholder="Ex: Mohamed HADI")
+                    email = st.text_input(t("your_email"), placeholder="Ex: mohamed@exemple.com")
                 with col2:
-                    phone = st.text_input("📱 Votre téléphone (optionnel)", placeholder="Ex: +212766052983")
+                    phone = st.text_input(t("your_phone_optional"), placeholder="Ex: +212766052983")
 
-                st.markdown("### 📊 Paramètres d'Alerte")
+                st.markdown(t("alert_settings"))
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
                     if not _is_none_choice(cat_col):
-                        produit_alert = st.selectbox("Catégorie à surveiller", df[cat_col].dropna().unique())
+                        produit_alert = st.selectbox(t("category_to_watch"), df[cat_col].dropna().unique())
                     else:
                         produit_alert = None
 
                 with col2:
-                    seuil_hausse = st.number_input("📈 Seuil de hausse (%)", min_value=0.0, value=10.0, step=5.0)
+                    seuil_hausse = st.number_input(t("rise_threshold"), min_value=0.0, value=10.0, step=5.0)
                 with col3:
-                    seuil_baisse = st.number_input("📉 Seuil de baisse (%)", min_value=0.0, value=10.0, step=5.0)
+                    seuil_baisse = st.number_input(t("drop_threshold"), min_value=0.0, value=10.0, step=5.0)
 
-                submitted = st.form_submit_button("✅ Activer les Alertes", type="primary", use_container_width=True)
+                submitted = st.form_submit_button(t("activate_alerts"), type="primary", use_container_width=True)
 
                 if submitted:
                     if nom and email:
                         if validate_email(email):
                             if phone and not validate_phone(phone):
-                                st.error("❌ Format de téléphone invalide (ex: +212766052983 ou 0766052983)")
+                                st.error(t("invalid_phone") )
                             else:
                                 user_data = {
                                     "Nom": [nom],
@@ -989,10 +991,11 @@ if uploaded_file:
                                 }
 
                                 if append_to_excel(user_data):
-                                    st.success("✅ Alertes activées! Vous recevrez un email de confirmation.")
+                                    st.success(t("alerts_enabled"))
                                     send_email_safe(
-                                        email,
-                                        "Confirmation d'Activation des Alertes - VentesPRO",
+                                        email,t("email_alert_confirm_subject")
+
+                                        ,
                                         f"""Bonjour {nom},
 
 Vos alertes ont été activées avec succès.
@@ -1009,11 +1012,11 @@ L'équipe VentesPRO
 """,
                                     )
                                 else:
-                                    st.error("❌ Erreur lors de l'enregistrement. Essayez à nouveau.")
+                                    st.error(t("save_error"))
                         else:
-                            st.error("❌ Format d'email invalide")
+                            st.error(t("invalid_email"))
                     else:
-                        st.error("❌ Veuillez remplir les champs obligatoires")
+                        st.error(t("fill_required"))
 
             st.markdown("---")
             st.markdown("### 🚨 Détection en Temps Réel")
@@ -1044,28 +1047,21 @@ L'équipe VentesPRO
         # FORECAST
         # ============================================================
         with tab_forecast:
-            st.markdown("## 🔮 Prévisions par Intelligence Artificielle")
-            st.info(
-                "Générez des prévisions pour votre colonne cible en utilisant des modèles.\n"
-                "✅ Compatible avec n’importe quelle colonne numérique\n"
-                "✅ Date optionnelle (si pas de date, une timeline est générée automatiquement)"
-            )
-            st.markdown(
-                "**Modèles conseillés** : Auto (comparaison), Random Forest, XGBoost, "
-                "SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business."
-            )
+            st.markdown(t("forecast_title"))
+            st.info(t("forecast_intro"))
+            st.markdown(t("forecast_tips"))
 
             col1, col2, col3 = st.columns(3)
 
             with col1:
                 if not _is_none_choice(cat_col):
-                    produit = st.selectbox("Catégorie à prévoir", df[cat_col].dropna().unique())
+                    produit = st.selectbox(t("category_to_forecast"), df[cat_col].dropna().unique())
                 else:
                     produit = "Globale"
 
             with col2:
                 model_type = st.selectbox(
-                    "Modèle de prévision",
+                    t("forecast_model"),
                     [
                         "Auto (Comparaison)",
                         "Naïf (Dernière valeur)",
@@ -1081,11 +1077,11 @@ L'équipe VentesPRO
                 )
 
             with col3:
-                horizon = st.number_input("Horizon de prévision (nombre de points)", min_value=1, max_value=365, value=30, step=1)
+                horizon = st.number_input(t("forecast_horizon"), min_value=1, max_value=365, value=30, step=1)
 
-            show_confidence = st.checkbox("Afficher intervalles de confiance (95%)", value=True)
+            show_confidence = st.checkbox(t("show_confidence"), value=True)
 
-            if st.button("🔮 Générer les Prévisions", type="primary", use_container_width=True):
+            if st.button(t("generate_forecast"), type="primary", use_container_width=True):
                 status_text = st.empty()
                 progress_bar = st.progress(0)
 
@@ -1097,7 +1093,7 @@ L'équipe VentesPRO
                 backtest_rmse = None
 
                 try:
-                    status_text.text("📦 Préparation des données...")
+                    status_text.text(t("status_prepare"))
                     progress_bar.progress(10)
 
                     df_ts, has_date, err = prepare_series(df, target_col, cat_col, date_col, produit)
@@ -1653,11 +1649,11 @@ L'équipe VentesPRO
                     status_text.empty()
 
                     if forecast_df is None:
-                        st.error("❌ Impossible de générer les prévisions.")
+                        st.error(t("forecast_failed"))
                         st.stop()
 
                     st.markdown("---")
-                    st.success("✅ Prévisions générées avec succès!")
+                    st.success(t("forecast_success"))
 
                     fig = go.Figure()
                     fig.add_trace(
@@ -1764,13 +1760,13 @@ L'équipe VentesPRO
                         st.dataframe(display_df, use_container_width=True, hide_index=True)
 
                     st.markdown('<div id="telechargements"></div>', unsafe_allow_html=True)
-                    st.markdown("### 💾 Téléchargements")
+                    st.markdown(t("downloads"))
                     colA, colB = st.columns(2)
 
                     with colA:
                         csv = forecast_df.to_csv(index=False).encode("utf-8")
                         st.download_button(
-                            label="📥 Télécharger CSV",
+                            label=t("download_csv"),
                             data=csv,
                             file_name=f"previsions_{produit}_{str(model_name).replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
                             mime="text/csv",
@@ -1806,7 +1802,7 @@ PRÉVISIONS:
                             report += f"{pd.to_datetime(row['Date']).strftime('%d/%m/%Y')}: {float(row['Prévision']):.2f}\n"
 
                         st.download_button(
-                            label="📄 Télécharger Rapport",
+                            label=t("download_report"),
                             data=report,
                             file_name=f"rapport_{produit}_{datetime.now().strftime('%Y%m%d_%H%M')}.txt",
                             mime="text/plain",
@@ -2332,32 +2328,22 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
 else:
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("## 🚀 Bienvenue sur VentesPro Analytics")
-        st.markdown("### Votre plateforme d'analyse et de prévision des ventes par IA")
-        st.info(
-            """
-### 📋 Pour Commencer
-**1️⃣ Préparez votre fichier**
-- Colonnes: une date + une colonne numérique
-- Format date: JJ/MM/AAAA ou AAAA-MM-JJ
-- CSV/Excel supportés
+        st.markdown(f"## 🚀 {t('welcome_title')}")
+        st.markdown(f"### {t('welcome_subtitle')}")
+        st.info(t("welcome_steps_md"))
 
-**2️⃣ Chargez votre fichier** via la sidebar ⬅️  
-**3️⃣ Explorez** les fonctionnalités!
-"""
-        )
-        st.success("💡 Astuce: téléchargez le fichier exemple dans la sidebar")
+        st.success(t("tip_example_file"))
 
 # Footer
 st.markdown("---")
 st.markdown(
-    """
+    f"""
 <div style='text-align: center; padding: 2rem 0; color: #e2e8f0;'>
     <p style='margin: 0; font-size: 0.9rem;'>
-        © 2025 VentesPro Analytics | Développé avec ❤️ par Mohamed HADI
+        {t("footer_built_by", name="Mohamed HADI")}
     </p>
     <p style='margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;'>
-        Version 2.0 | Propulsé par Streamlit & IA
+        {t("footer_version_powered")}
     </p>
 </div>
 """,
