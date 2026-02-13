@@ -1,6 +1,8 @@
 import os
 import warnings
 import traceback
+from utils.i18n import t, set_lang, get_lang
+
 
 
 # Configuration des warnings AVANT tout import
@@ -72,6 +74,15 @@ st.set_page_config(
     page_icon="📈",
     initial_sidebar_state="expanded"
 )
+# Language selector
+with st.sidebar:
+    lang_choice = st.radio(
+        "🌐 Language",
+        ["fr", "en"],
+        index=0 if get_lang() == "fr" else 1,
+        horizontal=True
+    )
+    set_lang(lang_choice)
 
 # ==================== STYLES CSS PERSONNALISÉS ====================
 # ==================== STYLES CSS ADAPTATIFS (Mode Sombre/Clair) ====================
@@ -204,16 +215,17 @@ if uploaded_file:
         # Navigation (Tabs) — layout SaaS (comme Notion/Stripe)
         st.markdown("---")
         tab_home, tab_dashboard, tab_analysis, tab_alerts, tab_forecast, tab_data, tab_reports, tab_insights, tab_support = st.tabs([
-            "🏠 Accueil",
-            "📊 Tableau de Bord",
-            "📈 Analyse Avancée",
-            "⚠️ Alertes",
-            "🔮 Prévisions",
-            "📂 Données",
-            "📑 Rapports",
-            "💡 Insights",
-            "📞 Support"
+            t("tab_home"),
+            t("tab_dashboard"),
+            t("tab_analysis"),
+            t("tab_alerts"),
+            t("tab_forecast"),
+            t("tab_data"),
+            t("tab_reports"),
+            t("tab_insights"),
+            t("tab_support"),
         ])
+
 
         # ==================== PAGE ACCUEIL ====================
         with tab_home:
@@ -2885,4 +2897,5 @@ st.markdown("""
     </p>
 </div>
 """, unsafe_allow_html=True)
+
 
