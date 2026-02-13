@@ -150,116 +150,6 @@ with st.sidebar:
     lang_code = "fr" if lang_choice == t("lang_fr") else "en"
     set_lang(lang_code)
 
-# -----------------------------
-# Local translation helper (fallback)
-# -----------------------------
-
-def tr(fr: str, en: str) -> str:
-    """Return fr/en text depending on current language.
-    Use this for UI strings that are not yet in utils.i18n."""
-    return fr if get_lang() == "fr" else en
-
-
-TRANSLATIONS = {
-    "### \u2728 Fonctionnalit\u00e9s Principales": "### \u2728 Key features",
-    "### \u2753 Questions Fr\u00e9quentes": "### \u2753 Frequently asked questions",
-    "### \ud83c\udf0d Analyse par R\u00e9gion": "### \ud83c\udf0d Regional analysis",
-    "### \ud83c\udfaf Analyse Pr\u00e9dictive": "### \ud83c\udfaf Predictive analysis",
-    "### \ud83c\udfc6 Performance par Cat\u00e9gorie": "### \ud83c\udfc6 Performance by category",
-    "### \ud83d\udcbe Exporter les Donn\u00e9es": "### \ud83d\udcbe Export data",
-    "### \ud83d\udcbe T\u00e9l\u00e9chargements": "### \ud83d\udcbe Downloads",
-    "### \ud83d\udcbe T\u00e9l\u00e9charger le Rapport": "### \ud83d\udcbe Download the report",
-    "### \ud83d\udcc5 Analyse Saisonni\u00e8re": "### \ud83d\udcc5 Seasonality analysis",
-    "### \ud83d\udcc5 Analyse de Saisonnalit\u00e9": "### \ud83d\udcc5 Seasonality analysis",
-    "### \ud83d\udcc9 Analyse des Tendances": "### \ud83d\udcc9 Trend analysis",
-    "### \ud83d\udcca Analyse D\u00e9taill\u00e9e": "### \ud83d\udcca Detailed analysis",
-    "### \ud83d\udcca Analyse par Variable": "### \ud83d\udcca Variable analysis",
-    "### \ud83d\udcca Comparaison des mod\u00e8les": "### \ud83d\udcca Model comparison",
-    "### \ud83d\udcca Corr\u00e9lation Stock-Valeurs": "### \ud83d\udcca Stock vs values correlation",
-    "### \ud83d\udcca Param\u00e8tres d'Alerte": "### \ud83d\udcca Alert settings",
-    "### \ud83d\udcca Rapport G\u00e9n\u00e9ral": "### \ud83d\udcca General report",
-    "### \ud83d\udcca Statistiques des Donn\u00e9es Filtr\u00e9es": "### \ud83d\udcca Filtered data stats",
-    "### \ud83d\udcca Statistiques des Pr\u00e9visions": "### \ud83d\udcca Forecast statistics",
-    "### \ud83d\udccb Tableau de Donn\u00e9es": "### \ud83d\udccb Data table",
-    "### \ud83d\udce6 Analyse des Cat\u00e9gories": "### \ud83d\udce6 Category analysis",
-    "### \ud83d\udd0d Analyse Rapide": "### \ud83d\udd0d Quick analysis",
-    "### \ud83d\udd17 Analyse des Corr\u00e9lations": "### \ud83d\udd17 Correlation analysis",
-    "### \ud83d\udd25 Carte de Chaleur Saisonni\u00e8re": "### \ud83d\udd25 Seasonality heatmap",
-    "### \ud83d\udd2e Pr\u00e9dictions Express": "### \ud83d\udd2e Quick predictions",
-    "### \ud83d\uddfa\ufe0f Comparaison entre R\u00e9gions": "### \ud83d\uddfa\ufe0f Region comparison",
-    "### \ud83d\ude80 Guide de D\u00e9marrage Rapide": "### \ud83d\ude80 Quick start guide",
-    "### \ud83d\udea8 D\u00e9tection en Temps R\u00e9el": "### \ud83d\udea8 Real-time detection",
-    "### \ud83e\udded Score de fiabilit\u00e9": "### \ud83e\udded Reliability score",
-    "#### \ud83c\udfaf Cat\u00e9gories Strat\u00e9giques": "#### \ud83c\udfaf Strategic categories",
-    "#### \ud83c\udfaf Visualisation des Corr\u00e9lations": "#### \ud83c\udfaf Correlation visualization",
-    "#### \ud83c\udfc6 Top 5 Cat\u00e9gories": "#### \ud83c\udfc6 Top 5 categories",
-    "#### \ud83d\udcc9 5 Cat\u00e9gories les Moins Performantes": "#### \ud83d\udcc9 Bottom 5 categories",
-    "#### \ud83d\ude80 Opportunit\u00e9s de Croissance": "#### \ud83d\ude80 Growth opportunities",
-    "**Mod\u00e8les conseill\u00e9s** : Auto (comparaison), Random Forest, XGBoost, ": "**Recommended models**: Auto (comparison), Random Forest, XGBoost, ",
-    "Aucune donn\u00e9e sur la p\u00e9riode s\u00e9lectionn\u00e9e.": "No data for the selected period.",
-    "Aucune donn\u00e9e \u00e0 d\u00e9crire (filtre trop strict).": "No data to describe (filters too strict).",
-    "Aucune variable num\u00e9rique disponible pour l'analyse": "No numeric variable available for analysis",
-    "Cat\u00e9gorie \u00e0 pr\u00e9voir": "Category to forecast",
-    "Cat\u00e9gorie \u00e0 surveiller": "Category to monitor",
-    "Choisissez une r\u00e9gion": "Choose a region",
-    "Choisissez une variable \u00e0 analyser": "Choose a variable to analyze",
-    "Fiabilit\u00e9 estim\u00e9e": "Estimated reliability",
-    "G\u00e9n\u00e9rez des pr\u00e9visions pour votre colonne cible en utilisant des mod\u00e8les.\n": "Generate forecasts for your target column using forecasting models.\n",
-    "Horizon de pr\u00e9vision (nombre de points)": "Forecast horizon (number of points)",
-    "Lien mod\u00e9r\u00e9 entre stock et valeurs": "Moderate link between stock and values",
-    "Lignes \u00e0 afficher": "Rows to display",
-    "Mod\u00e8le de pr\u00e9vision": "Forecast model",
-    "Pas assez de donn\u00e9es pour d\u00e9tecter des variations": "Not enough data to detect changes",
-    "Pas assez de variables num\u00e9riques pour l'analyse de corr\u00e9lation": "Not enough numeric variables for correlation analysis",
-    "Pas de variable num\u00e9rique (ou pas de donn\u00e9es) pour afficher une distribution.": "No numeric variable (or no data) to display a distribution.",
-    "S\u00e9lectionnez une cat\u00e9gorie": "Select a category",
-    "Utilisez la section Pr\u00e9visions pour des mod\u00e8les avanc\u00e9s": "Use the Forecasts section for advanced models",
-    "\u26a0\ufe0f **Stock Bas** - Envisagez un r\u00e9approvisionnement": "\u26a0\ufe0f **Low stock** - Consider replenishment",
-    "\u26a0\ufe0f Impact faible ou n\u00e9gatif : revois la strat\u00e9gie promo.": "\u26a0\ufe0f Low or negative impact: review the promotion strategy.",
-    "\u26a0\ufe0f Lift non calculable (pas assez de donn\u00e9es 'Oui/Non' ou moyenne sans promo = 0).": "\u26a0\ufe0f Lift cannot be computed (not enough Yes/No data or no-promo mean = 0).",
-    "\u2705 Alertes activ\u00e9es! Vous recevrez un email de confirmation.": "\u2705 Alerts enabled! You will receive a confirmation email.",
-    "\u2705 Analyse termin\u00e9e!": "\u2705 Analysis complete!",
-    "\u2705 Promotions tr\u00e8s efficaces : continue et optimise le ciblage.": "\u2705 Promotions are very effective: continue and optimize targeting.",
-    "\u2705 Pr\u00e9visions g\u00e9n\u00e9r\u00e9es avec succ\u00e8s!": "\u2705 Forecasts generated successfully!",
-    "\u2705 Votre message a \u00e9t\u00e9 envoy\u00e9 avec succ\u00e8s! Nous vous r\u00e9pondrons sous 24h.": "\u2705 Your message was sent! We'll reply within 24 hours.",
-    "\u274c Erreur lors de l'enregistrement. Essayez \u00e0 nouveau.": "\u274c Error while saving. Please try again.",
-    "\u274c Erreur lors de la g\u00e9n\u00e9ration des pr\u00e9visions": "\u274c Error while generating forecasts",
-    "\u274c Format de t\u00e9l\u00e9phone invalide (ex: +212766052983 ou 0766052983)": "\u274c Invalid phone format (e.g., +212766052983 or 0766052983)",
-    "\u274c Impossible de g\u00e9n\u00e9rer les pr\u00e9visions.": "\u274c Unable to generate forecasts.",
-    "\u274c Prophet n'est pas install\u00e9. Installez: pip install prophet": "\u274c Prophet is not installed. Install: pip install prophet",
-    "\u274c SARIMAX n'est pas install\u00e9. Installez: pip install statsmodels": "\u274c SARIMAX is not installed. Install: pip install statsmodels",
-    "\u274c XGBoost n'est pas install\u00e9. Installez: pip install xgboost": "\u274c XGBoost is not installed. Install: pip install xgboost",
-    "\u274c statsmodels n'est pas install\u00e9. Installez: pip install statsmodels": "\u274c statsmodels is not installed. Install: pip install statsmodels",
-    "\ud83c\udf0d R\u00e9gions": "\ud83c\udf0d Regions",
-    "\ud83d\udca1 Astuce: t\u00e9l\u00e9chargez le fichier exemple dans la sidebar": "\ud83d\udca1 Tip: download the sample file from the sidebar",
-    "\ud83d\udca1 V\u00e9rifiez que votre fichier respecte le format requis": "\ud83d\udca1 Check that your file matches the expected format",
-    "\ud83d\udcc5 P\u00e9riode": "\ud83d\udcc5 Period",
-    "\ud83d\udcca Impact positif mod\u00e9r\u00e9 : teste d\u2019autres m\u00e9caniques promo.": "\ud83d\udcca Moderate positive impact: test other promo mechanics.",
-    "\ud83d\udcca Moyenne Cible": "\ud83d\udcca Average target",
-    "\ud83d\udccb Tableau d\u00e9taill\u00e9 des pr\u00e9visions": "\ud83d\udccb Detailed forecast table",
-    "\ud83d\udccc Ajoute des donn\u00e9es 'Oui' et 'Non' dans la colonne Promo pour mesurer l\u2019impact.": "\ud83d\udccc Add 'Yes' and 'No' values in the Promo column to measure impact.",
-    "\ud83d\udccc Pas de colonne 'Promo' dans les donn\u00e9es": "\ud83d\udccc No 'Promo' column in the data",
-    "\ud83d\udccc Pas de colonne 'Region' dans les donn\u00e9es": "\ud83d\udccc No 'Region' column in the data",
-    "\ud83d\udccc Pas de colonne 'Stock' dans les donn\u00e9es": "\ud83d\udccc No 'Stock' column in the data",
-    "\ud83d\udccc S\u00e9lectionne une colonne cat\u00e9gorique pour activer l\u2019analyse par cat\u00e9gorie.": "\ud83d\udccc Select a categorical column to enable category analysis.",
-    "\ud83d\udce6 Cat\u00e9gories": "\ud83d\udce6 Categories",
-    "\ud83d\udcf1 Votre t\u00e9l\u00e9phone (optionnel)": "\ud83d\udcf1 Your phone (optional)",
-    "\ud83d\udd0d Filtres Avanc\u00e9s": "\ud83d\udd0d Advanced filters",
-    "\ud83d\udd17 Coefficient de Corr\u00e9lation": "\ud83d\udd17 Correlation coefficient",
-    "\ud83d\udd2e G\u00e9n\u00e9rer les Pr\u00e9visions": "\ud83d\udd2e Generate forecasts",
-    "\ud83d\ude80 G\u00e9n\u00e9rer les Insights": "\ud83d\ude80 Generate insights",
-    "\ud83d\udea8 **Alerte Stock Critique!** Le stock est inf\u00e9rieur \u00e0 30% de la moyenne": "\ud83d\udea8 **Critical stock alert!** Stock is below 30% of average",
-    "\ud83e\udd16 Cette section utilise des algorithmes simples pour g\u00e9n\u00e9rer des insights automatiques": "\ud83e\udd16 This section uses simple algorithms to generate automatic insights",
-}
-
-
-def L(fr_text: str) -> str:
-    """Translate a fixed French UI string to English when needed."""
-    if get_lang() == "en":
-        return TRANSLATIONS.get(fr_text, fr_text)
-    return fr_text
-
-
 # Styles
 apply_global_styles()
 
@@ -484,13 +374,12 @@ if uploaded_file:
 
             st.markdown("---")
 
-            st.markdown(L("### ✨ Fonctionnalités Principales"))
+            st.markdown("### ✨ Fonctionnalités Principales")
             colA, colB, colC = st.columns(3)
 
             with colA:
                 st.markdown(
-                    tr(
-                        """
+                    """
 <div class='stCard'>
     <h3 style='color: #6366f1;'>📊 Analyse en Temps Réel</h3>
     <ul style='color: #64748b; line-height: 2;'>
@@ -502,26 +391,12 @@ if uploaded_file:
     </ul>
 </div>
 """,
-                        """
-<div class='stCard'>
-    <h3 style='color: #6366f1;'>📊 Real-time analysis</h3>
-    <ul style='color: #64748b; line-height: 2;'>
-        <li>Interactive dashboard</li>
-        <li>Dynamic visualizations</li>
-        <li>Automated KPIs</li>
-        <li>Multi-category comparisons</li>
-        <li>Seasonality analysis</li>
-    </ul>
-</div>
-""",
-                    ),
                     unsafe_allow_html=True,
                 )
 
             with colB:
                 st.markdown(
-                    tr(
-                        """
+                    """
 <div class='stCard'>
     <h3 style='color: #8b5cf6;'>🔮 Prévisions IA</h3>
     <ul style='color: #64748b; line-height: 2;'>
@@ -533,50 +408,23 @@ if uploaded_file:
     </ul>
 </div>
 """,
-                        """
-<div class='stCard'>
-    <h3 style='color: #8b5cf6;'>🔮 AI forecasting</h3>
-    <ul style='color: #64748b; line-height: 2;'>
-        <li>5+ ML models</li>
-        <li>Auto-select mode</li>
-        <li>Confidence intervals</li>
-        <li>Forecast up to 1 year</li>
-        <li>Model comparison</li>
-    </ul>
-</div>
-""",
-                    ),
                     unsafe_allow_html=True,
                 )
 
             with colC:
                 st.markdown(
-                    tr(
-                        """
+                    """
 <div class='stCard'>
-    <h3 style='color: #ec4899;'>🚨 Alertes Intelligentes</h3>
+    <h3 style='color: #10b981;'>🚨 Alertes Intelligentes</h3>
     <ul style='color: #64748b; line-height: 2;'>
+        <li>Notifications Email/SMS</li>
         <li>Seuils personnalisables</li>
         <li>Détection d'anomalies</li>
-        <li>Alertes stock critique</li>
-        <li>Notifications email</li>
-        <li>Historique complet</li>
+        <li>Alertes en temps réel</li>
+        <li>Historique des alertes</li>
     </ul>
 </div>
 """,
-                        """
-<div class='stCard'>
-    <h3 style='color: #ec4899;'>🚨 Smart alerts</h3>
-    <ul style='color: #64748b; line-height: 2;'>
-        <li>Custom thresholds</li>
-        <li>Anomaly detection</li>
-        <li>Critical stock alerts</li>
-        <li>Email notifications</li>
-        <li>Full history</li>
-    </ul>
-</div>
-""",
-                    ),
                     unsafe_allow_html=True,
                 )
 
@@ -624,9 +472,10 @@ if uploaded_file:
             st.plotly_chart(fig, use_container_width=True)
 
             st.markdown("---")
-            st.markdown(L("### 🚀 Guide de Démarrage Rapide"))
-            with st.expander(tr("📖 Comment utiliser VentesPRO","📖 How to use VentesPRO"), expanded=False):
-                st.markdown(tr("""
+            st.markdown("### 🚀 Guide de Démarrage Rapide")
+            with st.expander("📖 Comment utiliser VentesPRO", expanded=False):
+                st.markdown(
+                    """
 #### 1️⃣ Préparer vos données
 - Format: CSV ou Excel
 - Au moins 1 colonne date + 1 colonne numérique cible
@@ -647,42 +496,22 @@ if uploaded_file:
 - Alertes
 - Prévisions
 - Rapports / Exports
-""","""
-#### 1️⃣ Prepare your data
-- Format: CSV or Excel
-- At least 1 date column + 1 numeric target column
-- Readable dates (DD/MM/YYYY, YYYY-MM-DD, or Excel serial)
-
-#### 2️⃣ Upload the file
-- From the sidebar
-- Download the sample file if needed
-
-#### 3️⃣ Configure columns
-- Date
-- Numeric target column
-- Categorical column (optional)
-
-#### 4️⃣ Explore
-- Dashboard
-- Analysis
-- Alerts
-- Forecasts
-- Reports / Exports
-"""))
+"""
+                )
 
         # ============================================================
         # DASHBOARD
         # ============================================================
         with tab_dashboard:
-            st.markdown(tr("## 📊 Tableau de Bord Interactif","## 📊 Interactive dashboard"))
+            st.markdown("## 📊 Tableau de Bord Interactif")
 
-            with st.expander(tr("🔍 Filtres","🔍 Filters"), expanded=True):
+            with st.expander("🔍 Filtres", expanded=True):
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
                     if not _is_none_choice(cat_col):
                         cats_selected = st.multiselect(
-                            tr("Catégories","Categories"),
+                            "Catégories",
                             df[cat_col].dropna().unique(),
                             default=list(df[cat_col].dropna().unique()[:3]),
                         )
@@ -691,14 +520,14 @@ if uploaded_file:
 
                 with col2:
                     date_debut = st.date_input(
-                        tr("Date de début","Start date"),
+                        "Date de début",
                         value=df.index.min().date(),
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
                     )
                 with col3:
                     date_fin = st.date_input(
-                        tr("Date de fin","End date"),
+                        "Date de fin",
                         value=df.index.max().date(),
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
@@ -709,7 +538,7 @@ if uploaded_file:
                 df_filtered = df_filtered[df_filtered[cat_col].isin(cats_selected)]
 
             if len(df_filtered) == 0:
-                st.warning(tr("⚠️ Aucune donnée ne correspond aux filtres sélectionnés","⚠️ No data matches the selected filters"))
+                st.warning("⚠️ Aucune donnée ne correspond aux filtres sélectionnés")
                 st.stop()
 
             tab1, tab2, tab3, tab4, tab5 = st.tabs(["📈 Évolution", "🌍 Géographie", "🏷️ Promotions", "📦 Stocks", "📅 Saisonnalité"])
@@ -740,7 +569,7 @@ if uploaded_file:
                 st.plotly_chart(fig, use_container_width=True)
 
                 if not _is_none_choice(cat_col):
-                    st.markdown(L("### 🏆 Performance par Catégorie"))
+                    st.markdown("### 🏆 Performance par Catégorie")
                     perf_data = []
                     cats_for_perf = cats_selected or list(df_filtered[cat_col].dropna().unique())
 
@@ -766,16 +595,16 @@ if uploaded_file:
 
             with tab2:
                 if region_col:
-                    st.markdown(L("### 🌍 Analyse par Région"))
+                    st.markdown("### 🌍 Analyse par Région")
                     regions = df_filtered[region_col].dropna().unique()
-                    region_selected = st.selectbox(L("Choisissez une région"), regions)
+                    region_selected = st.selectbox("Choisissez une région", regions)
                     df_region = df_filtered[df_filtered[region_col] == region_selected]
 
                     c1, c2, c3 = st.columns(3)
                     with c1:
                         st.metric("💰 Total Cible", f"{df_region[target_col].sum():,.0f}")
                     with c2:
-                        st.metric(L("📊 Moyenne Cible"), f"{df_region[target_col].mean():,.0f}")
+                        st.metric("📊 Moyenne Cible", f"{df_region[target_col].mean():,.0f}")
                     with c3:
                         part = (df_region[target_col].sum() / df_filtered[target_col].sum()) * 100 if df_filtered[target_col].sum() else 0
                         st.metric("📈 Part du Total", f"{part:.1f}%")
@@ -801,7 +630,7 @@ if uploaded_file:
                         )
                         st.plotly_chart(fig, use_container_width=True)
 
-                    st.markdown(L("### 🗺️ Comparaison entre Régions"))
+                    st.markdown("### 🗺️ Comparaison entre Régions")
                     region_comparison = df_filtered.groupby(region_col)[target_col].agg(["sum", "mean", "count"])
                     region_comparison.columns = ["Total", "Moyenne", "Transactions"]
                     region_comparison = region_comparison.sort_values("Total", ascending=False)
@@ -810,7 +639,7 @@ if uploaded_file:
                         use_container_width=True,
                     )
                 else:
-                    st.info(L("📌 Pas de colonne 'Region' dans les données"))
+                    st.info("📌 Pas de colonne 'Region' dans les données")
 
             with tab3:
                 if promo_col:
@@ -856,17 +685,17 @@ if uploaded_file:
                                 unsafe_allow_html=True,
                             )
                         else:
-                            st.warning(L("⚠️ Lift non calculable (pas assez de données 'Oui/Non' ou moyenne sans promo = 0)."))
+                            st.warning("⚠️ Lift non calculable (pas assez de données 'Oui/Non' ou moyenne sans promo = 0).")
 
                         st.markdown("### 💡 Recommandations")
                         if lift is None:
-                            st.info(L("📌 Ajoute des données 'Oui' et 'Non' dans la colonne Promo pour mesurer l’impact."))
+                            st.info("📌 Ajoute des données 'Oui' et 'Non' dans la colonne Promo pour mesurer l’impact.")
                         elif lift > 20:
-                            st.success(L("✅ Promotions très efficaces : continue et optimise le ciblage."))
+                            st.success("✅ Promotions très efficaces : continue et optimise le ciblage.")
                         elif lift > 0:
-                            st.info(L("📊 Impact positif modéré : teste d’autres mécaniques promo."))
+                            st.info("📊 Impact positif modéré : teste d’autres mécaniques promo.")
                         else:
-                            st.warning(L("⚠️ Impact faible ou négatif : revois la stratégie promo."))
+                            st.warning("⚠️ Impact faible ou négatif : revois la stratégie promo.")
 
                     st.markdown("### 📈 Évolution Temporelle")
                     df_promo = df_filtered[df_filtered[promo_col] == "Oui"].resample("W")[target_col].mean()
@@ -878,14 +707,14 @@ if uploaded_file:
                     fig.update_layout(title="Comparaison hebdomadaire des valeurs", xaxis_title="Semaine", yaxis_title="Valeurs Moyennes", height=400, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info(L("📌 Pas de colonne 'Promo' dans les données"))
+                    st.info("📌 Pas de colonne 'Promo' dans les données")
 
             with tab4:
                 if stock_col:
                     st.markdown("### 📦 Gestion des Stocks")
 
                     if not _is_none_choice(cat_col):
-                        cat_stock = st.selectbox(L("Sélectionnez une catégorie"), cats_selected or list(df_filtered[cat_col].dropna().unique()), key="stock_cat")
+                        cat_stock = st.selectbox("Sélectionnez une catégorie", cats_selected or list(df_filtered[cat_col].dropna().unique()), key="stock_cat")
                         df_stock = df_filtered[df_filtered[cat_col] == cat_stock]
                     else:
                         df_stock = df_filtered
@@ -910,22 +739,22 @@ if uploaded_file:
                         st.metric("📈 Variation", f"{ratio:+.1f}%")
 
                     if stock_moyen and stock_actuel < stock_moyen * 0.3:
-                        st.error(L("🚨 **Alerte Stock Critique!** Le stock est inférieur à 30% de la moyenne"))
+                        st.error("🚨 **Alerte Stock Critique!** Le stock est inférieur à 30% de la moyenne")
                     elif stock_moyen and stock_actuel < stock_moyen * 0.5:
-                        st.warning(L("⚠️ **Stock Bas** - Envisagez un réapprovisionnement"))
+                        st.warning("⚠️ **Stock Bas** - Envisagez un réapprovisionnement")
                     else:
                         st.success("✅ Niveau de stock satisfaisant")
 
-                    st.markdown(L("### 📊 Corrélation Stock-Valeurs"))
+                    st.markdown("### 📊 Corrélation Stock-Valeurs")
                     correlation = float(df_stock[stock_col].corr(df_stock[target_col])) if len(df_stock) > 1 else 0.0
 
                     c1, c2 = st.columns([1, 2])
                     with c1:
-                        st.metric(L("🔗 Coefficient de Corrélation"), f"{correlation:.3f}")
+                        st.metric("🔗 Coefficient de Corrélation", f"{correlation:.3f}")
                         if abs(correlation) > 0.7:
                             st.info("Fort lien entre stock et valeurs")
                         elif abs(correlation) > 0.4:
-                            st.info(L("Lien modéré entre stock et valeurs"))
+                            st.info("Lien modéré entre stock et valeurs")
                         else:
                             st.info("Faible lien entre stock et valeurs")
 
@@ -934,10 +763,10 @@ if uploaded_file:
                         fig.update_layout(height=300, template="plotly_white")
                         st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info(L("📌 Pas de colonne 'Stock' dans les données"))
+                    st.info("📌 Pas de colonne 'Stock' dans les données")
 
             with tab5:
-                st.markdown(L("### 📅 Analyse Saisonnière"))
+                st.markdown("### 📅 Analyse Saisonnière")
 
                 df_season = df_filtered.copy()
                 df_season["MoisNum"] = df_season.index.month
@@ -973,7 +802,7 @@ if uploaded_file:
                 fig.update_layout(title="Performance par Jour de la Semaine", xaxis_title="Jour", yaxis_title="Valeurs Moyennes", height=400, template="plotly_white")
                 st.plotly_chart(fig, use_container_width=True)
 
-                st.markdown(L("### 🔥 Carte de Chaleur Saisonnière"))
+                st.markdown("### 🔥 Carte de Chaleur Saisonnière")
                 df_heat = df_season.copy()
                 df_heat["Mois"] = df_heat.index.month
                 df_heat["Jour"] = df_heat.index.day
@@ -1001,14 +830,14 @@ if uploaded_file:
         # ANALYSIS
         # ============================================================
         with tab_analysis:
-            st.markdown(tr("## 📈 Analyse Avancée et Statistiques","## 📈 Advanced analysis & statistics"))
+            st.markdown("## 📈 Analyse Avancée et Statistiques")
             t1, t2, t3, t4 = st.tabs(["📊 Variables", "🔗 Corrélations", "📉 Tendances", "🎯 Analyse Prédictive"])
 
             with t1:
-                st.markdown(L("### 📊 Analyse par Variable"))
+                st.markdown("### 📊 Analyse par Variable")
                 numeric_cols_all = df.select_dtypes(include=["float64", "int64", "float32", "int32"]).columns.tolist()
                 if len(numeric_cols_all) > 0:
-                    variable = st.selectbox(L("Choisissez une variable à analyser"), numeric_cols_all)
+                    variable = st.selectbox("Choisissez une variable à analyser", numeric_cols_all)
                     c1, c2 = st.columns([1, 2])
 
                     with c1:
@@ -1041,10 +870,10 @@ if uploaded_file:
                         fig.update_layout(title=f"Comparaison de {variable} entre Catégories", yaxis_title=variable, height=400, template="plotly_white")
                         st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.warning(L("Aucune variable numérique disponible pour l'analyse"))
+                    st.warning("Aucune variable numérique disponible pour l'analyse")
 
             with t2:
-                st.markdown(L("### 🔗 Analyse des Corrélations"))
+                st.markdown("### 🔗 Analyse des Corrélations")
                 numeric_df = df.select_dtypes(include=["float64", "int64", "float32", "int32"])
                 if numeric_df.shape[1] > 1:
                     corr_matrix = numeric_df.corr()
@@ -1063,7 +892,7 @@ if uploaded_file:
                     fig.update_layout(title="Matrice de Corrélation", height=600, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
 
-                    st.markdown(L("#### 🎯 Visualisation des Corrélations"))
+                    st.markdown("#### 🎯 Visualisation des Corrélations")
                     c1, c2 = st.columns(2)
                     with c1:
                         var1 = st.selectbox("Variable X", numeric_df.columns, key="corr_x")
@@ -1077,10 +906,10 @@ if uploaded_file:
                     corr_value = float(df[var1].corr(df[var2])) if len(df) > 1 else 0.0
                     st.info(f"**Coefficient de corrélation**: {corr_value:.3f}")
                 else:
-                    st.warning(L("Pas assez de variables numériques pour l'analyse de corrélation"))
+                    st.warning("Pas assez de variables numériques pour l'analyse de corrélation")
 
             with t3:
-                st.markdown(L("### 📉 Analyse des Tendances"))
+                st.markdown("### 📉 Analyse des Tendances")
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(x=df.index, y=df[target_col], mode="lines", name="Valeurs", line=dict(width=2)))
                 ma_7 = df[target_col].rolling(7).mean()
@@ -1091,8 +920,8 @@ if uploaded_file:
                 st.plotly_chart(fig, use_container_width=True)
 
             with t4:
-                st.markdown(L("### 🎯 Analyse Prédictive"))
-                st.info(L("Utilisez la section Prévisions pour des modèles avancés"))
+                st.markdown("### 🎯 Analyse Prédictive")
+                st.info("Utilisez la section Prévisions pour des modèles avancés")
 
                 # FIX: ne pas modifier df global
                 y_series = df[target_col].values.astype(float)
@@ -1113,7 +942,7 @@ if uploaded_file:
         # ALERTS
         # ============================================================
         with tab_alerts:
-            st.markdown(tr("## ⚠️ Système d'Alertes Intelligentes","## ⚠️ Smart alerts system"))
+            st.markdown("## ⚠️ Système d'Alertes Intelligentes")
             st.info(
                 "Configurez des alertes pour surveiller les variations importantes de vos valeurs.\n"
                 "Vous recevrez un email lorsque les seuils sont dépassés."
@@ -1125,14 +954,14 @@ if uploaded_file:
                     nom = st.text_input("👤 Votre nom*", placeholder="Ex: Mohamed HADI")
                     email = st.text_input("📧 Votre email*", placeholder="Ex: mohamed@exemple.com")
                 with col2:
-                    phone = st.text_input(L("📱 Votre téléphone (optionnel)"), placeholder="Ex: +212766052983")
+                    phone = st.text_input("📱 Votre téléphone (optionnel)", placeholder="Ex: +212766052983")
 
-                st.markdown(L("### 📊 Paramètres d'Alerte"))
+                st.markdown("### 📊 Paramètres d'Alerte")
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
                     if not _is_none_choice(cat_col):
-                        produit_alert = st.selectbox(L("Catégorie à surveiller"), df[cat_col].dropna().unique())
+                        produit_alert = st.selectbox("Catégorie à surveiller", df[cat_col].dropna().unique())
                     else:
                         produit_alert = None
 
@@ -1141,13 +970,13 @@ if uploaded_file:
                 with col3:
                     seuil_baisse = st.number_input("📉 Seuil de baisse (%)", min_value=0.0, value=10.0, step=5.0)
 
-                submitted = st.form_submit_button(tr("✅ Activer les Alertes","✅ Enable alerts"), type="primary", use_container_width=True)
+                submitted = st.form_submit_button("✅ Activer les Alertes", type="primary", use_container_width=True)
 
                 if submitted:
                     if nom and email:
                         if validate_email(email):
                             if phone and not validate_phone(phone):
-                                st.error(L("❌ Format de téléphone invalide (ex: +212766052983 ou 0766052983)"))
+                                st.error("❌ Format de téléphone invalide (ex: +212766052983 ou 0766052983)")
                             else:
                                 user_data = {
                                     "Nom": [nom],
@@ -1160,7 +989,7 @@ if uploaded_file:
                                 }
 
                                 if append_to_excel(user_data):
-                                    st.success(L("✅ Alertes activées! Vous recevrez un email de confirmation."))
+                                    st.success("✅ Alertes activées! Vous recevrez un email de confirmation.")
                                     send_email_safe(
                                         email,
                                         "Confirmation d'Activation des Alertes - VentesPRO",
@@ -1180,15 +1009,15 @@ L'équipe VentesPRO
 """,
                                     )
                                 else:
-                                    st.error(L("❌ Erreur lors de l'enregistrement. Essayez à nouveau."))
+                                    st.error("❌ Erreur lors de l'enregistrement. Essayez à nouveau.")
                         else:
                             st.error("❌ Format d'email invalide")
                     else:
                         st.error("❌ Veuillez remplir les champs obligatoires")
 
             st.markdown("---")
-            st.markdown(L("### 🚨 Détection en Temps Réel"))
-            if st.button(tr("🔍 Vérifier les Alertes Maintenant","🔍 Check alerts now"), use_container_width=True):
+            st.markdown("### 🚨 Détection en Temps Réel")
+            if st.button("🔍 Vérifier les Alertes Maintenant", use_container_width=True):
                 with st.spinner("Analyse en cours..."):
                     last_two = df[target_col].tail(2)
                     if len(last_two) == 2 and float(last_two.iloc[0]) != 0:
@@ -1198,9 +1027,9 @@ L'équipe VentesPRO
                         else:
                             st.success("✅ Aucune variation significative")
                     else:
-                        st.info(L("Pas assez de données pour détecter des variations"))
+                        st.info("Pas assez de données pour détecter des variations")
 
-            st.markdown(tr("### 📜 Historique des Alertes","### 📜 Alerts history"))
+            st.markdown("### 📜 Historique des Alertes")
             alertes_exemple = pd.DataFrame(
                 {
                     "Date": [datetime.now() - timedelta(days=i) for i in range(5)],
@@ -1215,30 +1044,28 @@ L'équipe VentesPRO
         # FORECAST
         # ============================================================
         with tab_forecast:
-            st.markdown(tr("## 🔮 Prévisions par Intelligence Artificielle","## 🔮 AI forecasting"))
-            st.info(tr(
+            st.markdown("## 🔮 Prévisions par Intelligence Artificielle")
+            st.info(
                 "Générez des prévisions pour votre colonne cible en utilisant des modèles.\n"
                 "✅ Compatible avec n’importe quelle colonne numérique\n"
-                "✅ Date optionnelle (si pas de date, une timeline est générée automatiquement)",
-                "Generate forecasts for your target column using models.\n"
-                "✅ Works with any numeric column\n"
-                "✅ Date optional (if missing, a timeline is generated automatically)"
-            ))
-            st.markdown(tr(
-                "**Modèles conseillés** : Auto (comparaison), Random Forest, XGBoost, SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business.",
-                "**Recommended models**: Auto (comparison), Random Forest, XGBoost, SARIMA / Holt-Winters (seasonality) and Prophet for business time series."
-            ))
+                "✅ Date optionnelle (si pas de date, une timeline est générée automatiquement)"
+            )
+            st.markdown(
+                "**Modèles conseillés** : Auto (comparaison), Random Forest, XGBoost, "
+                "SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business."
+            )
 
             col1, col2, col3 = st.columns(3)
 
             with col1:
                 if not _is_none_choice(cat_col):
-                    produit = st.selectbox(L("Catégorie à prévoir"), df[cat_col].dropna().unique())
+                    produit = st.selectbox("Catégorie à prévoir", df[cat_col].dropna().unique())
                 else:
                     produit = "Globale"
 
             with col2:
-                model_type = st.selectbox(L("Modèle de prévision"),
+                model_type = st.selectbox(
+                    "Modèle de prévision",
                     [
                         "Auto (Comparaison)",
                         "Naïf (Dernière valeur)",
@@ -1254,11 +1081,11 @@ L'équipe VentesPRO
                 )
 
             with col3:
-                horizon = st.number_input(L("Horizon de prévision (nombre de points)"), min_value=1, max_value=365, value=30, step=1)
+                horizon = st.number_input("Horizon de prévision (nombre de points)", min_value=1, max_value=365, value=30, step=1)
 
             show_confidence = st.checkbox("Afficher intervalles de confiance (95%)", value=True)
 
-            if st.button(L("🔮 Générer les Prévisions"), type="primary", use_container_width=True):
+            if st.button("🔮 Générer les Prévisions", type="primary", use_container_width=True):
                 status_text = st.empty()
                 progress_bar = st.progress(0)
 
@@ -1393,7 +1220,7 @@ L'équipe VentesPRO
                         try:
                             from statsmodels.tsa.holtwinters import ExponentialSmoothing
                         except Exception:
-                            st.error(L("❌ statsmodels n'est pas installé. Installez: pip install statsmodels"))
+                            st.error("❌ statsmodels n'est pas installé. Installez: pip install statsmodels")
                             progress_bar.empty()
                             status_text.empty()
                             st.stop()
@@ -1472,7 +1299,7 @@ L'équipe VentesPRO
                     # -------------------------
                     elif model_type == "XGBoost":
                         if not _XGBOOST_OK:
-                            st.error(L("❌ XGBoost n'est pas installé. Installez: pip install xgboost"))
+                            st.error("❌ XGBoost n'est pas installé. Installez: pip install xgboost")
                             progress_bar.empty()
                             status_text.empty()
                             st.stop()
@@ -1525,7 +1352,7 @@ L'équipe VentesPRO
                         try:
                             from statsmodels.tsa.arima.model import ARIMA
                         except Exception:
-                            st.error(L("❌ statsmodels n'est pas installé. Installez: pip install statsmodels"))
+                            st.error("❌ statsmodels n'est pas installé. Installez: pip install statsmodels")
                             progress_bar.empty()
                             status_text.empty()
                             st.stop()
@@ -1564,7 +1391,7 @@ L'équipe VentesPRO
                         progress_bar.progress(25)
 
                         if not _SARIMAX_OK:
-                            st.error(L("❌ SARIMAX n'est pas installé. Installez: pip install statsmodels"))
+                            st.error("❌ SARIMAX n'est pas installé. Installez: pip install statsmodels")
                             progress_bar.empty()
                             status_text.empty()
                             st.stop()
@@ -1610,7 +1437,7 @@ L'équipe VentesPRO
                         progress_bar.progress(25)
 
                         if not _PROPHET_OK:
-                            st.error(L("❌ Prophet n'est pas installé. Installez: pip install prophet"))
+                            st.error("❌ Prophet n'est pas installé. Installez: pip install prophet")
                             progress_bar.empty()
                             status_text.empty()
                             st.stop()
@@ -1812,7 +1639,7 @@ L'équipe VentesPRO
                         backtest_rmse = results[best_model].get("RMSE")
 
                         st.success(f"🏆 Meilleur modèle : **{best_model}**")
-                        st.markdown(L("### 📊 Comparaison des modèles"))
+                        st.markdown("### 📊 Comparaison des modèles")
                         st.dataframe(comparison_df.style.format({"MAE": "{:.2f}", "RMSE": "{:.2f}"}), use_container_width=True)
 
                         forecast_df = forecasts_dict[best_model]
@@ -1826,11 +1653,11 @@ L'équipe VentesPRO
                     status_text.empty()
 
                     if forecast_df is None:
-                        st.error(L("❌ Impossible de générer les prévisions."))
+                        st.error("❌ Impossible de générer les prévisions.")
                         st.stop()
 
                     st.markdown("---")
-                    st.success(L("✅ Prévisions générées avec succès!"))
+                    st.success("✅ Prévisions générées avec succès!")
 
                     fig = go.Figure()
                     fig.add_trace(
@@ -1877,7 +1704,7 @@ L'équipe VentesPRO
                     )
                     st.plotly_chart(fig, use_container_width=True)
 
-                    st.markdown(L("### 📊 Statistiques des Prévisions"))
+                    st.markdown("### 📊 Statistiques des Prévisions")
                     c1, c2, c3, c4 = st.columns(4)
 
                     avg_forecast = float(forecast_df["Prévision"].mean())
@@ -1906,8 +1733,8 @@ L'équipe VentesPRO
                     reliability = 100 - min(70, volatility_pct) - data_penalty - model_penalty - mae_penalty
                     reliability = max(0, min(100, round(reliability, 1)))
 
-                    st.markdown(L("### 🧭 Score de fiabilité"))
-                    st.metric(L("Fiabilité estimée"), f"{reliability:.1f}%")
+                    st.markdown("### 🧭 Score de fiabilité")
+                    st.metric("Fiabilité estimée", f"{reliability:.1f}%")
                     st.caption("Estimation basée sur un backtest rapide, la stabilité récente et la longueur de l'historique. Ce score n'est pas une garantie.")
 
                     st.markdown("### 💡 Insights")
@@ -1930,14 +1757,14 @@ L'équipe VentesPRO
                         else:
                             st.success(f"✅ Faible volatilité : {volatility:.1f}%")
 
-                    with st.expander(L("📋 Tableau détaillé des prévisions")):
+                    with st.expander("📋 Tableau détaillé des prévisions"):
                         display_df = forecast_df.copy()
                         display_df["Date"] = pd.to_datetime(display_df["Date"]).dt.strftime("%d/%m/%Y")
                         display_df["Prévision"] = display_df["Prévision"].astype(float).round(2)
                         st.dataframe(display_df, use_container_width=True, hide_index=True)
 
                     st.markdown('<div id="telechargements"></div>', unsafe_allow_html=True)
-                    st.markdown(L("### 💾 Téléchargements"))
+                    st.markdown("### 💾 Téléchargements")
                     colA, colB = st.columns(2)
 
                     with colA:
@@ -1989,7 +1816,7 @@ PRÉVISIONS:
                 except Exception as e:
                     progress_bar.empty()
                     status_text.empty()
-                    st.error(L("❌ Erreur lors de la génération des prévisions"))
+                    st.error("❌ Erreur lors de la génération des prévisions")
                     st.error(str(e))
                     with st.expander("🔍 Traceback"):
                         st.code(traceback.format_exc())
@@ -1998,25 +1825,26 @@ PRÉVISIONS:
         # DATA
         # ============================================================
         with tab_data:
-            st.markdown(tr("## 📂 Exploration des Données Brutes","## 📂 Raw data explorer"))
+            st.markdown("## 📂 Exploration des Données Brutes")
 
-            with st.expander(L("🔍 Filtres Avancés"), expanded=True):
+            with st.expander("🔍 Filtres Avancés", expanded=True):
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
                     if not _is_none_choice(cat_col):
-                        cats_filter = st.multiselect(L("📦 Catégories"), df[cat_col].dropna().unique(), default=list(df[cat_col].dropna().unique()[:5]))
+                        cats_filter = st.multiselect("📦 Catégories", df[cat_col].dropna().unique(), default=list(df[cat_col].dropna().unique()[:5]))
                     else:
                         cats_filter = None
 
                 with col2:
                     if region_col:
-                        regions_filter = st.multiselect(L("🌍 Régions"), df[region_col].dropna().unique(), default=list(df[region_col].dropna().unique()[:3]))
+                        regions_filter = st.multiselect("🌍 Régions", df[region_col].dropna().unique(), default=list(df[region_col].dropna().unique()[:3]))
                     else:
                         regions_filter = None
 
                 with col3:
-                    date_range = st.date_input(L("📅 Période"),
+                    date_range = st.date_input(
+                        "📅 Période",
                         [df.index.min().date(), df.index.max().date()],
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
@@ -2031,24 +1859,24 @@ PRÉVISIONS:
             if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
                 df_filtered2 = df_filtered2.loc[pd.to_datetime(date_range[0]) : pd.to_datetime(date_range[1])]
 
-            st.markdown(L("### 📊 Statistiques des Données Filtrées"))
+            st.markdown("### 📊 Statistiques des Données Filtrées")
             c1, c2, c3, c4 = st.columns(4)
             with c1:
                 st.metric("📦 Lignes", len(df_filtered2))
             with c2:
                 days = (df_filtered2.index.max() - df_filtered2.index.min()).days if len(df_filtered2) else 0
-                st.metric(L("📅 Période"), f"{days} jours")
+                st.metric("📅 Période", f"{days} jours")
             with c3:
                 st.metric("💰 Total Cible", f"{df_filtered2[target_col].sum():,.0f}")
             with c4:
-                st.metric(L("📊 Moyenne Cible"), f"{df_filtered2[target_col].mean():,.0f}")
+                st.metric("📊 Moyenne Cible", f"{df_filtered2[target_col].mean():,.0f}")
 
-            st.markdown(L("### 📋 Tableau de Données"))
+            st.markdown("### 📋 Tableau de Données")
             c1, c2, c3 = st.columns(3)
             with c1:
                 show_index = st.checkbox("Afficher l'index", value=True)
             with c2:
-                n_rows = st.number_input(L("Lignes à afficher"), 10, max(10, len(df_filtered2)), 50)
+                n_rows = st.number_input("Lignes à afficher", 10, max(10, len(df_filtered2)), 50)
             with c3:
                 sort_col = st.selectbox("Trier par", df_filtered2.columns)
 
@@ -2056,7 +1884,7 @@ PRÉVISIONS:
             st.dataframe(df_display, use_container_width=True, hide_index=not show_index)
 
             st.markdown('<div id="telechargements"></div>', unsafe_allow_html=True)
-            st.markdown(L("### 💾 Exporter les Données"))
+            st.markdown("### 💾 Exporter les Données")
 
             col1, col2, col3 = st.columns(3)
 
@@ -2096,14 +1924,14 @@ PRÉVISIONS:
                 )
 
             st.markdown("---")
-            st.markdown(L("### 🔍 Analyse Rapide"))
+            st.markdown("### 🔍 Analyse Rapide")
             tA, tB = st.tabs(["📊 Statistiques Descriptives", "📈 Distribution"])
 
             with tA:
                 if len(df_filtered2):
                     st.dataframe(df_filtered2.describe(), use_container_width=True)
                 else:
-                    st.info(L("Aucune donnée à décrire (filtre trop strict)."))
+                    st.info("Aucune donnée à décrire (filtre trop strict).")
 
             with tB:
                 numeric_cols = df_filtered2.select_dtypes(include=["float64", "int64", "float32", "int32"]).columns
@@ -2113,49 +1941,49 @@ PRÉVISIONS:
                     fig.update_layout(height=400, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info(L("Pas de variable numérique (ou pas de données) pour afficher une distribution."))
+                    st.info("Pas de variable numérique (ou pas de données) pour afficher une distribution.")
 
         # ============================================================
         # REPORTS
         # ============================================================
         with tab_reports:
-            st.markdown(tr("## 📑 Rapports Automatisés","## 📑 Automated reports"))
-            st.markdown(L("### 📊 Rapport Général"))
+            st.markdown("## 📑 Rapports Automatisés")
+            st.markdown("### 📊 Rapport Général")
 
             col1, col2 = st.columns(2)
             with col1:
-                date_debut_rapport = st.date_input(tr("Date de début","Start date"), value=df.index.min().date(), key="rapport_debut")
+                date_debut_rapport = st.date_input("Date de début", value=df.index.min().date(), key="rapport_debut")
             with col2:
-                date_fin_rapport = st.date_input(tr("Date de fin","End date"), value=df.index.max().date(), key="rapport_fin")
+                date_fin_rapport = st.date_input("Date de fin", value=df.index.max().date(), key="rapport_fin")
 
             df_rapport = df[(df.index >= pd.to_datetime(date_debut_rapport)) & (df.index <= pd.to_datetime(date_fin_rapport))]
             croissance = float(df_rapport[target_col].pct_change().mean() * 100) if len(df_rapport) > 1 else 0.0
 
             c1, c2, c3, c4 = st.columns(4)
             with c1:
-                st.metric(L("📅 Période"), f"{len(df_rapport)} entrées")
+                st.metric("📅 Période", f"{len(df_rapport)} entrées")
             with c2:
                 st.metric("💰 Total Cible", f"{df_rapport[target_col].sum():,.0f}")
             with c3:
-                st.metric(L("📊 Moyenne Cible"), f"{df_rapport[target_col].mean():,.0f}")
+                st.metric("📊 Moyenne Cible", f"{df_rapport[target_col].mean():,.0f}")
             with c4:
                 st.metric("📈 Croissance Moy.", f"{croissance:+.2f}%")
 
             st.markdown("---")
-            st.markdown(L("### 📊 Analyse Détaillée"))
+            st.markdown("### 📊 Analyse Détaillée")
 
             if (not _is_none_choice(cat_col)) and len(df_rapport):
                 col1, col2 = st.columns(2)
 
                 with col1:
-                    st.markdown(L("#### 🏆 Top 5 Catégories"))
+                    st.markdown("#### 🏆 Top 5 Catégories")
                     top_cats = df_rapport.groupby(cat_col)[target_col].sum().sort_values(ascending=False).head(5)
                     fig = go.Figure(go.Bar(x=top_cats.values, y=top_cats.index.astype(str), orientation="h", text=top_cats.values, texttemplate="%{text:,.0f}", textposition="outside"))
                     fig.update_layout(title="Top 5 Catégories", xaxis_title="Valeurs", height=400, template="plotly_white")
                     st.plotly_chart(fig, use_container_width=True)
 
                 with col2:
-                    st.markdown(L("#### 📉 5 Catégories les Moins Performantes"))
+                    st.markdown("#### 📉 5 Catégories les Moins Performantes")
                     bottom_cats = df_rapport.groupby(cat_col)[target_col].sum().sort_values().head(5)
                     fig = go.Figure(go.Bar(x=bottom_cats.values, y=bottom_cats.index.astype(str), orientation="h", text=bottom_cats.values, texttemplate="%{text:,.0f}", textposition="outside"))
                     fig.update_layout(title="5 Catégories à Améliorer", xaxis_title="Valeurs", height=400, template="plotly_white")
@@ -2172,7 +2000,7 @@ PRÉVISIONS:
                 fig.update_layout(title="Évolution Quotidienne des Valeurs", xaxis_title="Date", yaxis_title="Valeurs", height=400, template="plotly_white")
                 st.plotly_chart(fig, use_container_width=True)
             else:
-                st.info(L("Aucune donnée sur la période sélectionnée."))
+                st.info("Aucune donnée sur la période sélectionnée.")
 
             st.markdown("---")
             st.markdown("### 💡 Insights et Recommandations")
@@ -2225,7 +2053,7 @@ PRÉVISIONS:
 
             st.markdown("---")
             st.markdown('<div id="telechargements"></div>', unsafe_allow_html=True)
-            st.markdown(L("### 💾 Télécharger le Rapport"))
+            st.markdown("### 💾 Télécharger le Rapport")
 
             rapport_complet = f"""
 ╔══════════════════════════════════════════════════════════╗
@@ -2293,10 +2121,10 @@ Fin du Rapport
         # INSIGHTS
         # ============================================================
         with tab_insights:
-            st.markdown(tr("## 💡 Insights Générés par Intelligence Artificielle","## 💡 AI-generated insights"))
-            st.info(L("🤖 Cette section utilise des algorithmes simples pour générer des insights automatiques"))
+            st.markdown("## 💡 Insights Générés par Intelligence Artificielle")
+            st.info("🤖 Cette section utilise des algorithmes simples pour générer des insights automatiques")
 
-            if st.button(L("🚀 Générer les Insights"), type="primary", use_container_width=True):
+            if st.button("🚀 Générer les Insights", type="primary", use_container_width=True):
                 import time
 
                 with st.spinner("🔎 Analyse en cours..."):
@@ -2306,7 +2134,7 @@ Fin du Rapport
                         progress.progress(i + 1)
                     progress.empty()
 
-                st.success(L("✅ Analyse terminée!"))
+                st.success("✅ Analyse terminée!")
 
                 st.markdown("---")
                 st.markdown("### 🎯 Insights Principaux")
@@ -2320,7 +2148,7 @@ Fin du Rapport
                     st.warning(f"⚠️ Attention : décroissance moyenne ~ **{croissance_global:.2f}%**")
 
                 st.markdown("---")
-                st.markdown(L("### 📅 Analyse de Saisonnalité"))
+                st.markdown("### 📅 Analyse de Saisonnalité")
 
                 monthly_avg = df.groupby(df.index.month)[target_col].mean()
                 best_month = int(monthly_avg.idxmax()) if len(monthly_avg) else 1
@@ -2333,7 +2161,7 @@ Fin du Rapport
                 )
 
                 st.markdown("---")
-                st.markdown(L("### 📦 Analyse des Catégories"))
+                st.markdown("### 📦 Analyse des Catégories")
 
                 if (not _is_none_choice(cat_col)) and (cat_col in df.columns):
                     prod_perf = df.groupby(cat_col)[target_col].agg(["sum", "mean", "std"]).round(2)
@@ -2344,7 +2172,7 @@ Fin du Rapport
                     col1, col2 = st.columns(2)
 
                     with col1:
-                        st.markdown(L("#### 🎯 Catégories Stratégiques"))
+                        st.markdown("#### 🎯 Catégories Stratégiques")
                         top_3 = prod_perf.head(3)
                         for i, (prod, row) in enumerate(top_3.iterrows(), 1):
                             total_sum = float(df[target_col].sum()) if df[target_col].sum() else 0.0
@@ -2353,7 +2181,7 @@ Fin du Rapport
                             st.success(f"**{i}. {prod}**\n- Part du total: {part_marche:.1f}%\n- Stabilité: {stability}")
 
                     with col2:
-                        st.markdown(L("#### 🚀 Opportunités de Croissance"))
+                        st.markdown("#### 🚀 Opportunités de Croissance")
                         bottom_3 = prod_perf.tail(3)
                         avg_mean = float(prod_perf["Moyenne"].mean()) if len(prod_perf) else 0.0
                         for prod, row in bottom_3.iterrows():
@@ -2364,10 +2192,10 @@ Fin du Rapport
                             action = "Promouvoir" if potentiel > 50 else ("Optimiser" if potentiel > 20 else "Surveiller")
                             st.warning(f"**{prod}**\n- Potentiel: {potentiel:+.1f}%\n- Action: {action}")
                 else:
-                    st.info(L("📌 Sélectionne une colonne catégorique pour activer l’analyse par catégorie."))
+                    st.info("📌 Sélectionne une colonne catégorique pour activer l’analyse par catégorie.")
 
                 st.markdown("---")
-                st.markdown(L("### 🔮 Prédictions Express"))
+                st.markdown("### 🔮 Prédictions Express")
 
                 last_30_days = float(df[target_col].tail(30).mean()) if len(df) else 0.0
                 trend_30 = float(df[target_col].tail(30).pct_change().mean()) if len(df) > 1 else 0.0
@@ -2382,7 +2210,7 @@ Fin du Rapport
         # SUPPORT
         # ============================================================
         with tab_support:
-            st.markdown(tr("## 🛠️ Support Technique","## 🛠️ Technical support"))
+            st.markdown("## 🛠️ Support Technique")
 
             col1, col2 = st.columns(2)
             with col1:
@@ -2391,7 +2219,7 @@ Fin du Rapport
 <div class='stCard'>
     <h3 style='color: #6366f1;'>📧 Email</h3>
     <p style='font-size: 1.2rem; color: #1e293b;'>{SUPPORT_EMAIL}</p>
-    <p style='color: #64748b;'>Reply within 24 business hours</p>
+    <p style='color: #64748b;'>Réponse sous 24h ouvrées</p>
 </div>
 """,
                     unsafe_allow_html=True,
@@ -2402,7 +2230,7 @@ Fin du Rapport
 <div class='stCard'>
     <h3 style='color: #6366f1;'>📱 Téléphone</h3>
     <p style='font-size: 1.2rem; color: #1e293b;'>{SUPPORT_PHONE}</p>
-    <p style='color: #64748b;'>Mon-Fri: 9am-6pm (GMT+1)</p>
+    <p style='color: #64748b;'>Lun-Ven: 9h-18h (GMT+1)</p>
 </div>
 """,
                     unsafe_allow_html=True,
@@ -2421,7 +2249,7 @@ Fin du Rapport
                 sujet = st.selectbox("📋 Sujet", ["Question générale", "Problème technique", "Demande de fonctionnalité", "Aide à l'utilisation", "Autre"])
                 message_support = st.text_area("💬 Votre message*", placeholder="Décrivez votre demande en détail...", height=150)
 
-                submitted = st.form_submit_button(tr("📤 Envoyer le Message","📤 Send message"), type="primary", use_container_width=True)
+                submitted = st.form_submit_button("📤 Envoyer le Message", type="primary", use_container_width=True)
                 if submitted:
                     if nom_support and email_support and message_support:
                         if validate_email(email_support):
@@ -2452,7 +2280,7 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
                             )
 
                             if success:
-                                st.success(L("✅ Votre message a été envoyé avec succès! Nous vous répondrons sous 24h."))
+                                st.success("✅ Votre message a été envoyé avec succès! Nous vous répondrons sous 24h.")
                                 st.balloons()
                             else:
                                 st.warning(f"Message enregistré mais {msg}")
@@ -2462,9 +2290,9 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
                         st.error("❌ Veuillez remplir tous les champs obligatoires")
 
             st.markdown("---")
-            st.markdown(L("### ❓ Questions Fréquentes"))
+            st.markdown("### ❓ Questions Fréquentes")
 
-            faqs_fr = [
+            faqs = [
                 {
                     "question": "Comment charger mes données?",
                     "reponse": "Utilisez le bouton d’upload dans la sidebar. CSV/Excel acceptés. Assurez-vous d’avoir une colonne date et une colonne numérique (ex: Ventes).",
@@ -2491,34 +2319,6 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
                 },
             ]
 
-            faqs_en = [
-                {
-                    "question": "How do I upload my data?",
-                    "reponse": "Use the upload button in the sidebar. CSV/Excel supported. Make sure you have a date column and a numeric column (e.g., Sales).",
-                },
-                {
-                    "question": "Which date formats are accepted?",
-                    "reponse": "DD/MM/YYYY, YYYY-MM-DD, and even Excel serial dates are supported via robust parsing.",
-                },
-                {
-                    "question": "How do forecasts work?",
-                    "reponse": "Several models are available. Auto mode backtests multiple models and chooses the best one (MAE).",
-                },
-                {
-                    "question": "How do I configure alerts?",
-                    "reponse": "In the Alerts tab: enter name + email, choose a category (optional), and set the thresholds.",
-                },
-                {
-                    "question": "Can I export my analyses?",
-                    "reponse": "Yes: CSV/Excel/JSON in the Data tab, and TXT reports in the Reports/Forecasts tab.",
-                },
-                {
-                    "question": "Is my data secure?",
-                    "reponse": "Data stays within the Streamlit session. Emails depend on your sending configuration.",
-                },
-            ]
-
-            faqs = faqs_fr if get_lang() == "fr" else faqs_en
             for i, faq in enumerate(faqs):
                 with st.expander(f"❓ {faq['question']}", expanded=(i == 0)):
                     st.markdown(faq["reponse"])
@@ -2527,13 +2327,13 @@ Envoyé le: {datetime.now().strftime('%d/%m/%Y à %H:%M')}
         fname = uploaded_file.name if uploaded_file is not None else "fichier"
         st.error(f"❌ Erreur lors du chargement/traitement ({fname}): {str(e)}")
         st.code(traceback.format_exc())
-        st.info(L("💡 Vérifiez que votre fichier respecte le format requis"))
+        st.info("💡 Vérifiez que votre fichier respecte le format requis")
 
 else:
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown(tr("## 🚀 Bienvenue sur VentesPro Analytics","## 🚀 Welcome to VentesPro Analytics"))
-        st.markdown(tr("### Votre plateforme d'analyse et de prévision des ventes par IA","### Your AI-powered sales analytics and forecasting platform"))
+        st.markdown("## 🚀 Bienvenue sur VentesPro Analytics")
+        st.markdown("### Votre plateforme d'analyse et de prévision des ventes par IA")
         st.info(
             """
 ### 📋 Pour Commencer
@@ -2546,12 +2346,12 @@ else:
 **3️⃣ Explorez** les fonctionnalités!
 """
         )
-        st.success(L("💡 Astuce: téléchargez le fichier exemple dans la sidebar"))
+        st.success("💡 Astuce: téléchargez le fichier exemple dans la sidebar")
 
 # Footer
 st.markdown("---")
 st.markdown(
-    tr("""
+    """
 <div style='text-align: center; padding: 2rem 0; color: #e2e8f0;'>
     <p style='margin: 0; font-size: 0.9rem;'>
         © 2025 VentesPro Analytics | Développé avec ❤️ par Mohamed HADI
@@ -2560,15 +2360,6 @@ st.markdown(
         Version 2.0 | Propulsé par Streamlit & IA
     </p>
 </div>
-""","""
-<div style='text-align: center; padding: 2rem 0; color: #e2e8f0;'>
-    <p style='margin: 0; font-size: 0.9rem;'>
-        © 2025 VentesPro Analytics | Built with ❤️ by Mohamed HADI
-    </p>
-    <p style='margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;'>
-        Version 2.0 | Powered by Streamlit & AI
-    </p>
-</div>
-"""),
+""",
     unsafe_allow_html=True,
 )
