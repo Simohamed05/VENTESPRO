@@ -593,6 +593,33 @@ CSS_STYLES = """
       }
     }
 
+    /* Final sidebar contrast fixes (must stay last) */
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] label,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] span,
+    [data-testid="stSidebar"] .stMarkdown p,
+    [data-testid="stSidebar"] .stMarkdown li,
+    [data-testid="stSidebar"] .stMarkdown span {
+      color: #f8fafc !important;
+      opacity: 1 !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stMetric"] {
+      background: rgba(15, 23, 42, 0.72) !important;
+      border: 1px solid rgba(148, 163, 184, 0.35) !important;
+      box-shadow: none !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stMetricLabel"],
+    [data-testid="stSidebar"] [data-testid="stMetricValue"] {
+      color: #f8fafc !important;
+    }
+
+    [data-testid="stSidebar"] .stAlert p,
+    [data-testid="stSidebar"] .stAlert div,
+    [data-testid="stSidebar"] .stAlert span {
+      color: #f8fafc !important;
+    }
+
 </style>
 """
 
