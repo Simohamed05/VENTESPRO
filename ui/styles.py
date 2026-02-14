@@ -136,6 +136,21 @@ CSS_STYLES = """
         background: #cbd5e1 !important;
     }
 
+    /* Download button sidebar: lisibilité élevée */
+    [data-testid="stSidebar"] .stDownloadButton > button {
+        background: #2563eb !important;
+        color: #ffffff !important;
+        border: 1px solid #1d4ed8 !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        box-shadow: 0 8px 16px rgba(37, 99, 235, 0.28) !important;
+    }
+    [data-testid="stSidebar"] .stDownloadButton > button:hover {
+        background: #1d4ed8 !important;
+        color: #ffffff !important;
+        transform: translateY(-1px) !important;
+    }
+
     /* Titres - Adaptatifs */
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Sora', 'Plus Jakarta Sans', sans-serif !important;
