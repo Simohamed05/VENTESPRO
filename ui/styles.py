@@ -378,30 +378,6 @@ CSS_STYLES = """
       gap: 0.3rem;
     }
 
-    /* Footer */
-    .vp-footer{
-      position: static;
-      z-index: 1;
-      clear: both;
-      text-align: center;
-      margin-top: 1.5rem;
-      padding: 1.2rem 0 0.6rem 0;
-      border-top: 1px solid var(--vp-border);
-      color: var(--vp-text-muted);
-    }
-    .vp-footer-main{
-      margin: 0;
-      font-size: 0.92rem;
-      color: var(--vp-text-muted);
-      font-weight: 600;
-    }
-    .vp-footer-sub{
-      margin: 0.4rem 0 0 0;
-      font-size: 0.82rem;
-      color: var(--vp-text-muted);
-      opacity: 0.9;
-    }
-
 </style>
 """
 

@@ -2326,17 +2326,14 @@ else:
         st.success(t("tip_example_file"))
 
 # Footer
-st.markdown("---")
-st.markdown(
-    f"""
-<div class='vp-footer'>
-    <p class='vp-footer-main'>
-        {t("footer_built_by", name="Mohamed HADI")}
-    </p>
-    <p class='vp-footer-sub'>
-        {t("footer_version_powered")}
-    </p>
-</div>
-""",
-    unsafe_allow_html=True,
-)
+st.divider()
+_f1, _f2, _f3 = st.columns([1, 2, 1])
+with _f2:
+    st.markdown(
+        f"<p style='text-align:center; font-weight:600; margin:0;'>{t('footer_built_by', name='Mohamed HADI')}</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"<p style='text-align:center; opacity:.85; margin:.25rem 0 0 0;'>{t('footer_version_powered')}</p>",
+        unsafe_allow_html=True,
+    )
