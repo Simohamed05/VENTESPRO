@@ -64,7 +64,7 @@ CSS_STYLES = """
             --vp-surface: #111827;
             --vp-surface-strong: #0f172a;
             --vp-text: #e2e8f0;
-            --vp-text-muted: #94a3b8;
+            --vp-text-muted: #f1f5f9;
             --vp-border: rgba(148, 163, 184, 0.24);
             --vp-border-strong: rgba(148, 163, 184, 0.4);
             --vp-primary: #60a5fa;
@@ -553,7 +553,7 @@ def apply_theme_overrides(theme_mode: str = "auto") -> None:
         --vp-surface: #111827;
         --vp-surface-strong: #0f172a;
         --vp-text: #e2e8f0;
-        --vp-text-muted: #94a3b8;
+        --vp-text-muted: #f1f5f9;
         --vp-border: rgba(148, 163, 184, 0.24);
         --vp-border-strong: rgba(148, 163, 184, 0.4);
         --vp-primary: #60a5fa;
