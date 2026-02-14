@@ -12,6 +12,10 @@ TRANSLATIONS = {
         "lang_label": "🌐 Langue",
         "lang_fr": "FR",
         "lang_en": "EN",
+        "theme_label": "🎨 Thème",
+        "theme_auto": "Auto",
+        "theme_light": "Clair",
+        "theme_dark": "Sombre",
 
         # =========================
         # Sidebar / Upload
@@ -242,6 +246,10 @@ TRANSLATIONS = {
         "lang_label": "🌐 Language",
         "lang_fr": "FR",
         "lang_en": "EN",
+        "theme_label": "🎨 Theme",
+        "theme_auto": "Auto",
+        "theme_light": "Light",
+        "theme_dark": "Dark",
 
         # =========================
         # Sidebar / Upload

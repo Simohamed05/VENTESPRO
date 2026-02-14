@@ -64,7 +64,7 @@ from plotly.subplots import make_subplots
 # -----------------------------
 # UI & utils
 # -----------------------------
-from ui.styles import apply_global_styles
+from ui.styles import apply_global_styles, apply_theme_overrides
 from ui.topbar import render_topbar
 from utils.data import load_data
 from utils.email import SUPPORT_EMAIL, SUPPORT_PHONE, append_to_excel, send_email_safe
@@ -253,10 +253,16 @@ st.set_page_config(
 # ============================================================
 if "lang" not in st.session_state:
     st.session_state["lang"] = "fr"
+if "theme_mode" not in st.session_state:
+    st.session_state["theme_mode"] = "auto"
 
 
 def _on_lang_change() -> None:
     set_lang(st.session_state.get("lang_selector", "fr"))
+
+
+def _on_theme_change() -> None:
+    st.session_state["theme_mode"] = st.session_state.get("theme_selector", "auto")
 
 
 with st.sidebar:
@@ -269,13 +275,26 @@ with st.sidebar:
         key="lang_selector",
         on_change=_on_lang_change,
     )
+    st.radio(
+        t("theme_label"),
+        ["auto", "light", "dark"],
+        index=["auto", "light", "dark"].index(st.session_state.get("theme_mode", "auto")),
+        horizontal=True,
+        format_func=lambda mode: t("theme_auto") if mode == "auto" else (t("theme_light") if mode == "light" else t("theme_dark")),
+        key="theme_selector",
+        on_change=_on_theme_change,
+    )
 
 # Styles
 apply_global_styles()
+apply_theme_overrides(st.session_state.get("theme_mode", "auto"))
 
 # Topbar
 render_topbar("● Online")
 st.markdown("<div style='height: 12px'></div>", unsafe_allow_html=True)
+
+if os.path.exists("VentesPRO.png"):
+    st.sidebar.image("VentesPRO.png", use_container_width=True)
 
 # ============================================================
 # Sidebar

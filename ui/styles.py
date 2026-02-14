@@ -5,7 +5,7 @@ import streamlit as st
 
 VP_PLOTLY_TEMPLATE = go.layout.Template(
     layout=go.Layout(
-        font=dict(family="Inter, Segoe UI, sans-serif", size=13, color="#0f172a"),
+        font=dict(family="Plus Jakarta Sans, Segoe UI, sans-serif", size=13, color="#0f172a"),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         hoverlabel=dict(bgcolor="rgba(15,23,42,0.98)", font=dict(color="white")),
@@ -32,7 +32,7 @@ VP_PLOTLY_TEMPLATE = go.layout.Template(
 CSS_STYLES = """
 <style>
     /* Import Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap');
 
     :root {
         --vp-bg: #f8fafc;
@@ -52,6 +52,10 @@ CSS_STYLES = """
         --vp-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
         --vp-shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
         --vp-radius: 16px;
+        --vp-sidebar-bg: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+        --vp-sidebar-text: #e2e8f0;
+        --vp-hero-grad-1: rgba(37, 99, 235, 0.1);
+        --vp-hero-grad-2: rgba(14, 165, 233, 0.09);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -72,39 +76,48 @@ CSS_STYLES = """
             --vp-danger: #f87171;
             --vp-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
             --vp-shadow-soft: 0 10px 20px rgba(0, 0, 0, 0.25);
+            --vp-sidebar-bg: linear-gradient(180deg, #030712 0%, #0f172a 100%);
+            --vp-sidebar-text: #e2e8f0;
+            --vp-hero-grad-1: rgba(96, 165, 250, 0.13);
+            --vp-hero-grad-2: rgba(56, 189, 248, 0.12);
         }
     }
 
     /* Global Styles */
     * {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     /* Main Container - Adaptatif */
     .main {
-        background: radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 40%),
-                    radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.08), transparent 45%),
+        background: radial-gradient(circle at top, var(--vp-hero-grad-1), transparent 42%),
+                    radial-gradient(circle at 8% 22%, var(--vp-hero-grad-2), transparent 48%),
+                    linear-gradient(120deg, rgba(2, 132, 199, 0.03), transparent 35%),
                     var(--vp-bg);
         padding: 2rem;
     }
 
-    /* Sidebar - Toujours sombre */
+    .stApp {
+        background: var(--vp-bg);
+    }
+
+    /* Sidebar */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f172a 0%, #111827 100%) !important;
+        background: var(--vp-sidebar-bg) !important;
         border-right: 1px solid rgba(148, 163, 184, 0.18);
     }
 
     [data-testid="stSidebar"] * {
-        color: #e2e8f0 !important;
+        color: var(--vp-sidebar-text) !important;
     }
 
     [data-testid="stSidebar"] .stMarkdown {
-        color: #e2e8f0 !important;
+        color: var(--vp-sidebar-text) !important;
     }
 
     /* Titres - Adaptatifs */
     h1, h2, h3, h4, h5, h6 {
-        font-family: 'Inter', sans-serif !important;
+        font-family: 'Sora', 'Plus Jakarta Sans', sans-serif !important;
         font-weight: 600 !important;
         color: var(--vp-text) !important;
     }
@@ -144,6 +157,14 @@ CSS_STYLES = """
     .stCard:hover {
         transform: translateY(-4px);
         box-shadow: var(--vp-shadow);
+    }
+
+    [data-testid="stMetric"] {
+        background: linear-gradient(180deg, color-mix(in oklab, var(--vp-surface) 88%, transparent), var(--vp-surface));
+        border: 1px solid var(--vp-border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        box-shadow: var(--vp-shadow-soft);
     }
 
     /* Metric Cards - Adaptatifs */
@@ -273,17 +294,25 @@ CSS_STYLES = """
       align-items:center;
       padding: 14px 18px;
       border-radius: 18px;
-      background: rgba(15, 23, 42, 0.7);
+      background: linear-gradient(120deg, rgba(15, 23, 42, 0.82), rgba(30, 41, 59, 0.64));
       backdrop-filter: blur(16px);
       border: 1px solid rgba(148,163,184,0.18);
       box-shadow: 0 16px 30px rgba(0,0,0,0.2);
     }
     .vp-topbar-left{display:flex;gap:12px;align-items:center;}
     .vp-logo{
-      width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+      width:48px;height:48px;display:flex;align-items:center;justify-content:center;
       border-radius: 14px;
       background: linear-gradient(135deg, var(--vp-primary) 0%, var(--vp-accent) 100%);
       color:white;font-weight:700;
+      overflow:hidden;
+      box-shadow: 0 8px 18px rgba(14, 165, 233, 0.25);
+    }
+    .vp-logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius: inherit;
     }
     .vp-brand .vp-title{color:white;font-size:16px;font-weight:700;line-height:1;}
     .vp-brand .vp-subtitle{color:rgba(226,232,240,0.8);font-size:12px;margin-top:3px;}
@@ -328,9 +357,10 @@ CSS_STYLES = """
   overflow-x: auto !important;
   white-space: nowrap !important;
 
-  background: transparent !important;  /* ❌ pas de rectangle */
+  background: color-mix(in oklab, var(--vp-surface-strong) 68%, transparent) !important;
   border: none !important;
-  box-shadow: none !important;
+  box-shadow: var(--vp-shadow-soft) !important;
+  border-radius: 999px !important;
   padding: 12px 0 !important;
   margin: 10px auto 20px auto !important;
 }
@@ -351,7 +381,7 @@ CSS_STYLES = """
       background: var(--vp-surface) !important;
       color: var(--vp-text) !important;
       transition: all .2s ease-in-out;
-      box-shadow: 0 10px 18px rgba(15,23,42,0.06);
+      box-shadow: 0 8px 16px rgba(15,23,42,0.08);
     }
     
     div[data-testid="stTabs"] button[role="tab"]:hover{
@@ -378,6 +408,49 @@ CSS_STYLES = """
       gap: 0.3rem;
     }
 
+    [data-testid="stForm"] {
+      background: color-mix(in oklab, var(--vp-surface) 93%, transparent);
+      border: 1px solid var(--vp-border);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: var(--vp-shadow-soft);
+    }
+
+    @keyframes vpFadeUp {
+      from { opacity: .0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    [data-testid="block-container"] > div {
+      animation: vpFadeUp .34s ease both;
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        padding: 1rem;
+      }
+      .vp-topbar{
+        position: static;
+        padding: 12px;
+        border-radius: 14px;
+      }
+      .vp-brand .vp-title{
+        font-size: 14px;
+      }
+      .vp-brand .vp-subtitle{
+        display:none;
+      }
+      div[data-testid="stTabs"] [role="tablist"]{
+        justify-content: flex-start !important;
+        padding: 8px !important;
+        margin: 8px 0 14px 0 !important;
+      }
+      div[data-testid="stTabs"] button[role="tab"]{
+        font-size: 13px !important;
+        padding: 8px 12px !important;
+      }
+    }
+
 </style>
 """
 
@@ -391,3 +464,115 @@ def apply_global_styles() -> None:
         pass
 
     st.markdown(CSS_STYLES, unsafe_allow_html=True)
+
+
+def apply_theme_overrides(theme_mode: str = "auto") -> None:
+    """Apply runtime theme overrides: auto | light | dark."""
+    if theme_mode not in {"auto", "light", "dark"}:
+        theme_mode = "auto"
+
+    if theme_mode == "auto":
+        st.markdown(
+            """
+<style>
+    :root{
+        color-scheme: light dark;
+    }
+    .stApp{
+        transition: background-color .25s ease, color .25s ease;
+    }
+</style>
+""",
+            unsafe_allow_html=True,
+        )
+        return
+
+    if theme_mode == "light":
+        vars_block = """
+        --vp-bg: #f8fafc;
+        --vp-surface: #ffffff;
+        --vp-surface-strong: #f1f5f9;
+        --vp-text: #0f172a;
+        --vp-text-muted: #64748b;
+        --vp-border: rgba(148, 163, 184, 0.35);
+        --vp-border-strong: rgba(148, 163, 184, 0.6);
+        --vp-primary: #2563eb;
+        --vp-primary-strong: #1d4ed8;
+        --vp-primary-soft: rgba(37, 99, 235, 0.1);
+        --vp-accent: #0ea5e9;
+        --vp-success: #16a34a;
+        --vp-warning: #f59e0b;
+        --vp-danger: #ef4444;
+        --vp-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        --vp-shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.08);
+        --vp-sidebar-bg: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+        --vp-sidebar-text: #e2e8f0;
+        --vp-hero-grad-1: rgba(37, 99, 235, 0.1);
+        --vp-hero-grad-2: rgba(14, 165, 233, 0.09);
+        """
+        color_scheme = "light"
+    else:
+        vars_block = """
+        --vp-bg: #0b1120;
+        --vp-surface: #111827;
+        --vp-surface-strong: #0f172a;
+        --vp-text: #e2e8f0;
+        --vp-text-muted: #94a3b8;
+        --vp-border: rgba(148, 163, 184, 0.24);
+        --vp-border-strong: rgba(148, 163, 184, 0.4);
+        --vp-primary: #60a5fa;
+        --vp-primary-strong: #3b82f6;
+        --vp-primary-soft: rgba(96, 165, 250, 0.15);
+        --vp-accent: #38bdf8;
+        --vp-success: #22c55e;
+        --vp-warning: #fbbf24;
+        --vp-danger: #f87171;
+        --vp-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        --vp-shadow-soft: 0 10px 20px rgba(0, 0, 0, 0.25);
+        --vp-sidebar-bg: linear-gradient(180deg, #030712 0%, #0f172a 100%);
+        --vp-sidebar-text: #e2e8f0;
+        --vp-hero-grad-1: rgba(96, 165, 250, 0.13);
+        --vp-hero-grad-2: rgba(56, 189, 248, 0.12);
+        """
+        color_scheme = "dark"
+
+    st.markdown(
+        f"""
+<style>
+    :root {{
+        color-scheme: {color_scheme};
+        {vars_block}
+    }}
+
+    .stApp {{
+        transition: background-color .25s ease, color .25s ease;
+    }}
+
+    .stSelectbox > div > div:focus-within,
+    .stTextInput > div > div:focus-within,
+    .stNumberInput > div > div:focus-within,
+    .stTextArea > div > div:focus-within {{
+        border-color: var(--vp-primary) !important;
+        box-shadow: 0 0 0 2px var(--vp-primary-soft) !important;
+    }}
+
+    .stButton > button,
+    .stDownloadButton > button {{
+        letter-spacing: .2px;
+    }}
+
+    ::-webkit-scrollbar {{
+        width: 10px;
+        height: 10px;
+    }}
+    ::-webkit-scrollbar-thumb {{
+        background: var(--vp-border-strong);
+        border-radius: 999px;
+    }}
+    ::-webkit-scrollbar-track {{
+        background: var(--vp-surface-strong);
+    }}
+</style>
+""",
+        unsafe_allow_html=True,
+    )
