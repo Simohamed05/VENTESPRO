@@ -56,6 +56,17 @@ CSS_STYLES = """
         --vp-sidebar-text: #e2e8f0;
         --vp-hero-grad-1: rgba(37, 99, 235, 0.1);
         --vp-hero-grad-2: rgba(14, 165, 233, 0.09);
+        --vp-uploader-bg: #f8fafc;
+        --vp-uploader-border: #cbd5e1;
+        --vp-uploader-text: #0f172a;
+        --vp-uploader-subtext: #475569;
+        --vp-uploader-btn-bg: #e2e8f0;
+        --vp-uploader-btn-text: #0f172a;
+        --vp-uploader-btn-border: #94a3b8;
+        --vp-download-btn-bg: #2563eb;
+        --vp-download-btn-text: #ffffff;
+        --vp-download-btn-border: #1d4ed8;
+        --vp-download-btn-hover: #1d4ed8;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -80,6 +91,17 @@ CSS_STYLES = """
             --vp-sidebar-text: #e2e8f0;
             --vp-hero-grad-1: rgba(96, 165, 250, 0.13);
             --vp-hero-grad-2: rgba(56, 189, 248, 0.12);
+            --vp-uploader-bg: #0b1222;
+            --vp-uploader-border: rgba(148, 163, 184, 0.35);
+            --vp-uploader-text: #f8fafc;
+            --vp-uploader-subtext: #e2e8f0;
+            --vp-uploader-btn-bg: #1e293b;
+            --vp-uploader-btn-text: #f8fafc;
+            --vp-uploader-btn-border: rgba(148, 163, 184, 0.45);
+            --vp-download-btn-bg: #3b82f6;
+            --vp-download-btn-text: #ffffff;
+            --vp-download-btn-border: #60a5fa;
+            --vp-download-btn-hover: #2563eb;
         }
     }
 
@@ -117,37 +139,37 @@ CSS_STYLES = """
 
     /* File uploader sidebar: lisibilité élevée */
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
-        background: #f8fafc !important;
-        border: 1px solid #cbd5e1 !important;
+        background: var(--vp-uploader-bg) !important;
+        border: 1px solid var(--vp-uploader-border) !important;
         border-radius: 12px !important;
     }
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] * {
-        color: #0f172a !important;
+        color: var(--vp-uploader-text) !important;
     }
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] small {
-        color: #475569 !important;
+        color: var(--vp-uploader-subtext) !important;
     }
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button {
-        background: #e2e8f0 !important;
-        color: #0f172a !important;
-        border: 1px solid #94a3b8 !important;
+        background: var(--vp-uploader-btn-bg) !important;
+        color: var(--vp-uploader-btn-text) !important;
+        border: 1px solid var(--vp-uploader-btn-border) !important;
     }
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button:hover {
-        background: #cbd5e1 !important;
+        filter: brightness(1.08);
     }
 
     /* Download button sidebar: lisibilité élevée */
     [data-testid="stSidebar"] .stDownloadButton > button {
-        background: #2563eb !important;
-        color: #ffffff !important;
-        border: 1px solid #1d4ed8 !important;
+        background: var(--vp-download-btn-bg) !important;
+        color: var(--vp-download-btn-text) !important;
+        border: 1px solid var(--vp-download-btn-border) !important;
         border-radius: 10px !important;
         font-weight: 700 !important;
         box-shadow: 0 8px 16px rgba(37, 99, 235, 0.28) !important;
     }
     [data-testid="stSidebar"] .stDownloadButton > button:hover {
-        background: #1d4ed8 !important;
-        color: #ffffff !important;
+        background: var(--vp-download-btn-hover) !important;
+        color: var(--vp-download-btn-text) !important;
         transform: translateY(-1px) !important;
     }
 
@@ -545,6 +567,17 @@ def apply_theme_overrides(theme_mode: str = "auto") -> None:
         --vp-sidebar-text: #e2e8f0;
         --vp-hero-grad-1: rgba(37, 99, 235, 0.1);
         --vp-hero-grad-2: rgba(14, 165, 233, 0.09);
+        --vp-uploader-bg: #f8fafc;
+        --vp-uploader-border: #cbd5e1;
+        --vp-uploader-text: #0f172a;
+        --vp-uploader-subtext: #475569;
+        --vp-uploader-btn-bg: #e2e8f0;
+        --vp-uploader-btn-text: #0f172a;
+        --vp-uploader-btn-border: #94a3b8;
+        --vp-download-btn-bg: #2563eb;
+        --vp-download-btn-text: #ffffff;
+        --vp-download-btn-border: #1d4ed8;
+        --vp-download-btn-hover: #1d4ed8;
         """
         color_scheme = "light"
     else:
@@ -569,6 +602,17 @@ def apply_theme_overrides(theme_mode: str = "auto") -> None:
         --vp-sidebar-text: #e2e8f0;
         --vp-hero-grad-1: rgba(96, 165, 250, 0.13);
         --vp-hero-grad-2: rgba(56, 189, 248, 0.12);
+        --vp-uploader-bg: #0b1222;
+        --vp-uploader-border: rgba(148, 163, 184, 0.35);
+        --vp-uploader-text: #f8fafc;
+        --vp-uploader-subtext: #e2e8f0;
+        --vp-uploader-btn-bg: #1e293b;
+        --vp-uploader-btn-text: #f8fafc;
+        --vp-uploader-btn-border: rgba(148, 163, 184, 0.45);
+        --vp-download-btn-bg: #3b82f6;
+        --vp-download-btn-text: #ffffff;
+        --vp-download-btn-border: #60a5fa;
+        --vp-download-btn-hover: #2563eb;
         """
         color_scheme = "dark"
 
