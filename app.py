@@ -1213,7 +1213,7 @@ L'équipe VentesPRO
                     st.markdown(
                         f"""
 <div class='stCard' style='margin-top: .35rem;'>
-    <h4 style='margin:0 0 .55rem 0;'>🧭 Aide à la décision - {model_type}</h4>
+    <h4 style='margin:0 0 .55rem 0;'>🧭  {model_type}</h4>
     <p style='margin:.1rem 0 .35rem 0;'><strong>Définition:</strong> {guide['definition']}</p>
     <p style='margin:.1rem 0 .35rem 0;'><strong>Type de données idéal:</strong> {guide['best_for']}</p>
     <p style='margin:.1rem 0;'><strong>Fiabilité estimée (sur vos données):</strong> {reliability_hint}%</p>
