@@ -139,16 +139,24 @@ st.set_page_config(
 # ============================================================
 # Language selector (FIX: set_lang reçoit 'fr'/'en', pas le label)
 # ============================================================
+if "lang" not in st.session_state:
+    st.session_state["lang"] = "fr"
+
+
+def _on_lang_change() -> None:
+    set_lang(st.session_state.get("lang_selector", "fr"))
+
+
 with st.sidebar:
-    lang_choice = st.radio(
+    st.radio(
         t("lang_label"),
-        [t("lang_fr"), t("lang_en")],
+        ["fr", "en"],
         index=0 if get_lang() == "fr" else 1,
         horizontal=True,
+        format_func=lambda code: t("lang_fr") if code == "fr" else t("lang_en"),
+        key="lang_selector",
+        on_change=_on_lang_change,
     )
-    # Mapping label -> code
-    lang_code = "fr" if lang_choice == t("lang_fr") else "en"
-    set_lang(lang_code)
 
 # Styles
 apply_global_styles()
@@ -173,6 +181,7 @@ uploaded_file = st.sidebar.file_uploader(
     t("upload_label"),
     type=["csv", "xlsx", "xls", "txt", "tsv", "parquet"],
     help=t("upload_help"),
+    key="main_uploader",
 )
 
 # Example file download (FIX: label traduit)
@@ -180,7 +189,7 @@ historical_data_file = "ventes_historique.csv"
 if os.path.exists(historical_data_file):
     with open(historical_data_file, "rb") as f:
         st.sidebar.download_button(
-            label=t("download_example") if "download_example" else "Download example",
+            label=t("download_example"),
             data=f,
             file_name="exemple_historique.csv",
             mime="text/csv",
@@ -228,6 +237,7 @@ if uploaded_file:
                     options=df.columns,
                     index=0 if len(df.columns) > 0 else None,
                     help=t("date_col_help"),
+                    key="cfg_date_col",
                 )
 
             with col2:
@@ -237,6 +247,7 @@ if uploaded_file:
                     options=numeric_cols,
                     index=0 if len(numeric_cols) > 0 else None,
                     help=t("target_col_help"),
+                    key="cfg_target_col",
                 )
 
             with col3:
@@ -250,6 +261,7 @@ if uploaded_file:
                     options=cat_options,
                     index=default_cat_index,
                     help=t("cat_col_help"),
+                    key="cfg_cat_col",
                 )
 
         if not date_col or not target_col:
@@ -475,31 +487,7 @@ if uploaded_file:
             st.markdown("---")
             st.markdown(f"### 🚀 {t('home_quickstart_title')}")
             with st.expander(t("home_howto_title"), expanded=False):
-                st.markdown(t("home_howto_md"),
-
-                    """
-#### 1️⃣ Préparer vos données
-- Format: CSV ou Excel
-- Au moins 1 colonne date + 1 colonne numérique cible
-- Dates lisibles (JJ/MM/AAAA, AAAA-MM-JJ, ou Excel serial)
-
-#### 2️⃣ Charger le fichier
-- Via la sidebar
-- Téléchargez le fichier exemple si besoin
-
-#### 3️⃣ Configurer les colonnes
-- Date
-- Colonne numérique cible
-- Colonne catégorique (optionnelle)
-
-#### 4️⃣ Explorer
-- Dashboard
-- Analyse
-- Alertes
-- Prévisions
-- Rapports / Exports
-"""
-                )
+                st.markdown(t("home_howto_md"))
 
         # ============================================================
         # DASHBOARD
@@ -518,6 +506,7 @@ if uploaded_file:
                             t("categories"),
                             df[cat_col].dropna().unique(),
                             default=list(df[cat_col].dropna().unique()[:3]),
+                            key="dash_categories",
                         )
                     else:
                         cats_selected = None
@@ -528,6 +517,7 @@ if uploaded_file:
                         value=df.index.min().date(),
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
+                        key="dash_start_date",
                     )
                 with col3:
                     date_fin = st.date_input(
@@ -535,6 +525,7 @@ if uploaded_file:
                         value=df.index.max().date(),
                         min_value=df.index.min().date(),
                         max_value=df.index.max().date(),
+                        key="dash_end_date",
                     )
 
             df_filtered = df[(df.index >= pd.to_datetime(date_debut)) & (df.index <= pd.to_datetime(date_fin))]
@@ -1948,9 +1939,9 @@ PRÉVISIONS:
 
             col1, col2 = st.columns(2)
             with col1:
-                date_debut_rapport = st.date_input("Date de début", value=df.index.min().date(), key="rapport_debut")
+                date_debut_rapport = st.date_input(t("start_date"), value=df.index.min().date(), key="rapport_debut")
             with col2:
-                date_fin_rapport = st.date_input("Date de fin", value=df.index.max().date(), key="rapport_fin")
+                date_fin_rapport = st.date_input(t("end_date"), value=df.index.max().date(), key="rapport_fin")
 
             df_rapport = df[(df.index >= pd.to_datetime(date_debut_rapport)) & (df.index <= pd.to_datetime(date_fin_rapport))]
             croissance = float(df_rapport[target_col].pct_change().mean() * 100) if len(df_rapport) > 1 else 0.0
@@ -2238,9 +2229,9 @@ Fin du Rapport
             with st.form("contact_form", clear_on_submit=True):
                 col1, col2 = st.columns(2)
                 with col1:
-                    nom_support = st.text_input("👤 Votre nom*", placeholder="Ex: Mohamed HADI")
+                    nom_support = st.text_input(t("your_name"), placeholder="Ex: Mohamed HADI")
                 with col2:
-                    email_support = st.text_input("📧 Votre email*", placeholder="Ex: mohamed@exemple.com")
+                    email_support = st.text_input(t("your_email"), placeholder="Ex: mohamed@exemple.com")
 
                 sujet = st.selectbox("📋 Sujet", ["Question générale", "Problème technique", "Demande de fonctionnalité", "Aide à l'utilisation", "Autre"])
                 message_support = st.text_area("💬 Votre message*", placeholder="Décrivez votre demande en détail...", height=150)
