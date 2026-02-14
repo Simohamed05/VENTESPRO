@@ -81,7 +81,7 @@ from models.forecasting import (
     prepare_series,
 )
 
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import ExtraTreesRegressor, GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
@@ -124,6 +124,118 @@ def _to_datetime_index(df: pd.DataFrame, date_col: str) -> pd.DataFrame:
 
     df = df.dropna(subset=[date_col]).sort_values(by=date_col).set_index(date_col)
     return df
+
+
+MODEL_GUIDE = {
+    "Auto (Comparaison)": {
+        "definition": "Teste plusieurs modèles puis combine les meilleurs (ensemble) pour une prévision plus stable.",
+        "best_for": "Décision globale, séries de ventes mixtes avec tendance + variations.",
+        "base_reliability": 86,
+    },
+    "Naïf (Dernière valeur)": {
+        "definition": "Projette la dernière valeur observée sur l’horizon futur.",
+        "best_for": "Très court terme et séries très stables.",
+        "base_reliability": 58,
+    },
+    "Tendance linéaire": {
+        "definition": "Ajuste une droite de tendance pour extrapoler les valeurs futures.",
+        "best_for": "Séries avec croissance/décroissance régulière et faible bruit.",
+        "base_reliability": 68,
+    },
+    "Moyenne Mobile Intelligente": {
+        "definition": "Combine moyennes mobiles et pente récente pour lisser la prévision.",
+        "best_for": "Séries bruitées sans forte saisonnalité.",
+        "base_reliability": 66,
+    },
+    "Holt-Winters": {
+        "definition": "Modèle de lissage exponentiel avec tendance et saisonnalité.",
+        "best_for": "Ventes avec cycles réguliers (hebdo/mensuels).",
+        "base_reliability": 80,
+    },
+    "Random Forest": {
+        "definition": "Ensemble d’arbres de décision robuste aux non-linéarités.",
+        "best_for": "Données de ventes complexes avec relations non linéaires.",
+        "base_reliability": 79,
+    },
+    "Extra Trees": {
+        "definition": "Variante d’arbres plus aléatoire, souvent rapide et robuste.",
+        "best_for": "Volumes de données moyens à grands, bruit modéré à élevé.",
+        "base_reliability": 81,
+    },
+    "Gradient Boosting": {
+        "definition": "Construit des arbres successifs pour corriger les erreurs précédentes.",
+        "best_for": "Séries avec patterns subtils et besoin de précision.",
+        "base_reliability": 80,
+    },
+    "XGBoost": {
+        "definition": "Boosting optimisé pour performance élevée sur données tabulaires.",
+        "best_for": "Grand historique et patterns complexes.",
+        "base_reliability": 82,
+    },
+    "ARIMA": {
+        "definition": "Modèle statistique classique pour tendance/autocorrélation.",
+        "best_for": "Séries stationnarisables avec structure temporelle claire.",
+        "base_reliability": 74,
+    },
+    "SARIMA": {
+        "definition": "Extension ARIMA intégrant la saisonnalité explicite.",
+        "best_for": "Ventes avec saisonnalité forte et régulière.",
+        "base_reliability": 79,
+    },
+    "Prophet": {
+        "definition": "Modèle additif robuste aux changements de tendance/saisonnalité.",
+        "best_for": "Séries business avec saisonnalités et ruptures progressives.",
+        "base_reliability": 78,
+    },
+}
+
+
+def _sales_profile(df_ts: pd.DataFrame) -> dict:
+    y = df_ts["Valeurs"].astype(float)
+    n = len(y)
+    mean_v = float(y.mean()) if n else 0.0
+    std_v = float(y.std()) if n else 0.0
+    cv = (std_v / mean_v * 100) if mean_v else 0.0
+    weekly_autocorr = float(y.autocorr(lag=7)) if n > 21 else 0.0
+    return {"n": n, "cv": cv, "weekly_autocorr": weekly_autocorr}
+
+
+def _estimate_model_reliability(model_name: str, profile: dict) -> int:
+    base = MODEL_GUIDE.get(model_name, {}).get("base_reliability", 70)
+    n = profile.get("n", 0)
+    cv = profile.get("cv", 0.0)
+    weekly = profile.get("weekly_autocorr", 0.0)
+
+    score = float(base)
+
+    # Taille de l'historique
+    if n < 30:
+        score -= 12
+    elif n < 60:
+        score -= 6
+    elif n > 180:
+        score += 3
+
+    # Volatilité
+    if cv > 55:
+        score -= 9
+    elif cv > 35:
+        score -= 4
+    elif cv < 20:
+        score += 3
+
+    # Saisonnalité hebdomadaire
+    seasonal_models = {"Holt-Winters", "SARIMA", "Prophet", "Auto (Comparaison)"}
+    if abs(weekly) >= 0.35 and model_name in seasonal_models:
+        score += 5
+    if abs(weekly) >= 0.35 and model_name in {"Naïf (Dernière valeur)", "Tendance linéaire"}:
+        score -= 4
+
+    # Modèles avancés demandent plus de data
+    if model_name in {"XGBoost", "Gradient Boosting", "Random Forest", "Extra Trees"} and n < 50:
+        score -= 5
+
+    return int(max(45, min(96, round(score))))
 
 
 # ============================================================
@@ -1060,6 +1172,8 @@ L'équipe VentesPRO
                         "Moyenne Mobile Intelligente",
                         "Holt-Winters",
                         "Random Forest",
+                        "Extra Trees",
+                        "Gradient Boosting",
                         "XGBoost",
                         "ARIMA",
                         "SARIMA",
@@ -1069,6 +1183,27 @@ L'équipe VentesPRO
 
             with col3:
                 horizon = st.number_input(t("forecast_horizon"), min_value=1, max_value=365, value=30, step=1)
+
+            # Aide décision: définition + type de données + fiabilité estimée pour le modèle choisi
+            guide = MODEL_GUIDE.get(model_type)
+            if guide:
+                df_preview, _, preview_err = prepare_series(df, target_col, cat_col, date_col, produit)
+                if (df_preview is not None) and (not preview_err):
+                    profile = _sales_profile(df_preview)
+                    reliability_hint = _estimate_model_reliability(model_type, profile)
+                    st.markdown(
+                        f"""
+<div class='stCard' style='margin-top: .35rem;'>
+    <h4 style='margin:0 0 .55rem 0;'>🧭 Aide à la décision - {model_type}</h4>
+    <p style='margin:.1rem 0 .35rem 0;'><strong>Définition:</strong> {guide['definition']}</p>
+    <p style='margin:.1rem 0 .35rem 0;'><strong>Type de données idéal:</strong> {guide['best_for']}</p>
+    <p style='margin:.1rem 0;'><strong>Fiabilité estimée (sur vos données):</strong> {reliability_hint}%</p>
+</div>
+""",
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.info("📌 Chargez et configurez des données valides pour afficher la fiabilité estimée du modèle.")
 
             show_confidence = st.checkbox(t("show_confidence"), value=True)
 
@@ -1282,32 +1417,112 @@ L'équipe VentesPRO
                         progress_bar.progress(100)
 
                     # -------------------------
+                    # Extra Trees
+                    # -------------------------
+                    elif model_type == "Extra Trees":
+                        status_text.text("🌲 Extra Trees...")
+                        progress_bar.progress(25)
+
+                        df_feat, X, y_et, feature_cols = build_features(df_ts)
+                        split_idx = int(len(df_feat) * 0.8)
+                        X_train, y_train = X.iloc[:split_idx], y_et.iloc[:split_idx]
+                        X_test, y_test = X.iloc[split_idx:], y_et.iloc[split_idx:]
+
+                        model = ExtraTreesRegressor(n_estimators=240, max_depth=12, random_state=42, n_jobs=-1)
+                        model.fit(X_train, y_train)
+
+                        progress_bar.progress(60)
+
+                        future_dates2, future_X = build_future_features(df_feat, feature_cols, horizon)
+                        forecasts = np.maximum(np.array(model.predict(future_X), dtype=float), 0)
+
+                        if show_confidence:
+                            pred_test = model.predict(X_test) if len(X_test) else np.array([])
+                            std = float(np.std(y_test.values - pred_test)) if len(pred_test) > 1 else float(df_ts["Valeurs"].std())
+                            confidence_lower, confidence_upper = basic_confidence_band(forecasts, std)
+
+                        forecast_df = pd.DataFrame({"Date": future_dates2, "Prévision": forecasts})
+                        if len(X_test):
+                            pred_test = model.predict(X_test)
+                            backtest_mae = mean_absolute_error(y_test.values, pred_test)
+                            backtest_rmse = np.sqrt(mean_squared_error(y_test.values, pred_test))
+
+                        progress_bar.progress(100)
+
+                    # -------------------------
+                    # Gradient Boosting
+                    # -------------------------
+                    elif model_type == "Gradient Boosting":
+                        status_text.text("📉 Gradient Boosting...")
+                        progress_bar.progress(25)
+
+                        df_feat, X, y_gb, feature_cols = build_features(df_ts)
+                        split_idx = int(len(df_feat) * 0.8)
+                        X_train, y_train = X.iloc[:split_idx], y_gb.iloc[:split_idx]
+                        X_test, y_test = X.iloc[split_idx:], y_gb.iloc[split_idx:]
+
+                        model = GradientBoostingRegressor(
+                            n_estimators=250,
+                            learning_rate=0.04,
+                            max_depth=3,
+                            subsample=0.9,
+                            random_state=42,
+                        )
+                        model.fit(X_train, y_train)
+
+                        progress_bar.progress(60)
+
+                        future_dates2, future_X = build_future_features(df_feat, feature_cols, horizon)
+                        forecasts = np.maximum(np.array(model.predict(future_X), dtype=float), 0)
+
+                        if show_confidence:
+                            pred_test = model.predict(X_test) if len(X_test) else np.array([])
+                            std = float(np.std(y_test.values - pred_test)) if len(pred_test) > 1 else float(df_ts["Valeurs"].std())
+                            confidence_lower, confidence_upper = basic_confidence_band(forecasts, std)
+
+                        forecast_df = pd.DataFrame({"Date": future_dates2, "Prévision": forecasts})
+                        if len(X_test):
+                            pred_test = model.predict(X_test)
+                            backtest_mae = mean_absolute_error(y_test.values, pred_test)
+                            backtest_rmse = np.sqrt(mean_squared_error(y_test.values, pred_test))
+
+                        progress_bar.progress(100)
+
+                    # -------------------------
                     # XGBoost
                     # -------------------------
                     elif model_type == "XGBoost":
-                        if not _XGBOOST_OK:
-                            st.error("❌ XGBoost n'est pas installé. Installez: pip install xgboost")
-                            progress_bar.empty()
-                            status_text.empty()
-                            st.stop()
-
                         status_text.text("⚡ XGBoost...")
                         progress_bar.progress(25)
 
                         df_feat, X, y_xgb, feature_cols = build_features(df_ts)
                         split_idx = int(len(df_feat) * 0.8)
                         X_train, y_train = X.iloc[:split_idx], y_xgb.iloc[:split_idx]
+                        X_test = X.iloc[split_idx:]
+                        y_test = y_xgb.iloc[split_idx:]
 
-                        model = XGBRegressor(
-                            n_estimators=250,
-                            max_depth=6,
-                            learning_rate=0.05,
-                            subsample=0.9,
-                            colsample_bytree=0.9,
-                            random_state=42,
-                            n_jobs=-1,
-                        )
-                        model.fit(X_train, y_train, verbose=False)
+                        model_name = "XGBoost"
+                        try:
+                            if not _XGBOOST_OK:
+                                raise RuntimeError("xgboost indisponible")
+
+                            model = XGBRegressor(
+                                n_estimators=140,
+                                max_depth=4,
+                                learning_rate=0.06,
+                                subsample=0.9,
+                                colsample_bytree=0.9,
+                                objective="reg:squarederror",
+                                tree_method="hist",
+                                random_state=42,
+                                n_jobs=-1,
+                            )
+                            model.fit(X_train, y_train, verbose=False)
+                        except Exception:
+                            st.warning("XGBoost indisponible ou instable. Bascule automatique sur Extra Trees.")
+                            model_name = "Extra Trees (fallback)"
+                            model = ExtraTreesRegressor(n_estimators=240, max_depth=12, random_state=42, n_jobs=-1)
+                            model.fit(X_train, y_train)
 
                         progress_bar.progress(60)
 
@@ -1319,9 +1534,6 @@ L'équipe VentesPRO
                             confidence_lower, confidence_upper = basic_confidence_band(forecasts, std)
 
                         forecast_df = pd.DataFrame({"Date": future_dates2, "Prévision": forecasts})
-
-                        X_test = X.iloc[split_idx:]
-                        y_test = y_xgb.iloc[split_idx:]
                         if len(X_test):
                             pred_test = model.predict(X_test)
                             backtest_mae = mean_absolute_error(y_test.values, pred_test)
@@ -1474,6 +1686,7 @@ L'équipe VentesPRO
 
                         results = {}
                         forecasts_dict = {}
+                        backtest_preds = {}
 
                         # Naïf
                         try:
@@ -1485,6 +1698,7 @@ L'équipe VentesPRO
                             mae = mean_absolute_error(test["Valeurs"].values, pred_test) if len(test) else np.inf
                             rmse = np.sqrt(mean_squared_error(test["Valeurs"].values, pred_test)) if len(test) else np.inf
                             results["Naïf"] = {"MAE": mae, "RMSE": rmse}
+                            backtest_preds["Naïf"] = pred_test
 
                             fut_dates = build_future_dates(df_ts.index[-1], horizon, "D")
                             forecasts_dict["Naïf"] = pd.DataFrame({"Date": fut_dates, "Prévision": np.full(horizon, max(last_val, 0.0))})
@@ -1507,6 +1721,7 @@ L'équipe VentesPRO
                             mae = mean_absolute_error(y_te, pred_test) if len(y_te) else np.inf
                             rmse = np.sqrt(mean_squared_error(y_te, pred_test)) if len(y_te) else np.inf
                             results["Tendance linéaire"] = {"MAE": mae, "RMSE": rmse}
+                            backtest_preds["Tendance linéaire"] = pred_test
 
                             fut_dates = build_future_dates(df_ts.index[-1], horizon, "D")
                             fut_X = np.arange(len(y_all), len(y_all) + horizon).reshape(-1, 1)
@@ -1531,6 +1746,7 @@ L'équipe VentesPRO
                             mae = mean_absolute_error(y_test.values, pred_test) if len(pred_test) else np.inf
                             rmse = np.sqrt(mean_squared_error(y_test.values, pred_test)) if len(pred_test) else np.inf
                             results["Random Forest"] = {"MAE": mae, "RMSE": rmse}
+                            backtest_preds["Random Forest"] = pred_test
 
                             fut_dates2, future_X = build_future_features(df_feat, feature_cols, horizon)
                             forecasts = np.maximum(rf.predict(future_X), 0.0)
@@ -1538,18 +1754,80 @@ L'équipe VentesPRO
                         except Exception:
                             results["Random Forest"] = {"MAE": np.inf, "RMSE": np.inf}
 
+                        # Extra Trees
+                        try:
+                            status_text.text("Auto: test Extra Trees...")
+                            progress_bar.progress(65)
+
+                            df_feat, X, y_m, feature_cols = build_features(df_ts)
+                            X_train, y_train = X.iloc[:split_idx], y_m.iloc[:split_idx]
+                            X_test, y_test = X.iloc[split_idx:], y_m.iloc[split_idx:]
+
+                            et = ExtraTreesRegressor(n_estimators=240, max_depth=12, random_state=42, n_jobs=-1)
+                            et.fit(X_train, y_train)
+
+                            pred_test = et.predict(X_test) if len(X_test) else np.array([])
+                            mae = mean_absolute_error(y_test.values, pred_test) if len(pred_test) else np.inf
+                            rmse = np.sqrt(mean_squared_error(y_test.values, pred_test)) if len(pred_test) else np.inf
+                            results["Extra Trees"] = {"MAE": mae, "RMSE": rmse}
+                            backtest_preds["Extra Trees"] = pred_test
+
+                            fut_dates2, future_X = build_future_features(df_feat, feature_cols, horizon)
+                            forecasts = np.maximum(et.predict(future_X), 0.0)
+                            forecasts_dict["Extra Trees"] = pd.DataFrame({"Date": fut_dates2, "Prévision": forecasts})
+                        except Exception:
+                            results["Extra Trees"] = {"MAE": np.inf, "RMSE": np.inf}
+
+                        # Gradient Boosting
+                        try:
+                            status_text.text("Auto: test Gradient Boosting...")
+                            progress_bar.progress(70)
+
+                            df_feat, X, y_m, feature_cols = build_features(df_ts)
+                            X_train, y_train = X.iloc[:split_idx], y_m.iloc[:split_idx]
+                            X_test, y_test = X.iloc[split_idx:], y_m.iloc[split_idx:]
+
+                            gb = GradientBoostingRegressor(
+                                n_estimators=250,
+                                learning_rate=0.04,
+                                max_depth=3,
+                                subsample=0.9,
+                                random_state=42,
+                            )
+                            gb.fit(X_train, y_train)
+
+                            pred_test = gb.predict(X_test) if len(X_test) else np.array([])
+                            mae = mean_absolute_error(y_test.values, pred_test) if len(pred_test) else np.inf
+                            rmse = np.sqrt(mean_squared_error(y_test.values, pred_test)) if len(pred_test) else np.inf
+                            results["Gradient Boosting"] = {"MAE": mae, "RMSE": rmse}
+                            backtest_preds["Gradient Boosting"] = pred_test
+
+                            fut_dates2, future_X = build_future_features(df_feat, feature_cols, horizon)
+                            forecasts = np.maximum(gb.predict(future_X), 0.0)
+                            forecasts_dict["Gradient Boosting"] = pd.DataFrame({"Date": fut_dates2, "Prévision": forecasts})
+                        except Exception:
+                            results["Gradient Boosting"] = {"MAE": np.inf, "RMSE": np.inf}
+
                         # XGBoost (si dispo)
                         if _XGBOOST_OK:
                             try:
                                 status_text.text("Auto: test XGBoost...")
-                                progress_bar.progress(70)
+                                progress_bar.progress(75)
 
                                 df_feat, X, y_m, feature_cols = build_features(df_ts)
                                 X_train, y_train = X.iloc[:split_idx], y_m.iloc[:split_idx]
                                 X_test, y_test = X.iloc[split_idx:], y_m.iloc[split_idx:]
 
                                 xgb = XGBRegressor(
-                                    n_estimators=200, max_depth=6, learning_rate=0.05, subsample=0.9, random_state=42, n_jobs=-1
+                                    n_estimators=140,
+                                    max_depth=4,
+                                    learning_rate=0.06,
+                                    subsample=0.9,
+                                    colsample_bytree=0.9,
+                                    objective="reg:squarederror",
+                                    tree_method="hist",
+                                    random_state=42,
+                                    n_jobs=-1,
                                 )
                                 xgb.fit(X_train, y_train, verbose=False)
 
@@ -1557,6 +1835,7 @@ L'équipe VentesPRO
                                 mae = mean_absolute_error(y_test.values, pred_test) if len(pred_test) else np.inf
                                 rmse = np.sqrt(mean_squared_error(y_test.values, pred_test)) if len(pred_test) else np.inf
                                 results["XGBoost"] = {"MAE": mae, "RMSE": rmse}
+                                backtest_preds["XGBoost"] = pred_test
 
                                 fut_dates2, future_X = build_future_features(df_feat, feature_cols, horizon)
                                 forecasts = np.maximum(xgb.predict(future_X), 0.0)
@@ -1580,6 +1859,7 @@ L'équipe VentesPRO
                                 mae = mean_absolute_error(y_test, pred_test) if len(pred_test) else np.inf
                                 rmse = np.sqrt(mean_squared_error(y_test, pred_test)) if len(pred_test) else np.inf
                                 results["SARIMA"] = {"MAE": mae, "RMSE": rmse}
+                                backtest_preds["SARIMA"] = pred_test
 
                                 fut_dates = build_future_dates(df_ts.index[-1], horizon, "D")
                                 forecasts = np.maximum(sarima.forecast(steps=horizon), 0.0)
@@ -1609,6 +1889,7 @@ L'équipe VentesPRO
                                 mae = mean_absolute_error(test_df["y"].values, pred_vals) if len(pred_vals) else np.inf
                                 rmse = np.sqrt(mean_squared_error(test_df["y"].values, pred_vals)) if len(pred_vals) else np.inf
                                 results["Prophet"] = {"MAE": mae, "RMSE": rmse}
+                                backtest_preds["Prophet"] = pred_vals
 
                                 future = prophet_model.make_future_dataframe(periods=horizon, freq="D", include_history=False)
                                 forecast = prophet_model.predict(future)
@@ -1619,8 +1900,44 @@ L'équipe VentesPRO
 
                         progress_bar.progress(90)
 
+                        # Ensemble pondéré Top N
+                        valid_models = [
+                            m for m, r in results.items() if np.isfinite(r.get("MAE", np.inf)) and m in forecasts_dict
+                        ]
+                        if len(test) and len(valid_models) >= 2:
+                            ranked = sorted(valid_models, key=lambda m: results[m]["MAE"])[:3]
+                            weights = np.array([1.0 / (results[m]["MAE"] + 1e-6) for m in ranked], dtype=float)
+                            weights = weights / weights.sum()
+
+                            try:
+                                ensemble_test = np.zeros(len(test), dtype=float)
+                                ensemble_future = np.zeros(horizon, dtype=float)
+                                used = 0
+                                for w, m in zip(weights, ranked):
+                                    pred_bt = np.asarray(backtest_preds.get(m, []), dtype=float)
+                                    pred_fc = forecasts_dict[m]["Prévision"].values.astype(float)
+                                    if len(pred_bt) == len(test) and len(pred_fc) == horizon:
+                                        ensemble_test += w * pred_bt
+                                        ensemble_future += w * pred_fc
+                                        used += 1
+
+                                if used >= 2:
+                                    mae = mean_absolute_error(test["Valeurs"].values, ensemble_test)
+                                    rmse = np.sqrt(mean_squared_error(test["Valeurs"].values, ensemble_test))
+                                    results["Ensemble Top"] = {"MAE": mae, "RMSE": rmse}
+                                    backtest_preds["Ensemble Top"] = ensemble_test
+                                    forecasts_dict["Ensemble Top"] = pd.DataFrame(
+                                        {"Date": build_future_dates(df_ts.index[-1], horizon, "D"), "Prévision": np.maximum(ensemble_future, 0.0)}
+                                    )
+                            except Exception:
+                                pass
+
                         comparison_df = pd.DataFrame(results).T.sort_values("MAE")
-                        best_model = comparison_df.index[0]
+                        comparison_df_valid = comparison_df[np.isfinite(comparison_df["MAE"])]
+                        if len(comparison_df_valid) == 0:
+                            st.error("Aucun modèle valide n'a pu être entraîné pour cette série.")
+                            st.stop()
+                        best_model = comparison_df_valid.index[0]
 
                         backtest_mae = results[best_model].get("MAE")
                         backtest_rmse = results[best_model].get("RMSE")

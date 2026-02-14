@@ -198,7 +198,7 @@ TRANSLATIONS = {
         # =========================
         "forecast_title": "## 🔮 Prévisions par Intelligence Artificielle",
         "forecast_intro": "Générez des prévisions pour votre colonne cible.\n✅ Compatible avec n’importe quelle colonne numérique\n✅ Date optionnelle (si pas de date, une timeline est générée automatiquement)",
-        "forecast_tips": "**Modèles conseillés** : Auto (comparaison), Random Forest, XGBoost, SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business.",
+        "forecast_tips": "**Modèles conseillés** : Auto (comparaison + ensemble), Extra Trees, Gradient Boosting, Random Forest, XGBoost, SARIMA / Holt-Winters (si saisonnalité) et Prophet pour les séries business.",
         "category_to_forecast": "Catégorie à prévoir",
         "forecast_model": "Modèle de prévision",
         "forecast_horizon": "Horizon de prévision (nombre de points)",
@@ -428,7 +428,7 @@ TRANSLATIONS = {
         # =========================
         "forecast_title": "## 🔮 AI Forecasting",
         "forecast_intro": "Generate forecasts for your target column.\n✅ Works with any numeric column\n✅ Optional date (if missing, a timeline is generated automatically)",
-        "forecast_tips": "**Recommended models**: Auto (compare), Random Forest, XGBoost, SARIMA / Holt-Winters (seasonality) and Prophet for business series.",
+        "forecast_tips": "**Recommended models**: Auto (comparison + ensemble), Extra Trees, Gradient Boosting, Random Forest, XGBoost, SARIMA / Holt-Winters (seasonality) and Prophet for business series.",
         "category_to_forecast": "Category to forecast",
         "forecast_model": "Forecast model",
         "forecast_horizon": "Forecast horizon (number of points)",
