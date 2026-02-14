@@ -253,16 +253,10 @@ st.set_page_config(
 # ============================================================
 if "lang" not in st.session_state:
     st.session_state["lang"] = "fr"
-if "theme_mode" not in st.session_state:
-    st.session_state["theme_mode"] = "auto"
 
 
 def _on_lang_change() -> None:
     set_lang(st.session_state.get("lang_selector", "fr"))
-
-
-def _on_theme_change() -> None:
-    st.session_state["theme_mode"] = st.session_state.get("theme_selector", "auto")
 
 
 with st.sidebar:
@@ -275,19 +269,9 @@ with st.sidebar:
         key="lang_selector",
         on_change=_on_lang_change,
     )
-    st.radio(
-        t("theme_label"),
-        ["auto", "light", "dark"],
-        index=["auto", "light", "dark"].index(st.session_state.get("theme_mode", "auto")),
-        horizontal=True,
-        format_func=lambda mode: t("theme_auto") if mode == "auto" else (t("theme_light") if mode == "light" else t("theme_dark")),
-        key="theme_selector",
-        on_change=_on_theme_change,
-    )
-
 # Styles
 apply_global_styles()
-apply_theme_overrides(st.session_state.get("theme_mode", "auto"))
+apply_theme_overrides("light")
 
 # Topbar
 render_topbar("● Online")
