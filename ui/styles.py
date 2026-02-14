@@ -136,6 +136,12 @@ CSS_STYLES = """
     [data-testid="stSidebar"] .stMarkdown {
         color: var(--vp-sidebar-text) !important;
     }
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] label,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] span {
+        color: var(--vp-sidebar-text) !important;
+        opacity: 1 !important;
+    }
 
     /* File uploader sidebar: lisibilité élevée */
     [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
@@ -171,6 +177,22 @@ CSS_STYLES = """
         background: var(--vp-download-btn-hover) !important;
         color: var(--vp-download-btn-text) !important;
         transform: translateY(-1px) !important;
+    }
+
+    /* Sidebar metrics: éviter fond blanc + texte illisible */
+    [data-testid="stSidebar"] [data-testid="stMetric"] {
+        background: rgba(15, 23, 42, 0.72) !important;
+        border: 1px solid rgba(148, 163, 184, 0.3) !important;
+        box-shadow: none !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stMetricValue"],
+    [data-testid="stSidebar"] [data-testid="stMetricLabel"] {
+        color: #f8fafc !important;
+    }
+    [data-testid="stSidebar"] .stAlert p,
+    [data-testid="stSidebar"] .stAlert div,
+    [data-testid="stSidebar"] .stAlert span {
+        color: #f8fafc !important;
     }
 
     /* Titres - Adaptatifs */
