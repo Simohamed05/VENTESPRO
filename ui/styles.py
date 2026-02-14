@@ -284,6 +284,29 @@ CSS_STYLES = """
         border: 1px solid var(--vp-border) !important;
     }
 
+    /* Widget labels: toujours lisibles */
+    .stTextInput label,
+    .stNumberInput label,
+    .stSelectbox label,
+    .stTextArea label,
+    .stDateInput label,
+    .stMultiSelect label,
+    .stRadio label,
+    [data-testid="stWidgetLabel"] label,
+    [data-testid="stWidgetLabel"] p,
+    [data-testid="stWidgetLabel"] span {
+        color: var(--vp-text) !important;
+        opacity: 1 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Textes de contenu (hors sidebar) */
+    [data-testid="stAppViewContainer"] .stMarkdown p,
+    [data-testid="stAppViewContainer"] .stMarkdown li,
+    [data-testid="stAppViewContainer"] .stMarkdown span {
+        color: var(--vp-text) !important;
+    }
+
     /* Text / number / textarea real input colors */
     .stTextInput input,
     .stNumberInput input,
