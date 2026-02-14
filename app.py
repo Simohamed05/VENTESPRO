@@ -610,7 +610,7 @@ if uploaded_file:
                 yaxis_title=t("axis_values"),
                 hovermode="x unified",
                 height=500,
-                template="plotly_white",
+                template="ventespro",
                 showlegend=True,
             )
             st.plotly_chart(fig, use_container_width=True)
@@ -690,7 +690,7 @@ if uploaded_file:
                     yaxis_title="Valeurs",
                     hovermode="x unified",
                     height=500,
-                    template="plotly_white",
+                    template="ventespro",
                 )
                 st.plotly_chart(fig, use_container_width=True)
 
@@ -752,7 +752,7 @@ if uploaded_file:
                             xaxis_title="Valeurs",
                             yaxis_title="Catégorie",
                             height=400,
-                            template="plotly_white",
+                            template="ventespro",
                         )
                         st.plotly_chart(fig, use_container_width=True)
 
@@ -788,7 +788,7 @@ if uploaded_file:
                                 go.Bar(name="Sans Promo", x=["Total", "Moyenne", "Transactions"], y=[non_sum, non_mean, non_count]),
                             ]
                         )
-                        fig.update_layout(title="Comparaison Avec/Sans Promotion", barmode="group", height=400, template="plotly_white")
+                        fig.update_layout(title="Comparaison Avec/Sans Promotion", barmode="group", height=400, template="ventespro")
                         st.plotly_chart(fig, use_container_width=True)
 
                     with col2:
@@ -830,7 +830,7 @@ if uploaded_file:
                     fig = go.Figure()
                     fig.add_trace(go.Scatter(x=df_promo.index, y=df_promo.values, name="Avec Promo", line=dict(width=3)))
                     fig.add_trace(go.Scatter(x=df_no_promo.index, y=df_no_promo.values, name="Sans Promo", line=dict(width=3)))
-                    fig.update_layout(title="Comparaison hebdomadaire des valeurs", xaxis_title="Semaine", yaxis_title="Valeurs Moyennes", height=400, template="plotly_white")
+                    fig.update_layout(title="Comparaison hebdomadaire des valeurs", xaxis_title="Semaine", yaxis_title="Valeurs Moyennes", height=400, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.info(t("no_promo_col"))
@@ -848,7 +848,7 @@ if uploaded_file:
                     fig = make_subplots(rows=2, cols=1, subplot_titles=("Niveau de Stock", "Valeurs"), vertical_spacing=0.15)
                     fig.add_trace(go.Scatter(x=df_stock.index, y=df_stock[stock_col], name="Stock", fill="tozeroy", line=dict(width=2)), row=1, col=1)
                     fig.add_trace(go.Scatter(x=df_stock.index, y=df_stock[target_col], name="Valeurs", fill="tozeroy", line=dict(width=2)), row=2, col=1)
-                    fig.update_layout(height=600, template="plotly_white", showlegend=True)
+                    fig.update_layout(height=600, template="ventespro", showlegend=True)
                     st.plotly_chart(fig, use_container_width=True)
 
                     st.markdown("### ⚠️ Alertes de Stock")
@@ -886,7 +886,7 @@ if uploaded_file:
 
                     with c2:
                         fig = px.scatter(df_stock, x=stock_col, y=target_col, trendline="ols", title="Relation Stock-Valeurs")
-                        fig.update_layout(height=300, template="plotly_white")
+                        fig.update_layout(height=300, template="ventespro")
                         st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.info(t("no_stock_col"))
@@ -908,7 +908,7 @@ if uploaded_file:
                         textposition="outside",
                     )
                 )
-                fig.update_layout(title="Valeurs Moyennes par Mois", xaxis_title="Mois", yaxis_title="Valeurs Moyennes", height=400, template="plotly_white")
+                fig.update_layout(title="Valeurs Moyennes par Mois", xaxis_title="Mois", yaxis_title="Valeurs Moyennes", height=400, template="ventespro")
                 st.plotly_chart(fig, use_container_width=True)
 
                 st.markdown("### 📆 Valeurs par Jour de la Semaine")
@@ -925,7 +925,7 @@ if uploaded_file:
                         textposition="outside",
                     )
                 )
-                fig.update_layout(title="Performance par Jour de la Semaine", xaxis_title="Jour", yaxis_title="Valeurs Moyennes", height=400, template="plotly_white")
+                fig.update_layout(title="Performance par Jour de la Semaine", xaxis_title="Jour", yaxis_title="Valeurs Moyennes", height=400, template="ventespro")
                 st.plotly_chart(fig, use_container_width=True)
 
                 st.markdown("### 🔥 Carte de Chaleur Saisonnière")
@@ -935,7 +935,7 @@ if uploaded_file:
                 pivot = df_heat.pivot_table(values=target_col, index="Jour", columns="Mois", aggfunc="mean")
 
                 fig = go.Figure(data=go.Heatmap(z=pivot.values, x=pivot.columns, y=pivot.index, hoverongaps=False))
-                fig.update_layout(title="Heatmap des Valeurs (Jour x Mois)", xaxis_title="Mois", yaxis_title="Jour du Mois", height=500, template="plotly_white")
+                fig.update_layout(title="Heatmap des Valeurs (Jour x Mois)", xaxis_title="Mois", yaxis_title="Jour du Mois", height=500, template="ventespro")
                 st.plotly_chart(fig, use_container_width=True)
 
                 st.markdown("### 💡 Insights Saisonniers")
@@ -977,7 +977,7 @@ if uploaded_file:
                     with c2:
                         fig = go.Figure()
                         fig.add_trace(go.Histogram(x=df[variable], nbinsx=50, name="Distribution"))
-                        fig.update_layout(title=f"Distribution de {variable}", xaxis_title=variable, yaxis_title="Fréquence", height=400, template="plotly_white")
+                        fig.update_layout(title=f"Distribution de {variable}", xaxis_title=variable, yaxis_title="Fréquence", height=400, template="ventespro")
                         st.plotly_chart(fig, use_container_width=True)
 
                     st.markdown(f"#### 📈 Évolution de {variable}")
@@ -985,7 +985,7 @@ if uploaded_file:
                     fig.add_trace(go.Scatter(x=df.index, y=df[variable], mode="lines", name=variable, line=dict(width=2)))
                     ma = df[variable].rolling(30).mean()
                     fig.add_trace(go.Scatter(x=df.index, y=ma, mode="lines", name="Moyenne Mobile 30j", line=dict(width=3, dash="dash")))
-                    fig.update_layout(title=f"Évolution temporelle de {variable}", xaxis_title="Date", yaxis_title=variable, hovermode="x unified", height=500, template="plotly_white")
+                    fig.update_layout(title=f"Évolution temporelle de {variable}", xaxis_title="Date", yaxis_title=variable, hovermode="x unified", height=500, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
 
                     if not _is_none_choice(cat_col):
@@ -993,7 +993,7 @@ if uploaded_file:
                         fig = go.Figure()
                         for cat in df[cat_col].dropna().unique():
                             fig.add_trace(go.Box(y=df[df[cat_col] == cat][variable], name=str(cat), boxmean="sd"))
-                        fig.update_layout(title=f"Comparaison de {variable} entre Catégories", yaxis_title=variable, height=400, template="plotly_white")
+                        fig.update_layout(title=f"Comparaison de {variable} entre Catégories", yaxis_title=variable, height=400, template="ventespro")
                         st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.warning(t("no_numeric_vars"))
@@ -1015,7 +1015,7 @@ if uploaded_file:
                             colorbar=dict(title="Corrélation"),
                         )
                     )
-                    fig.update_layout(title=t("corr_matrix"), height=600, template="plotly_white")
+                    fig.update_layout(title=t("corr_matrix"), height=600, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
 
                     st.markdown("#### 🎯 Visualisation des Corrélations")
@@ -1026,7 +1026,7 @@ if uploaded_file:
                         var2 = st.selectbox(t("var_y"), [c for c in numeric_df.columns if c != var1], key="corr_y")
 
                     fig = px.scatter(df, x=var1, y=var2, trendline="ols", title=f"Relation entre {var1} et {var2}", color=cat_col if not _is_none_choice(cat_col) else None)
-                    fig.update_layout(height=500, template="plotly_white")
+                    fig.update_layout(height=500, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
 
                     corr_value = float(df[var1].corr(df[var2])) if len(df) > 1 else 0.0
@@ -1042,7 +1042,7 @@ if uploaded_file:
                 ma_30 = df[target_col].rolling(30).mean()
                 fig.add_trace(go.Scatter(x=ma_7.index, y=ma_7.values, mode="lines", name="MA 7j", line=dict(width=3)))
                 fig.add_trace(go.Scatter(x=ma_30.index, y=ma_30.values, mode="lines", name="MA 30j", line=dict(width=3, dash="dash")))
-                fig.update_layout(title="Tendances avec Moyennes Mobiles", xaxis_title="Date", yaxis_title="Valeurs", height=500, template="plotly_white")
+                fig.update_layout(title="Tendances avec Moyennes Mobiles", xaxis_title="Date", yaxis_title="Valeurs", height=500, template="ventespro")
                 st.plotly_chart(fig, use_container_width=True)
 
             with t4:
@@ -1061,7 +1061,7 @@ if uploaded_file:
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(x=df.index, y=y_series, mode="lines", name="Historique"))
                 fig.add_trace(go.Scatter(x=future_dates, y=pred, mode="lines", name="Prédiction Linéaire", line=dict(dash="dash")))
-                fig.update_layout(title="Prédiction Linéaire Simple (30 jours)", height=400, template="plotly_white")
+                fig.update_layout(title="Prédiction Linéaire Simple (30 jours)", height=400, template="ventespro")
                 st.plotly_chart(fig, use_container_width=True)
 
         # ============================================================
@@ -2022,7 +2022,7 @@ L'équipe VentesPRO
                         yaxis_title=f"Valeurs ({target_col})",
                         hovermode="x unified",
                         height=550,
-                        template="plotly_white",
+                        template="ventespro",
                         legend=dict(orientation="h", y=1.02, x=1, xanchor="right", yanchor="bottom"),
                     )
                     st.plotly_chart(fig, use_container_width=True)
@@ -2261,7 +2261,7 @@ PRÉVISIONS:
                 if len(numeric_cols) > 0 and len(df_filtered2):
                     col_to_plot = st.selectbox("Variable", numeric_cols)
                     fig = px.histogram(df_filtered2, x=col_to_plot, title=f"Distribution de {col_to_plot}", marginal="box")
-                    fig.update_layout(height=400, template="plotly_white")
+                    fig.update_layout(height=400, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.info("Pas de variable numérique (ou pas de données) pour afficher une distribution.")
@@ -2302,14 +2302,14 @@ PRÉVISIONS:
                     st.markdown("#### 🏆 Top 5 Catégories")
                     top_cats = df_rapport.groupby(cat_col)[target_col].sum().sort_values(ascending=False).head(5)
                     fig = go.Figure(go.Bar(x=top_cats.values, y=top_cats.index.astype(str), orientation="h", text=top_cats.values, texttemplate="%{text:,.0f}", textposition="outside"))
-                    fig.update_layout(title="Top 5 Catégories", xaxis_title="Valeurs", height=400, template="plotly_white")
+                    fig.update_layout(title="Top 5 Catégories", xaxis_title="Valeurs", height=400, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
 
                 with col2:
                     st.markdown("#### 📉 5 Catégories les Moins Performantes")
                     bottom_cats = df_rapport.groupby(cat_col)[target_col].sum().sort_values().head(5)
                     fig = go.Figure(go.Bar(x=bottom_cats.values, y=bottom_cats.index.astype(str), orientation="h", text=bottom_cats.values, texttemplate="%{text:,.0f}", textposition="outside"))
-                    fig.update_layout(title="5 Catégories à Améliorer", xaxis_title="Valeurs", height=400, template="plotly_white")
+                    fig.update_layout(title="5 Catégories à Améliorer", xaxis_title="Valeurs", height=400, template="ventespro")
                     st.plotly_chart(fig, use_container_width=True)
 
             st.markdown("#### 📈 Évolution des Valeurs")
@@ -2320,7 +2320,7 @@ PRÉVISIONS:
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(x=daily_values.index, y=daily_values.values, name="Valeurs Quotidiennes", line=dict(width=1), fill="tozeroy"))
                 fig.add_trace(go.Scatter(x=ma_7.index, y=ma_7.values, name="Moyenne Mobile 7j", line=dict(width=3)))
-                fig.update_layout(title="Évolution Quotidienne des Valeurs", xaxis_title="Date", yaxis_title="Valeurs", height=400, template="plotly_white")
+                fig.update_layout(title="Évolution Quotidienne des Valeurs", xaxis_title="Date", yaxis_title="Valeurs", height=400, template="ventespro")
                 st.plotly_chart(fig, use_container_width=True)
             else:
                 st.info("Aucune donnée sur la période sélectionnée.")

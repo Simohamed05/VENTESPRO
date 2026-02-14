@@ -284,6 +284,42 @@ CSS_STYLES = """
         border: 1px solid var(--vp-border) !important;
     }
 
+    /* Text / number / textarea real input colors */
+    .stTextInput input,
+    .stNumberInput input,
+    .stTextArea textarea {
+        background: var(--vp-surface) !important;
+        color: var(--vp-text) !important;
+        caret-color: var(--vp-text) !important;
+    }
+    .stTextInput input::placeholder,
+    .stNumberInput input::placeholder,
+    .stTextArea textarea::placeholder {
+        color: var(--vp-text-muted) !important;
+        opacity: 0.9 !important;
+    }
+
+    /* BaseWeb controls used by Streamlit (select/input internals) */
+    [data-baseweb="input"] input {
+        background: var(--vp-surface) !important;
+        color: var(--vp-text) !important;
+    }
+    [data-baseweb="select"] > div {
+        background: var(--vp-surface) !important;
+        border-color: var(--vp-border) !important;
+    }
+    [data-baseweb="select"] * {
+        color: var(--vp-text) !important;
+    }
+    [data-testid="stNumberInput"] button {
+        background: var(--vp-surface-strong) !important;
+        color: var(--vp-text) !important;
+        border-color: var(--vp-border) !important;
+    }
+    [data-testid="stNumberInput"] button:hover {
+        filter: brightness(1.08);
+    }
+
     /* Tables - Adaptatifs */
     .dataframe {
         border-radius: 12px;
@@ -298,6 +334,9 @@ CSS_STYLES = """
         border: none;
         padding: 1rem;
         color: var(--vp-text);
+    }
+    .stAlert p, .stAlert div, .stAlert span {
+        color: var(--vp-text) !important;
     }
 
     /* Success Alert */
