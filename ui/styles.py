@@ -312,9 +312,9 @@ CSS_STYLES = """
     }
     /* ===================== TABS (st.tabs) - BIG + CENTER + ATTRACTIVE ===================== */
     div[data-testid="stTabs"]{
-      position: sticky;
-      top: 74px;              /* si tu as topbar sticky */
-      z-index: 998;
+      position: static;
+      top: auto;
+      z-index: 1;
       background: transparent;
       padding-top: 6px;
     }
@@ -380,8 +380,9 @@ CSS_STYLES = """
 
     /* Footer */
     .vp-footer{
-      position: relative;
-      z-index: 2;
+      position: static;
+      z-index: 1;
+      clear: both;
       text-align: center;
       margin-top: 1.5rem;
       padding: 1.2rem 0 0.6rem 0;
