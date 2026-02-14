@@ -228,7 +228,7 @@ if uploaded_file:
         # --------------------------------------------------------
         # Configuration des colonnes
         # --------------------------------------------------------
-        with st.expander(t("config_columns"), expanded=True):
+        with st.expander(t("config_columns"), expanded=False):
             col1, col2, col3 = st.columns(3)
 
             with col1:
@@ -2329,11 +2329,11 @@ else:
 st.markdown("---")
 st.markdown(
     f"""
-<div style='text-align: center; padding: 2rem 0; color: #e2e8f0;'>
-    <p style='margin: 0; font-size: 0.9rem;'>
+<div class='vp-footer'>
+    <p class='vp-footer-main'>
         {t("footer_built_by", name="Mohamed HADI")}
     </p>
-    <p style='margin: 0.5rem 0 0 0; font-size: 0.8rem; opacity: 0.7;'>
+    <p class='vp-footer-sub'>
         {t("footer_version_powered")}
     </p>
 </div>
