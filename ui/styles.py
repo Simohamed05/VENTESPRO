@@ -115,6 +115,27 @@ CSS_STYLES = """
         color: var(--vp-sidebar-text) !important;
     }
 
+    /* File uploader sidebar: lisibilité élevée */
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 12px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] * {
+        color: #0f172a !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] small {
+        color: #475569 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button {
+        background: #e2e8f0 !important;
+        color: #0f172a !important;
+        border: 1px solid #94a3b8 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button:hover {
+        background: #cbd5e1 !important;
+    }
+
     /* Titres - Adaptatifs */
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Sora', 'Plus Jakarta Sans', sans-serif !important;
